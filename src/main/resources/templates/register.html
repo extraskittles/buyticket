@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content:space-around;
+        margin-top: 10%;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+        width:160%;
+        height: 15rem;
+        border: solid black;
+    }
+
+
+    input{
+        width: 60%;
+        height: 10%;
+    }
+
+
+
+    a{
+        font-size: 0.9rem;
+
+    }
+    #register{
+        background-color: dodgerblue;
+        color: aliceblue;
+    }
+    a:hover{
+        color:red;
+    }
+    #register:hover{
+        background-color: cyan;
+        cursor: pointer;
+    }
+</style>
+<body>
+<div id="app">
+
+    <form action="/user/register" method="post">
+        <h3>skittle购票&nbsp;用户注册</h3>
+        <input id="name" type="text" name="name" placeholder="请设置用户名">
+        <input id="password" type="password" name="password" placeholder="请设置登录密码">
+        <input id="register" type="button" value="注册" v-on:click="register()">
+        <a class="href" href="login.html" >返回登录</a>
+    </form>
+</div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+<script src="../static/JS/jquery-1.9.1.min.js"></script>
+<script>
+    let app=new Vue({
+        el:"#app",
+        data:function () {
+            return{
+
+            }
+        },
+        methods:{
+            register:function () {
+                axios({
+                    method:"post",
+                    url:"http://localhost:9090/user/register",
+                    data:{
+                        name:$("#name").val(),
+                        password:$("#password").val()
+                    }
+                }).then((response=>{
+                    let code=response.data.code
+                    if(code==200){
+                        alert("注册成功")
+                        window.location="http://localhost:9090/login.html"
+                    }else{
+                        alert("用户名已被注册，注册失败")
+                    }
+                })).catch(error=>{
+                    alert("注册错误")
+                })
+            }
+        }
+    })
+</script>
+</html>

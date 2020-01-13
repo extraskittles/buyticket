@@ -1,0 +1,69 @@
+spring:
+  profiles:
+    active: dev
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+  redis:
+    host: 111.231.237.220
+    port: 6379
+    timeout: 20000
+    #    集群环境打开下面注释，单机不需要打开
+    #    cluster:
+    #      集群信息
+    #      nodes: xxx.xxx.xxx.xxx:xxxx,xxx.xxx.xxx.xxx:xxxx,xxx.xxx.xxx.xxx:xxxx
+    #      #默认值是5 一般当此值设置过大时，容易报：Too many Cluster redirections
+    #      maxRedirects: 3
+    pool:
+      max-active: 8
+      min-idle: 0
+      max-idle: 8
+      max-wait: -1
+    password: skittles
+    application:
+      name: spring-boot-redis
+
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  port: 9090
+  tomcat:
+    uri-encoding: UTF-8
+
+##微信配置
+#weixin4j:
+#  #微信开发配置
+#  config:
+#    #开发者第三方用户唯一凭证
+#    appid: wx290c9f6319d3532c
+#    #开发者第三方用户唯一凭证密钥
+#    secret: 7aaa74e1564eef0d9b0c2bade4bfe9dd
+#    #公众号原始ID
+#    originalid: gh_b594669cb1c0
+#    #消息加密方式 0:明文模式(默认), 1:兼容模式, 2:安全模式(推荐)
+#    encodingtype: 0
+#    #消息加密密钥(43位字符组成A-Za-z0-9)
+#    encodingaeskey: 0123456789abcedfghijklmnopqrstuvwxyzZXCVBNM
+#    #网页安全授权URL
+#    oauthUrl: zhouzhaorong.xyz
+#  #微信支付配置
+#  payConfig:
+#    #微信支付_商户ID，例如10000000001
+#    partnerId:
+#    #微信支付_商户密钥，由商户设置32位字符
+#    partnerKey:
+#    #微信支付_通知URL，异步接收微信支付结果的URL
+#    notifyUrl:
+#    #证书路径(pk12格式)，例如：/opt/cert/10000000001.pk12
+#    certPath:
+#    #证书密钥,默认为商户ID，例如：10000000001
+#    certSecret:
+
+
+
+

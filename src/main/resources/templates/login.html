@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10%;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+
+            width: 140%;
+            height: 15rem;
+            border: solid black;
+        }
+
+        input {
+            width: 60%;
+            height: 10%;
+        }
+
+        .href {
+            width: 60%;
+            height: 10%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        a {
+            font-size: 0.9rem;
+        }
+
+        #submit {
+            background-color: dodgerblue;
+            color: aliceblue;
+        }
+
+        #submit:hover {
+            background-color: cyan;
+            cursor: pointer;
+        }
+
+        a:hover {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+
+    <form>
+        <h3 class="aa">skittles购票&nbsp;用户名密码登录</h3>
+        <input id="name" type="text" name="name" placeholder="用户名" ref="name">
+        <input id="password" type="password" name="password" placeholder="密码" ref="password">
+        <input id="submit" type="button" value="登录" v-on:click="login()">
+        <div class="href">
+            <a id="updatePassword" href="/updatePassword">忘记密码?</a>
+            <a id="register" href="register.html">立即注册</a>
+        </div>
+    </form>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+<script src="../static/JS/jquery-1.9.1.min.js"></script>
+<script>
+    let app = new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                name:'',
+                password:''
+            }
+        },
+        methods: {
+            login: function () {
+                axios({
+                    method: "post",
+                    url: "http://localhost:9090/user/login",
+                    data: {
+                        name: $("#name").val(),
+                        password:$("#password").val()
+                    },
+                }).then((response) => {
+                    let code=response.data.code
+                    if(code==200){
+                        alert("登陆成功")
+                        window.location="http://localhost:9090/index.html"
+                    }else{
+                        alert("密码错误")
+                    }
+                })
+            }
+        },
+        created: function () {
+
+        }
+    })
+</script>
+
+</html>
