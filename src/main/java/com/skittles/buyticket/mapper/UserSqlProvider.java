@@ -36,6 +36,10 @@ public class UserSqlProvider {
             VALUES("roles", "#{roles,jdbcType=VARCHAR}");
         }
         
+        if (record.getOpenid() != null) {
+            VALUES("openid", "#{openid,jdbcType=VARCHAR}");
+        }
+        
         return SQL();
     }
 
@@ -57,6 +61,10 @@ public class UserSqlProvider {
         
         if (record.getRoles() != null) {
             SET("roles = #{roles,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getOpenid() != null) {
+            SET("openid = #{openid,jdbcType=VARCHAR}");
         }
         
         WHERE("id = #{id,jdbcType=INTEGER}");

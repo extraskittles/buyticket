@@ -20,7 +20,9 @@ import org.springframework.validation.annotation.Validated;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -42,8 +44,9 @@ public class TestController {
 
     @ApiOperation(value = "第一个接口", notes = "这是第一个接口")
     @GetMapping(value = "/test")
-    public Object test() {
-        return true;
+    public Object test(HttpServletRequest request) {
+        String remoteHost = request.getRemoteAddr();
+        return remoteHost;
     }
 
     @PostMapping(value = "/test1", produces = "application/json")
@@ -51,11 +54,19 @@ public class TestController {
         System.out.println(myObject.code);
     }
 
-    @RequestMapping
-    public String test3(){
-
-        return null;
+    @RequestMapping("/test3")
+    public Map test3(){
+        Map<String,Object> map= new HashMap<>();
+        map.put("11","22");
+        return map;
     }
+
+    @RequestMapping(value = "/test/wechat", produces = "application/json")
+    public void testWechat(String code) {
+        System.out.println("成功回调");
+        System.out.println(code);
+    }
+
 
     /*局部处理异常*/
 /*@ExceptionHandler(BindException.class)

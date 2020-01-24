@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Api(tags = "用户信息中心")
 @RequestMapping("/user")
@@ -36,7 +37,7 @@ public class UserController {
     @ApiOperation("登陆")
     @ApiImplicitParam("用户")
     @CrossOrigin(origins = "*")
-    @PostMapping(value = "/login",produces = "application/json")
+    @PostMapping(value = "/login", produces = "application/json")
     public CommonResult login(@Validated @RequestBody User user, HttpServletResponse response) {
         String token = userService.login(user);
         if (token == null) {
@@ -82,7 +83,7 @@ public class UserController {
     @ApiOperation("修改用户信息")
     @CrossOrigin(origins = "*")
     @PostMapping("/")
-    public CommonResult updataUser(@RequestBody  User user, HttpServletRequest request) {
+    public CommonResult updataUser(@RequestBody User user, HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
         int count = userService.updateUser(id, user);
         if (count > 0) {
@@ -92,7 +93,20 @@ public class UserController {
         }
     }
 
-
+    @ApiOperation("微信登陆")
+    @ApiImplicitParam("用户")
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/wechatLogin")
+    public CommonResult weChatlogin(String code, HttpServletResponse response) throws IOException {
+        String token = userService.wechatLogin(code);
+        if (token == null) {
+            return CommonResult.validateFailed();
+        } else {
+            Cookie cookie = new Cookie("token", token);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            return CommonResult.success(token);
+         }
+    }
 }
-
 

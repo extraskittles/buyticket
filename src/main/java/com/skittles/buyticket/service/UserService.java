@@ -6,4 +6,5 @@ public interface UserService {
      boolean register(User user);
      User selectUser(int id);
      int updateUser(int id,User user);
+     String wechatLogin(String code);
 }

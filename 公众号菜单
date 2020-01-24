@@ -1,0 +1,26 @@
+ https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN
+
+ {
+      "button":[
+      {
+           "name":"菜单1",
+           "sub_button":[
+           {
+         	"type":"view",
+         	"name":"今日歌曲3",
+         	 "url":"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect/"
+           }
+           ]
+       },
+       {
+           "type":"view",
+           "name":"今日歌曲2",
+           "url":"http://www.soso.com/"
+       },
+       {
+           "type":"view",
+           "name":"今日歌曲3",
+           "url":"http://www.soso.com/"
+       }
+
+ }

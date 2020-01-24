@@ -23,7 +23,7 @@
         align:right;
     }
 </style>
-`
+
 <body>
 <div id="app">
     <div id="top" >
@@ -171,7 +171,7 @@
             //设置selectedMovie和selectedDate
             //获取该影院所有场次的信息
             getScenes: function (cinemaId) {
-                axios.get('http://localhost:9090/order/selectSceneByCinemaId', {
+                axios.get('http://zhouzhaorong.xyz/order/selectSceneByCinemaId', {
                         params: {
                             cinemaId: cinemaId
                         }
@@ -197,12 +197,20 @@
             //将timestamp转化为日期格式
             getDate: function (timestamp) {
                 return moment(timestamp).format('YYYY-MM-DD')
+            },
+            //判断是否为微信浏览器访问
+            isWechat: function () {
+                if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                    return true;
+                }else{
+                    return false;
+                }
             }
 
         },
         created: function () {
             //获取用户信息
-            axios.get("http://localhost:9090/user/").then((response)=>{
+            axios.get("http://zhouzhaorong.xyz/user/").then((response)=>{
                 let code=response.data.code;
                 if(code==200){
                     let user=response.data.data;
@@ -210,16 +218,16 @@
                     alert("用户ID"+user.id)
                 }
             }).catch(error=>{
-                alert("error")
+                /*alert("error")*/
             }
             )
 
             //查询所有电影
-            axios.get('http://localhost:9090/order/selectMovies').then((response) => {
+            axios.get('http://zhouzhaorong.xyz/order/selectMovies').then((response) => {
                 this.movies = response.data.data;
             });
             //查询所有影院
-            axios.get('http://localhost:9090/order/selectCinemas').then((response) => {
+            axios.get('http://zhouzhaorong.xyz/order/selectCinemas').then((response) => {
                 this.cinemas = response.data.data;
             });
 
@@ -230,6 +238,29 @@
             this.date = [todayDate, tomorrowDate]
 
 
+        },
+        mounted:function(){
+            //如果是微信浏览器访问则发ajax到微信服务器去登陆
+            let isWechat=null;
+            let ua = window.navigator.userAgent.toLowerCase();
+            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                isWechat= true;
+            }else{
+                isWechat=false;
+            }
+            if(isWechat){
+                debugger;
+                alert("微信浏览器访问")
+                axios.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect').then((response) => {
+                    if(respones.data.code==200){
+                        alert("登陆成功")
+                    }
+                }).catch((error)=>{
+                    alert("登陆失败")
+                });
+            }else{
+                alert("PC浏览器访问")
+            }
         },
         computed: {},
         updated: function () {

@@ -1,17 +1,17 @@
 package com.skittles.buyticket.model;
 
-import javax.validation.constraints.NotNull;
-
 public class User {
     private Integer id;
-@NotNull
+
     private String name;
 
     private Integer points;
-@NotNull
+
     private String password;
 
     private String roles;
+
+    private String openid;
 
     public Integer getId() {
         return id;
@@ -51,5 +51,13 @@ public class User {
 
     public void setRoles(String roles) {
         this.roles = roles == null ? null : roles.trim();
+    }
+
+    public String getOpenid() {
+        return openid;
+    }
+
+    public void setOpenid(String openid) {
+        this.openid = openid == null ? null : openid.trim();
     }
 }
