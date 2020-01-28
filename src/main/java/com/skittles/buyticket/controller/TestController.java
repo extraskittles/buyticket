@@ -57,7 +57,7 @@ public class TestController {
     @RequestMapping("/test3")
     public Map test3(){
         Map<String,Object> map= new HashMap<>();
-        map.put("11","22");
+        map.put("66","44");
         return map;
     }
 

@@ -71,7 +71,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
-<script src="../static/JS/jquery-1.9.1.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <script>
     let app = new Vue({
         el: '#app',
@@ -85,7 +85,7 @@
             login: function () {
                 axios({
                     method: "post",
-                    url: "http://localhost:9090/user/login",
+                    url: "http://zhouzhaorong.xyz/user/login",
                     data: {
                         name: $("#name").val(),
                         password:$("#password").val()
@@ -94,7 +94,7 @@
                     let code=response.data.code
                     if(code==200){
                         alert("登陆成功")
-                        window.location="http://localhost:9090/index.html"
+                        window.location="http://zhouzhaorong.xyz/index.html"
                     }else{
                         alert("密码错误")
                     }

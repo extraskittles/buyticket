@@ -73,7 +73,7 @@ public class UserController {
 
     @ApiOperation("查看用户信息")
     @CrossOrigin(origins = "*")
-    @GetMapping("/")
+    @GetMapping("")
     public CommonResult selectUser(HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
         User user = userService.selectUser(id);
@@ -82,7 +82,7 @@ public class UserController {
 
     @ApiOperation("修改用户信息")
     @CrossOrigin(origins = "*")
-    @PostMapping("/")
+    @PostMapping("")
     public CommonResult updataUser(@RequestBody User user, HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
         int count = userService.updateUser(id, user);

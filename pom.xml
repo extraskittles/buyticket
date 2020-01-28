@@ -11,8 +11,6 @@
     <groupId>com.skittles</groupId>
     <artifactId>buyticket</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <!--将springboot打包成war-->
-   <!-- <packaging>war</packaging>-->
     <name>buyticket</name>
     <description>Demo project for Spring Boot</description>
 
@@ -34,12 +32,7 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.1</version>
         </dependency>
-        <!--JDBC-->
-      <!--  <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>2.1.6.RELEASE</version>
-        </dependency>-->
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -61,11 +54,7 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>error</groupId>
-            <artifactId>starter</artifactId>
-            <version>unknown</version>
-        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -109,24 +98,14 @@
             <artifactId>nimbus-jose-jwt</artifactId>
             <version>6.0</version>
         </dependency>
-        <!--wechat-->
-        <!--<dependency>
-            <groupId>org.weixin4j.spring.boot</groupId>
-            <artifactId>weixin4j-spring-boot-starter</artifactId>
-            <version>1.0.0</version>
-        </dependency>-->
+
         <!--wechat公众号-->
         <dependency>
             <groupId>com.foxinmy</groupId>
             <artifactId>weixin4j-mp</artifactId>
             <version>1.8.2</version>
         </dependency>
-        <!--wechat回调消息-->
-        <!--<dependency>
-            <groupId>com.foxinmy</groupId>
-            <artifactId>weixin4j-server</artifactId>
-            <version>1.8.2</version>
-        </dependency>-->
+
         <!--redis-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -144,18 +123,12 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.42.Final</version>
         </dependency>
-  <!--json-->
+<!--热部署工具-->
         <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>2.4</version>
-        </dependency>
-        <!--取消springboot内置tomcat-->
-        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>-->
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
 
     </dependencies>
 

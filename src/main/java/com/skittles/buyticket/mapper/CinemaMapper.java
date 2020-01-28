@@ -55,6 +55,6 @@ public interface CinemaMapper {
     })
     int updateByPrimaryKey(Cinema record);
 
-    @Select("select * from Cinema")
+    @Select("select * from cinema")
     List<Cinema> selectCinemas();
 }
