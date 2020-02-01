@@ -17,7 +17,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class swaggerConfig {
     @Bean
     public Docket customDocket(){
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiinfo());
+        return new Docket(DocumentationType.SWAGGER_2)
+                .host("zhouzhaorong.xyz")
+                .apiInfo(apiinfo());
     }
 
     private ApiInfo apiinfo(){

@@ -1,5 +1,6 @@
 package com.skittles.buyticket.controller;
 
+import com.skittles.buyticket.Timer.DataTask;
 import com.skittles.buyticket.detailMapper.OrderDetailMapper;
 import com.skittles.buyticket.detailMapper.SceneDetailMapper;
 import com.skittles.buyticket.detailMapper.TestMapper;
@@ -41,6 +42,8 @@ public class TestController {
     OrderDetailMapper orderDetailMapper;
     @Autowired
     SceneMapper sceneMapper;
+    @Autowired
+    DataTask dataTask;
 
     @ApiOperation(value = "第一个接口", notes = "这是第一个接口")
     @GetMapping(value = "/test")
@@ -55,10 +58,22 @@ public class TestController {
     }
 
     @RequestMapping("/test3")
-    public Map test3(){
-        Map<String,Object> map= new HashMap<>();
-        map.put("66","44");
-        return map;
+    public String test3(){
+        dataTask.updateTodayData();
+        return "test3";
+    }
+
+    @RequestMapping("/test4")
+    public String test4(){
+        dataTask.updateTomorrowData();
+        return "test3";
+    }
+
+
+    @RequestMapping("/test5")
+    public Object test5(){
+        Scene scene = sceneMapper.selectByPrimaryKey(348);
+        return scene.getDatetime();
     }
 
     @RequestMapping(value = "/test/wechat", produces = "application/json")

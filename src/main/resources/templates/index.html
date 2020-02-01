@@ -180,6 +180,7 @@
                     }
                 ).then((response) => {
                     this.scenes = response.data.data;
+                    alert("111"+cinemaId)
                     //将场次信息分为今天场次和明天场次，并传入到todayScenes和tomorrowScenes
                     let sceneDate;
                     let arr1 = [];
@@ -223,7 +224,7 @@
                 if(code==200){
                     let user=response.data.data;
                     this.user=user;
-                    alert("用户ID"+user.id)
+                    /*alert("用户ID"+user.id)*/
                 }
             }).catch(error=>{
                 /*alert("error")*/
@@ -267,7 +268,7 @@
                     alert("登陆失败")
                 });
             }else{
-                alert("PC浏览器访问")
+               /* alert("PC浏览器访问")*/
             }
         },
         computed: {},

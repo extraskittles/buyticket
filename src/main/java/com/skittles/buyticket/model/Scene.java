@@ -1,6 +1,5 @@
 package com.skittles.buyticket.model;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class Scene {
@@ -15,6 +14,8 @@ public class Scene {
     private Integer cinemaId;
 
     private Integer hallId;
+
+    private String leftSit;
 
     public Integer getId() {
         return id;
@@ -62,5 +63,13 @@ public class Scene {
 
     public void setHallId(Integer hallId) {
         this.hallId = hallId;
+    }
+
+    public String getLeftSit() {
+        return leftSit;
+    }
+
+    public void setLeftSit(String leftSit) {
+        this.leftSit = leftSit == null ? null : leftSit.trim();
     }
 }

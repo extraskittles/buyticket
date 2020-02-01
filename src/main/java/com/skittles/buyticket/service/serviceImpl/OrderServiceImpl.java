@@ -5,9 +5,11 @@ import com.skittles.buyticket.detailMapper.SceneDetailMapper;
 import com.skittles.buyticket.detailModel.OrderDetail;
 import com.skittles.buyticket.detailModel.SceneDetail;
 import com.skittles.buyticket.mapper.HallMapper;
+import com.skittles.buyticket.mapper.SceneMapper;
 import com.skittles.buyticket.mapper.TicketOrderMapper;
 import com.skittles.buyticket.mapper.UserMapper;
 import com.skittles.buyticket.model.Hall;
+import com.skittles.buyticket.model.Scene;
 import com.skittles.buyticket.model.TicketOrder;
 import com.skittles.buyticket.model.User;
 import com.skittles.buyticket.param.ConfirmOrderParam;
@@ -35,6 +37,8 @@ UserMapper userMapper;
     SceneDetailMapper sceneDetailMapper;
 @Autowired
     HallMapper hallMapper;
+@Autowired
+    SceneMapper sceneMapper;
 //  扣取一定用户积分来获得电影票
 
     @Override
@@ -68,7 +72,7 @@ UserMapper userMapper;
         }
         return map;
     }
-
+//确认订单
     @Override
     public Map<String, Object> confirmOrder(ConfirmOrderParam confirmOrderParam, int id) {
         Map<String, Object> map = new HashMap<>();
@@ -79,6 +83,14 @@ UserMapper userMapper;
         String[] sitNumbers = numbersString.split(",");
         SceneDetail sceneDetail = sceneDetailMapper.selectSceneDetailById(sceneId);
         String leftSitString = sceneDetail.getLeftSit();
+        if(leftSitString==null){
+            Integer sitNumber = sceneDetail.getSitNumber();
+            List<Integer> sitNumberString =new ArrayList<>();
+            for(int i=1;i<sitNumber;i++){
+                sitNumberString.add(i);
+            }
+            leftSitString = StringUtils.join(sitNumberString, ",");
+        }
         String[] leftSits = leftSitString.split(",");
         int broketime = 0;
         for (String sitNumber : sitNumbers) {
@@ -107,17 +119,17 @@ UserMapper userMapper;
         int count = orderMapper.insertSelective(order);
         Integer orderId = order.getId();
         map.put("count", count);
-        //减少数据库hall表的电影票数量
+        //减少数据库scene表的电影票数量
         List<String> arr = new ArrayList(Arrays.asList(leftSits));
         for (String sitNumber : sitNumbers) {
             String a = sitNumber;
             arr.remove(a);
         }
         String join = StringUtils.join(arr, ",");
-        Hall hall = new Hall();
-        hall.setId(sceneDetail.getHallId());
-        hall.setLeftSit(join);
-        hallMapper.updateByPrimaryKeySelective(hall);
+        Scene scene = new Scene();
+        scene.setId(sceneId);
+        scene.setLeftSit(join);
+        sceneMapper.updateByPrimaryKeySelective(scene);
         //将应付价格
         OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(orderId);
         map.put("orderDetail",orderDetail);

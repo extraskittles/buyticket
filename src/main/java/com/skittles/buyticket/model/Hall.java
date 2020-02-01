@@ -7,7 +7,7 @@ public class Hall {
 
     private String name;
 
-    private String leftSit;
+    private Integer cinemaId;
 
     public Integer getId() {
         return id;
@@ -33,11 +33,11 @@ public class Hall {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getLeftSit() {
-        return leftSit;
+    public Integer getCinemaId() {
+        return cinemaId;
     }
 
-    public void setLeftSit(String leftSit) {
-        this.leftSit = leftSit == null ? null : leftSit.trim();
+    public void setCinemaId(Integer cinemaId) {
+        this.cinemaId = cinemaId;
     }
 }

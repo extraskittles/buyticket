@@ -40,6 +40,10 @@ public class SceneSqlProvider {
             VALUES("hall_id", "#{hallId,jdbcType=INTEGER}");
         }
         
+        if (record.getLeftSit() != null) {
+            VALUES("left_sit", "#{leftSit,jdbcType=VARCHAR}");
+        }
+        
         return SQL();
     }
 
@@ -65,6 +69,10 @@ public class SceneSqlProvider {
         
         if (record.getHallId() != null) {
             SET("hall_id = #{hallId,jdbcType=INTEGER}");
+        }
+        
+        if (record.getLeftSit() != null) {
+            SET("left_sit = #{leftSit,jdbcType=VARCHAR}");
         }
         
         WHERE("id = #{id,jdbcType=INTEGER}");

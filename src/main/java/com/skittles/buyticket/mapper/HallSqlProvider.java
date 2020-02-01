@@ -28,8 +28,8 @@ public class HallSqlProvider {
             VALUES("name", "#{name,jdbcType=VARCHAR}");
         }
         
-        if (record.getLeftSit() != null) {
-            VALUES("left_sit", "#{leftSit,jdbcType=VARCHAR}");
+        if (record.getCinemaId() != null) {
+            VALUES("cinema_id", "#{cinemaId,jdbcType=INTEGER}");
         }
         
         return SQL();
@@ -47,8 +47,8 @@ public class HallSqlProvider {
             SET("name = #{name,jdbcType=VARCHAR}");
         }
         
-        if (record.getLeftSit() != null) {
-            SET("left_sit = #{leftSit,jdbcType=VARCHAR}");
+        if (record.getCinemaId() != null) {
+            SET("cinema_id = #{cinemaId,jdbcType=INTEGER}");
         }
         
         WHERE("id = #{id,jdbcType=INTEGER}");

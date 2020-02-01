@@ -66,7 +66,6 @@ public class OrderController {
     @PostMapping("/confirmOrder")
     public CommonResult confirmOrder(ConfirmOrderParam confirmOrderParam, HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
-        String sitNumbers = confirmOrderParam.getSitNumbers();
         Map<String, Object> map = orderService.confirmOrder(confirmOrderParam, id);
         if(map.get("defaultTicket")!=null){
             return CommonResult.failed("所选票已被购，请再选票");

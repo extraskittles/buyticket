@@ -20,9 +20,9 @@ public interface HallMapper {
 
     @Insert({
         "insert into hall (id, sit_number, ",
-        "name, left_sit)",
+        "name, cinema_id)",
         "values (#{id,jdbcType=INTEGER}, #{sitNumber,jdbcType=INTEGER}, ",
-        "#{name,jdbcType=VARCHAR}, #{leftSit,jdbcType=VARCHAR})"
+        "#{name,jdbcType=VARCHAR}, #{cinemaId,jdbcType=INTEGER})"
     })
     int insert(Hall record);
 
@@ -31,7 +31,7 @@ public interface HallMapper {
 
     @Select({
         "select",
-        "id, sit_number, name, left_sit",
+        "id, sit_number, name, cinema_id",
         "from hall",
         "where id = #{id,jdbcType=INTEGER}"
     })
@@ -39,7 +39,7 @@ public interface HallMapper {
         @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="sit_number", property="sitNumber", jdbcType=JdbcType.INTEGER),
         @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="left_sit", property="leftSit", jdbcType=JdbcType.VARCHAR)
+        @Result(column="cinema_id", property="cinemaId", jdbcType=JdbcType.INTEGER)
     })
     Hall selectByPrimaryKey(Integer id);
 
@@ -50,7 +50,7 @@ public interface HallMapper {
         "update hall",
         "set sit_number = #{sitNumber,jdbcType=INTEGER},",
           "name = #{name,jdbcType=VARCHAR},",
-          "left_sit = #{leftSit,jdbcType=VARCHAR}",
+          "cinema_id = #{cinemaId,jdbcType=INTEGER}",
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Hall record);
