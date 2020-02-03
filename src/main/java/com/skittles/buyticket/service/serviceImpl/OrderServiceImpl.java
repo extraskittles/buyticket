@@ -133,7 +133,6 @@ UserMapper userMapper;
         //将应付价格
         OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(orderId);
         map.put("orderDetail",orderDetail);
-        int i=2/0;
         return map;
     }
 }
