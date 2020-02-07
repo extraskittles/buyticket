@@ -18,10 +18,11 @@
     }
 
 
-
     #logout {
         align:right;
     }
+
+    
 </style>
 
 <body>
@@ -102,11 +103,19 @@
                 <td>{{scene.time}}</td>
                 <td>{{scene.hallName}}</td>
                 <td>{{scene.price}}</td>
-                <td>购票</td>
+                <td  v-on:click="choseSit(scene.id)">购票</td>
             </tr>
         </table>
 
-
+    </div>
+    <!--第四页，选座-->
+    <div id="choseSit" v-if="displayNum==4">
+        <h3>选座</h3>
+        <div id="choseSit_sits"></div>
+        <div class="choseSit_sits_sit" v-for="sit in leftSitArr">
+            <div id="choseSit_sits_sit_num">{{sit}}</div>
+            <input id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="Car" checked="checked" />
+        </div>
     </div>
 </div>
 </body>
@@ -133,6 +142,8 @@
                 selectedDate: '',
                 selectedMovie: '',
                 scenesByDateAndMovie: [],
+                leftSitArr: '',
+
             };
         },
         methods: {
@@ -180,7 +191,6 @@
                     }
                 ).then((response) => {
                     this.scenes = response.data.data;
-                    alert("111"+cinemaId)
                     //将场次信息分为今天场次和明天场次，并传入到todayScenes和tomorrowScenes
                     let sceneDate;
                     let arr1 = [];
@@ -213,6 +223,20 @@
             logout:function () {
                 axios.get('http://zhouzhaorong.xyz/user/logout').then((response)=>{
                         window.location="http://zhouzhaorong.xyz/login.html";
+                    }
+                )
+            },
+            //选座
+            choseSit:function (sceneId) {
+                alert(sceneId)
+                this.displayNum=4;
+                axios.get('http://zhouzhaorong.xyz/order/selectSceneById',{
+                    params:{
+                        sceneId:sceneId
+                    }
+                }).then((response)=>{
+                        let leftSitStr=response.data.data.leftSit;
+                        this.leftSitArr=leftSitStr.split(',');
                     }
                 )
             }

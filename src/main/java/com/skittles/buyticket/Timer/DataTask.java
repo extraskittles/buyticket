@@ -2,6 +2,7 @@ package com.skittles.buyticket.Timer;
 
 import com.skittles.buyticket.mapper.SceneMapper;
 import com.skittles.buyticket.model.Scene;
+import com.skittles.buyticket.utils.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,8 @@ public class DataTask {
                     }else if(h==3){
                         scene.setName("勒流影院场次"+sceneCount);
                     }
+                    String s = StringUtils.sitNumberStr(50);
+                    scene.setLeftSit(s);
                     sceneCount++;
                     scene.setDatetime(date);
                     sceneMapper.insertSelective(scene);
@@ -70,7 +73,7 @@ public class DataTask {
     }
 @Test
     public void updateTomorrowData(){
-        //插入当天的的场次信息
+        //插入明天的的场次信息
         Scene scene = new Scene();
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH,1);

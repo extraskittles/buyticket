@@ -57,8 +57,8 @@ public class OrderController {
         return CommonResult.failed();
     }
     @ApiOperation("根据场次id,获取该场次所有信息")
-    @GetMapping("/selectSceneById")
-    public CommonResult selectSceneDetail(int sceneId) {
+    @GetMapping(value = "/selectSceneById")
+    public CommonResult selectSceneDetail( Integer sceneId) {
         SceneDetail sceneDetail = cinemaService.selectSceneDetailById(sceneId);
         return CommonResult.success(sceneDetail);
     }

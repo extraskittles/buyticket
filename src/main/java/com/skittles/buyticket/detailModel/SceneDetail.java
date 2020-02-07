@@ -3,8 +3,12 @@ package com.skittles.buyticket.detailModel;
 import com.skittles.buyticket.model.Scene;
 
 public class SceneDetail extends Scene {
+    private Integer id;
     private int movieLength;
     private String movieName;
+
+
+
     private Double price;
 
     private String description;

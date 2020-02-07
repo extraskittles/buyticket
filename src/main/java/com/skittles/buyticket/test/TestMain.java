@@ -11,6 +11,7 @@ import com.skittles.buyticket.mapper.UserMapper;
 import com.skittles.buyticket.model.Scene;
 import com.skittles.buyticket.utils.HttpUtils;
 import com.skittles.buyticket.utils.JsonUtils;
+import com.skittles.buyticket.utils.StringUtils;
 import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
@@ -131,7 +132,6 @@ public class TestMain {
     }
     @Test
     public void test7(){
-      /*  UserMapper userMapper = new UserMapper();
-        userMapper*/
+        StringUtils.sitNumberStr(20);
     }
 }
