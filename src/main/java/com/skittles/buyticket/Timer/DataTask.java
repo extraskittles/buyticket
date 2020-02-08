@@ -109,6 +109,8 @@ public class DataTask {
                     }else if(h==3){
                         scene.setName("勒流影院场次"+sceneCount);
                     }
+                    String s = StringUtils.sitNumberStr(50);
+                    scene.setLeftSit(s);
                     sceneCount++;
                     scene.setDatetime(date);
                     sceneMapper.insertSelective(scene);

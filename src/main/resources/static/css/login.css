@@ -1,0 +1,16 @@
+#top {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.tags {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+#logout {
+    align:right;
+}

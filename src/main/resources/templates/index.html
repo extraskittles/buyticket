@@ -22,7 +22,26 @@
         align:right;
     }
 
-    
+
+    #choseSit{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #choseSit_sits{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .choseSit_sits_sit{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 30%;
+    }
+
 </style>
 
 <body>
@@ -111,11 +130,13 @@
     <!--第四页，选座-->
     <div id="choseSit" v-if="displayNum==4">
         <h3>选座</h3>
-        <div id="choseSit_sits"></div>
-        <div class="choseSit_sits_sit" v-for="sit in leftSitArr">
-            <div id="choseSit_sits_sit_num">{{sit}}</div>
-            <input id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="Car" checked="checked" />
+        <div id="choseSit_sits">
+            <div class="choseSit_sits_sit" v-for="count in scene.sitNumber">
+                <div id="choseSit_sits_sit_num">{{count}}</div>
+                <input v-if="leftSitArr.indexOf(count+'')>-1" v-on:click="choseTrigger(count)" id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="count" />
+            </div>
         </div>
+        <input type="button" v-on:click="confirmSit(11)">
     </div>
 </div>
 </body>
@@ -143,6 +164,8 @@
                 selectedMovie: '',
                 scenesByDateAndMovie: [],
                 leftSitArr: '',
+                scene: '',
+                chosedList: [],
 
             };
         },
@@ -228,7 +251,6 @@
             },
             //选座
             choseSit:function (sceneId) {
-                alert(sceneId)
                 this.displayNum=4;
                 axios.get('http://zhouzhaorong.xyz/order/selectSceneById',{
                     params:{
@@ -236,9 +258,49 @@
                     }
                 }).then((response)=>{
                         let leftSitStr=response.data.data.leftSit;
+                        this.scene =response.data.data;
                         this.leftSitArr=leftSitStr.split(',');
                     }
                 )
+            },
+            //确定座位，发出生成确认订单请求
+            confirmSit:function () {
+                let sceneId=this.scene.id;
+                let list =this.chosedList;
+                let sitNumbers='';
+                list.map((value,index)=>{
+                   if(index==0){
+                       sitNumbers=value;
+                   }else{
+                       sitNumbers=sitNumbers+","+list[index];
+                   }
+                })
+                alert(sitNumbers);
+                axios({
+                    method: "post",
+                    url: "http://zhouzhaorong.xyz/order/confirmOrder",
+                    data:{
+                        sitNumbers:sitNumbers,
+                        sceneId:sceneId
+                    }
+                }).then(response=>{
+                    alert(response.data.data.id)
+                    localStorage.setItem("confirmOrder",response.data.data)
+                })
+            },
+            choseTrigger:function (sitNumber) {
+                let list = this.chosedList;
+                let isHas = false;
+                list.map((value, index) => {
+                    if(value === sitNumber){
+                        list.splice(index, 1);
+                        isHas = true;
+                    }
+                });
+                if(!isHas){
+                    list.push(sitNumber);
+                }
+                this.chosedList = list;
             }
         },
         created: function () {
@@ -248,7 +310,6 @@
                 if(code==200){
                     let user=response.data.data;
                     this.user=user;
-                    /*alert("用户ID"+user.id)*/
                 }
             }).catch(error=>{
                 /*alert("error")*/

@@ -63,8 +63,8 @@ public class OrderController {
         return CommonResult.success(sceneDetail);
     }
     @ApiOperation("根据电影院id，场次id，座位号生成确认订单")
-    @PostMapping("/confirmOrder")
-    public CommonResult confirmOrder(ConfirmOrderParam confirmOrderParam, HttpServletRequest request) {
+    @PostMapping(value = "/confirmOrder",produces = "application/json")
+    public CommonResult confirmOrder(@RequestBody ConfirmOrderParam confirmOrderParam, HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
         Map<String, Object> map = orderService.confirmOrder(confirmOrderParam, id);
         if(map.get("defaultTicket")!=null){
