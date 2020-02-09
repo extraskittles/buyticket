@@ -74,8 +74,8 @@ public class OrderController {
     }
 
     @ApiOperation("根据用户积分支付")
-    @PostMapping("/pay")
-    public CommonResult pay(int orderId,HttpServletRequest request){
+    @PostMapping(value = "/pay",produces = "application/json")
+    public CommonResult pay(@RequestBody int orderId,HttpServletRequest request){
         Map<String, Boolean> map = orderService.pay(orderId, request);
         if(map.get("noPoints")){
             return CommonResult.failed("没有足够积分");

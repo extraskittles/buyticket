@@ -1,10 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    
+<div id="app">
+
+    <h2>确认订单</h2>
+    <div>
+        <table>
+            <tr>
+                <td>电影名</td>
+                <td>时间</td>
+                <td>影院名字</td>
+                <td>厅号</td>
+                <td>座位</td>
+                <td>单价</td>
+                <td>总价</td>
+            </tr>
+            <tr>
+                <td>{{orderDetail.movieName}}</td>
+                <td>{{orderDetail.datetime}}</td>
+                <td>{{orderDetail.cinemaName}}</td>
+                <td>{{orderDetail.hallName}}</td>
+                <td>{{orderDetail.sitNumbers}}</td>
+                <td>{{orderDetail.price}}</td>
+                <td>{{orderDetail.payPrice}}</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <div>实付积分：</div>
+        <div><input  v-on:click="pay" type="button" value="付款"></div>
+    </div>
+</div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+    let app=new Vue({
+        el:'#app',
+        data:function () {
+            return{
+                orderDetail:JSON.parse(localStorage.getItem("orderDetail"))
+            }
+        },
+
+        methods:{
+            pay:function () {
+                let orderDetail=this.orderDetail;
+                let orderId=orderDetail.id;
+                axios({
+                    method:"post",
+                    url:"http://zhouzhaorong.xyz/order/pay",
+                    headers:
+                      {
+                        'Content-Type': 'application/json'
+                       },
+                    data:orderId
+                }).then((response)=>{
+                    alert("支付成功")
+                })
+            }
+        },
+
+        created:function () {
+
+
+        },
+        mounted:function () {
+
+        }
+    })
+</script>
 </html>

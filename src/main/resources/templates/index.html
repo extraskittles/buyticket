@@ -136,7 +136,7 @@
                 <input v-if="leftSitArr.indexOf(count+'')>-1" v-on:click="choseTrigger(count)" id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="count" />
             </div>
         </div>
-        <input type="button" v-on:click="confirmSit(11)">
+        <input type="button" v-on:click="confirmSit()">
     </div>
 </div>
 </body>
@@ -263,7 +263,7 @@
                     }
                 )
             },
-            //确定座位，发出生成确认订单请求
+            //确定座位，将sceneId和sitNumbers储存到storage，跳转到确认订单页面
             confirmSit:function () {
                 let sceneId=this.scene.id;
                 let list =this.chosedList;
@@ -275,18 +275,22 @@
                        sitNumbers=sitNumbers+","+list[index];
                    }
                 })
-                alert(sitNumbers);
                 axios({
-                    method: "post",
-                    url: "http://zhouzhaorong.xyz/order/confirmOrder",
+                    method:"post",
+                    url:"http://zhouzhaorong.xyz/order/confirmOrder",
                     data:{
-                        sitNumbers:sitNumbers,
-                        sceneId:sceneId
+                        sceneId: sceneId,
+                        sitNumbers:sitNumbers
                     }
-                }).then(response=>{
+                }).then((response)=>{
+                    alert("请求成功")
                     alert(response.data.data.id)
-                    localStorage.setItem("confirmOrder",response.data.data)
+                    localStorage.setItem("orderDetail",JSON.stringify(response.data.data));
+                    window.location="http://zhouzhaorong.xyz/confirmOrder.html";
+                }).catch((error)=>{
+                    alert("请求失败")
                 })
+
             },
             choseTrigger:function (sitNumber) {
                 let list = this.chosedList;
