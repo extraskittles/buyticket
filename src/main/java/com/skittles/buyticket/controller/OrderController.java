@@ -1,10 +1,13 @@
 package com.skittles.buyticket.controller;
 
+import com.skittles.buyticket.detailMapper.OrderDetailMapper;
+import com.skittles.buyticket.detailModel.OrderDetail;
 import com.skittles.buyticket.detailModel.SceneDetail;
 import com.skittles.buyticket.model.Cinema;
 import com.skittles.buyticket.model.Movie;
 import com.skittles.buyticket.param.ConfirmOrderParam;
 import com.skittles.buyticket.result.CommonResult;
+import com.skittles.buyticket.result.ResultCode;
 import com.skittles.buyticket.service.CinemaService;
 import com.skittles.buyticket.service.OrderService;
 import com.skittles.buyticket.utils.HttpUtils;
@@ -26,6 +29,8 @@ public class OrderController {
     CinemaService cinemaService;
 @Autowired
     OrderService orderService;
+@Autowired
+    OrderDetailMapper orderDetailMapper;
     @ApiOperation("根据电影院id查找该影院上映的所有场次的所有信息")
     @GetMapping("selectSceneByCinemaId")
     public CommonResult selectScene(int cinemaId) {
@@ -66,6 +71,9 @@ public class OrderController {
     @PostMapping(value = "/confirmOrder",produces = "application/json")
     public CommonResult confirmOrder(@RequestBody ConfirmOrderParam confirmOrderParam, HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
+        if(id==0){
+           return CommonResult.unAuthorized();
+        }
         Map<String, Object> map = orderService.confirmOrder(confirmOrderParam, id);
         if(map.get("defaultTicket")!=null){
             return CommonResult.failed("所选票已被购，请再选票");
@@ -95,6 +103,17 @@ public class OrderController {
         if(movies!=null){
             return CommonResult.success(movies);
         }else {
+            return CommonResult.failed();
+        }
+    }
+
+    @ApiOperation("根据订单号查询该订单信息")
+    @GetMapping("/selectOrderById")
+    public CommonResult selectOrderById(int orderId){
+        OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(orderId);
+        if(orderDetail!=null){
+            return CommonResult.success(orderDetail);
+        }else{
             return CommonResult.failed();
         }
     }

@@ -53,28 +53,32 @@
     </style>
 </head>
 <body>
-<div id="app">
-
-    <form>
-        <h3 class="aa">skittles购票&nbsp;用户名密码登录</h3>
-        <input id="name" type="text" name="name" placeholder="用户名" ref="name">
-        <input id="password" type="password" name="password" placeholder="密码" ref="password">
-        <input id="submit" type="button" value="登录" v-on:click="login()">
-        <div class="href">
-            <a id="updatePassword" href="/updatePassword">忘记密码?</a>
-            <a id="register" href="register.html">立即注册</a>
-        </div>
-    </form>
-</div>
+<div id="app"></div>
 
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/x-template" id="template">
+    <div>
+
+        <form>
+            <h3 class="aa">skittles购票&nbsp;用户名密码登录</h3>
+            <input id="name" type="text" name="name" placeholder="用户名" ref="name">
+            <input id="password" type="password" name="password" placeholder="密码" ref="password">
+            <input id="submit" type="button" value="登录" v-on:click="login()">
+            <div class="href">
+                <a id="updatePassword" href="/updatePassword">忘记密码?</a>
+                <a id="register" href="register.html">立即注册</a>
+            </div>
+        </form>
+    </div>
+</script>
 <script>
     let app = new Vue({
         el: '#app',
+        template:'#template',
         data: function () {
             return {
                 name:'',

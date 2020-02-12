@@ -46,24 +46,28 @@
     }
 </style>
 <body>
-<div id="app">
-
-    <form action="/user/register" method="post">
-        <h3>skittle购票&nbsp;用户注册</h3>
-        <input id="name" type="text" name="name" placeholder="请设置用户名">
-        <input id="password" type="password" name="password" placeholder="请设置登录密码">
-        <input id="register" type="button" value="注册" v-on:click="register()">
-        <a class="href" href="login.html" >返回登录</a>
-    </form>
-</div>
+<div id="app"></div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
 <script src="../static/JS/jquery-1.9.1.min.js"></script>
+<script type="text/x-template" id="template">
+    <div>
+
+        <form action="/user/register" method="post">
+            <h3>skittle购票&nbsp;用户注册</h3>
+            <input id="name" type="text" name="name" placeholder="请设置用户名">
+            <input id="password" type="password" name="password" placeholder="请设置登录密码">
+            <input id="register" type="button" value="注册" v-on:click="register()">
+            <a class="href" href="login.html" >返回登录</a>
+        </form>
+    </div>
+</script>
 <script>
     let app=new Vue({
         el:"#app",
+        template:"#template",
         data:function () {
             return{
 

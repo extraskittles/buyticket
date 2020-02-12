@@ -8,7 +8,7 @@ public interface OrderDetailMapper {
             "ticket_order.*,\n" +
             "scene.datetime,scene.name AS scene_name,\n" +
             "movie.name AS movie_name,movie.price,movie.movie_length,movie.description,\n" +
-            "cinema.name AS cinema_name,\n" +
+            "cinema.name AS cinema_name,cinema.address,\n" +
             "hall.sit_number,hall.name AS hall_name,hall.id AS hall_id \n" +
             "FROM ticket_order\n" +
             "LEFT JOIN scene ON ticket_order.scene_id=scene.id \n" +

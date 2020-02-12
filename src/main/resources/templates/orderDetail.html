@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
 </head>
 <body>
-<div id="app">
-
-</div>
+<div id="app"></div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div>
-
-        <h2>确认订单</h2>
+        <h2>订单详情</h2>
         <div>
             <table>
                 <tr>
@@ -25,8 +24,6 @@
                     <td>影院名字</td>
                     <td>厅号</td>
                     <td>座位</td>
-                    <td>单价</td>
-                    <td>总价</td>
                 </tr>
                 <tr>
                     <td>{{orderDetail.movieName}}</td>
@@ -34,53 +31,52 @@
                     <td>{{orderDetail.cinemaName}}</td>
                     <td>{{orderDetail.hallName}}</td>
                     <td>{{orderDetail.sitNumbers}}</td>
-                    <td>{{orderDetail.price}}</td>
-                    <td>{{orderDetail.payPrice}}</td>
                 </tr>
             </table>
         </div>
+
         <div>
-            <div>实付积分：{{payPoint}}</div>
-            <div><input  v-on:click="pay" type="button" value="付款"></div>
+            <div>取票码:</div>
+            <div>{{orderDetail.uuid}}</div>
+        </div>
+        <div>
+            <div>地址：</div>
+            <div>{{orderDetail.cinemaName}}</div>
+            <div>{{orderDetail.address}}</div>
         </div>
     </div>
 </script>
 <script>
     let app=new Vue({
         el:'#app',
-        template:'#template',
+        template: '#template',
         data:function () {
             return{
-                orderDetail:JSON.parse(localStorage.getItem("orderDetail"))
+                orderDetail:'',
             }
         },
 
         methods:{
-            pay:function () {
-                let orderDetail=this.orderDetail;
-                let orderId=orderDetail.id;
-                axios({
-                    method:"post",
-                    url:"http://zhouzhaorong.xyz/order/pay",
-                    headers:
-                      {
-                        'Content-Type': 'application/json'
-                       },
-                    data:orderId
-                }).then((response)=>{
-                    window.location="http://zhouzhaorong.xyz/orderDetail.html?orderId="+orderId;
-                })
-            }
+
         },
 
         created:function () {
-
+            let orderId = getQuery("orderId");
+            axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{
+                    params:{
+                        orderId:orderId
+                    }
+                }
+            ).then((response=>{
+                this.orderDetail=response.data.data;
+            }))
 
         },
         mounted:function () {
 
         },
         computed: {
+            //计算所需要的积分
             payPoint:function f() {
                 let payPrice=this.orderDetail.payPrice;
                 let payPoint=payPrice*10;

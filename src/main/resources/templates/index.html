@@ -10,8 +10,14 @@
         flex-direction: row;
         justify-content: flex-end;
     }
+    /*第一页*/
+    #movie-cinema_tag {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
 
-    .tags {
+    .tags{
         display: flex;
         flex-direction: row;
         justify-content: space-around;
@@ -35,118 +41,127 @@
         width: 100%;
     }
 
-    .choseSit_sits_sit{
+    #choseSit_sits_sit{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         width: 30%;
     }
-
+    .active_title {
+        color: red;
+        text-decoration-line: underline;
+    }
 </style>
 
 <body>
-<div id="app">
-    <div id="top" >
-        <div v-if="user.name!=null">用户：{{user.name}}&nbsp&nbsp</div>
-        <div id="logout" v-if="user.name!=null" v-on:click="logout()">注销</div>
-        <div v-if="user.name==null" ><a href="/login.html">登陆</a></div>
-    </div>
-    <!--第一页-->
-    <div id="movie_cinema" v-if="displayNum==1">
-        <div class="tags">
-            <div class="tag" v-on:click="list(1)">所有电影</div>
-            <div class="tag" v-on:click="list(2)">所有影院</div>
-        </div>
-        <!--显示所有电影-->
-        <table id="table1" v-if="listNum==1">
-            <tr>
-                <td>电影名</td>
-                <td>描述</td>
-                <td>票价</td>
-                <td>影长</td>
-                <td>购票</td>
-            </tr>
-            <tr v-for="movie in movies">
-                <td>{{movie.name}}</td>
-                <td>{{movie.description}}</td>
-                <td>{{movie.price}}</td>
-                <td>{{movie.movieLength}}分钟</td>
-                <td v-on:click="setMovie(movie)">购票</td>
-            </tr>
-        </table>
-        <!--显示所有影院-->
-        <table id="table2" v-if="listNum==2">
-            <tr>
-                <td>电影院名</td>
-                <td>地址</td>
-                <td>购票</td>
-            </tr>
-            <tr v-for="cinema in cinemas">
-                <td>{{cinema.name}}</td>
-                <td>{{cinema.address}}</td>
-                <td v-on:click="setCinema(cinema)">进入影院</td>
-            </tr>
-        </table>
-    </div>
-    <!--第二页，显示电影上映的影院信息-->
-    <div id="movie" v-if="displayNum==2">
-        <h3>{{selectedMovie.name}}</h3>
-        <table id="table3">
-            <tr>
-                <td>影院名</td>
-                <td>地址</td>
-            </tr>
-            <tr v-for="cinema in cinemas">
-                <td>{{cinema.name}}</td>
-                <td>{{cinema.address}}</td>
-                <td v-on:click="setCinema(cinema)">购票</td>
-            </tr>
-        </table>
-    </div>
-    <!--第三页，电影和影院对应的场次-->
-    <div id="buyTicket" v-if="displayNum==3">
-        <h3>{{cinema.name}}</h3>
-        <p>{{cinema.address}}</p>
-        <div class="tags">
-            <div v-for="movie in movies" v-on:click="setSelectedMovie(movie)">{{movie.name}}</div>
-        </div>
-
-        <div class="tags">
-            <div v-on:click="setSelectedDate(date[0])">今天{{date[0]}}</div>
-            <div v-on:click="setSelectedDate(date[1])">明天{{date[1]}}</div>
-        </div>
-
-
-        <table>
-            <tr v-for="scene in selectedScenes">
-                <td>{{scene.time}}</td>
-                <td>{{scene.hallName}}</td>
-                <td>{{scene.price}}</td>
-                <td  v-on:click="choseSit(scene.id)">购票</td>
-            </tr>
-        </table>
-
-    </div>
-    <!--第四页，选座-->
-    <div id="choseSit" v-if="displayNum==4">
-        <h3>选座</h3>
-        <div id="choseSit_sits">
-            <div class="choseSit_sits_sit" v-for="count in scene.sitNumber">
-                <div id="choseSit_sits_sit_num">{{count}}</div>
-                <input v-if="leftSitArr.indexOf(count+'')>-1" v-on:click="choseTrigger(count)" id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="count" />
-            </div>
-        </div>
-        <input type="button" v-on:click="confirmSit()">
-    </div>
-</div>
+<div id="app"></div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/x-template" id="template">
+    <div>
+        <div id="top" >
+            <div v-if="user.name!=null">用户：{{user.name}}&nbsp&nbsp</div>
+            <div id="logout" v-if="user.name!=null" v-on:click="logout()">注销</div>
+            <div v-if="user.name==null" ><a href="/login.html">登陆</a></div>
+        </div>
+        <!--第一页-->
+        <div id="movie_cinema" v-if="displayNum==1">
+            <div id="movie-cinema_tag" class="tags">
+                <div id="movie-cinema_tag_tag1" class="tag" :class="{active_title: listNum === 1}" v-on:click="list(1)">所有电影</div>
+                <div id="movie-cinema_tag_tag2" class="tag" :class="{active_title: listNum === 2}" v-on:click="list(2)">所有影院</div>
+            </div>
+            <!--显示所有电影-->
+            <table id="movie-cinema_table1" v-if="listNum==1">
+                <tr>
+                    <td>电影名</td>
+                    <td>描述</td>
+                    <td>票价</td>
+                    <td>影长</td>
+                    <td>购票</td>
+                </tr>
+                <tr v-for="movie in movies">
+                    <td>{{movie.name}}</td>
+                    <td>{{movie.description}}</td>
+                    <td>{{movie.price}}</td>
+                    <td>{{movie.movieLength}}分钟</td>
+                    <td v-on:click="setMovie(movie)">购票</td>
+                </tr>
+            </table>
+            <!--显示所有影院-->
+            <table id="movie_cinema_table2" v-if="listNum==2">
+                <tr>
+                    <td>电影院名</td>
+                    <td>地址</td>
+                    <td>购票</td>
+                </tr>
+                <tr v-for="cinema in cinemas">
+                    <td>{{cinema.name}}</td>
+                    <td>{{cinema.address}}</td>
+                    <td v-on:click="setCinema(cinema)">进入影院</td>
+                </tr>
+            </table>
+        </div>
+        <!--第二页，显示电影上映的影院信息-->
+        <div id="movie" v-if="displayNum==2">
+            <h3>{{selectedMovie.name}}</h3>
+            <table id="table3">
+                <tr>
+                    <td>影院名</td>
+                    <td>地址</td>
+                </tr>
+                <tr v-for="cinema in cinemas">
+                    <td>{{cinema.name}}</td>
+                    <td>{{cinema.address}}</td>
+                    <td v-on:click="setCinema(cinema)">购票</td>
+                </tr>
+            </table>
+            <div v-on:click="displayNum=1">返回</div>
+        </div>
+        <!--第三页，电影和影院对应的场次-->
+        <div id="buyTicket" v-if="displayNum==3">
+            <h3>{{cinema.name}}</h3>
+            <p>{{cinema.address}}</p>
+            <div class="tags">
+                <div :class="{active_title:selectedMovie==movie}" v-for="movie in movies" v-on:click="setSelectedMovie(movie)">{{movie.name}}</div>
+            </div>
+
+            <div class="tags">
+                <div :class="{active_title:selectedDate==date[0]}" v-on:click="setSelectedDate(date[0])">今天{{date[0]}}</div>
+                <div :class="{active_title:selectedDate==date[1]}" v-on:click="setSelectedDate(date[1])">明天{{date[1]}}</div>
+            </div>
+
+
+            <table>
+                <tr v-for="scene in selectedScenes">
+                    <td>{{scene.time}}</td>
+                    <td>{{scene.hallName}}</td>
+                    <td>{{scene.price}}</td>
+                    <td  v-on:click="choseSit(scene.id)">购票</td>
+                </tr>
+            </table>
+            <div v-on:click="displayNum=2">返回</div>
+        </div>
+        <!--第四页，选座-->
+        <div id="choseSit" v-if="displayNum==4">
+            <h3>选座</h3>
+            <div id="choseSit_sits">
+                <div id="choseSit_sits_sit" v-for="count in scene.sitNumber">
+                    <div id="choseSit_sits_sit_num">{{count}}</div>
+                    <input v-if="leftSitArr.indexOf(count+'')>-1" v-on:click="choseTrigger(count)" id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="count" />
+                </div>
+            </div>
+            <input type="button" v-on:click="confirmSit()">
+            <div v-on:click="displayNum=3">返回</div>
+        </div>
+    </div>
+</script>
 <script>
     let app = new Vue({
         el: '#app',
+        template:"#template",
         data: function () {
             return {
                 user:{},
@@ -156,7 +171,6 @@
                 cinemas: [],
                 cinema: null,
                 scenes: [],
-                selectedScenes: [],
                 date: [],//记录今天明天日期
                 todayScenes: [],
                 tomorrowScenes: [],
@@ -180,18 +194,6 @@
             //将场次按所选日期和电影进行筛选
             setSelectedDate: function (date) {
                 this.selectedDate = date;
-                let arr = [];
-                let sceneDate = null;
-                let time;
-                for (i = 0; i < this.scenes.length; i++) {
-                    sceneDate = moment(this.scenes[i].datetime).format('YYYY-MM-DD');
-                    if (this.selectedDate == sceneDate && this.selectedMovie.id == this.scenes[i].movieId) {
-                        time = moment(this.scenes[i].datetime).format('HH:mm');
-                        this.scenes[i].time = time;
-                        arr.push(this.scenes[i]);
-                    }
-                }
-                this.selectedScenes = arr;
             },
             //往vue.movie传入参数
             setMovie: function (movie) {
@@ -283,10 +285,13 @@
                         sitNumbers:sitNumbers
                     }
                 }).then((response)=>{
-                    alert("请求成功")
-                    alert(response.data.data.id)
-                    localStorage.setItem("orderDetail",JSON.stringify(response.data.data));
-                    window.location="http://zhouzhaorong.xyz/confirmOrder.html";
+                    if(response.data.code==200){
+                        localStorage.setItem("orderDetail",JSON.stringify(response.data.data));
+                        window.location="http://zhouzhaorong.xyz/confirmOrder.html";
+                    }else if(response.data.code==401){
+                        alert(response.data.msg)
+                        window.location="http://zhouzhaorong.xyz/login.html";
+                    }
                 }).catch((error)=>{
                     alert("请求失败")
                 })
@@ -347,7 +352,6 @@
                 isWechat=false;
             }
             if(isWechat){
-                debugger;
                 alert("微信浏览器访问")
                 axios.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect').then((response) => {
                     if(respones.data.code==200){
@@ -360,7 +364,25 @@
                /* alert("PC浏览器访问")*/
             }
         },
-        computed: {},
+        computed: {
+            selectedScenes:function () {
+                let selectedMovie=this.selectedMovie;
+                let selectedDate=this.selectedDate;
+                let scenes=this.scenes;
+                let arr = [];
+                let sceneDate = null;
+                let time;
+                for (i = 0; i < scenes.length; i++) {
+                    sceneDate = moment(scenes[i].datetime).format('YYYY-MM-DD');
+                    if (selectedDate == sceneDate && selectedMovie.id == scenes[i].movieId) {
+                        time = moment(scenes[i].datetime).format('HH:mm');
+                        scenes[i].time = time;
+                        arr.push(scenes[i]);
+                    }
+                }
+               return arr;
+            }
+        },
         updated: function () {
 
         }

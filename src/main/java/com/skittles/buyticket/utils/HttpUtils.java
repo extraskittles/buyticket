@@ -16,6 +16,9 @@ public class HttpUtils {
         String token=null;
         Map<String, Object> payload=null;
         Cookie[] cookies = request.getCookies();
+        if(cookies==null){
+            return id;
+        }
         for(Cookie cookie:cookies){
             if("token".equals(cookie.getName())){
                 token=cookie.getValue();

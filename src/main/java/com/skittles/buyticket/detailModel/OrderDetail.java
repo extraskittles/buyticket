@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class OrderDetail {
     //基本的
+    private String uuid;
     private Integer id;
 
     private Integer userId;
@@ -21,7 +22,7 @@ public class OrderDetail {
 
 //电影院
     private String cinemaName;
-
+    private String address;
 
     //电影
 
@@ -169,5 +170,21 @@ public class OrderDetail {
 
     public void setHallName(String hallName) {
         this.hallName = hallName;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
