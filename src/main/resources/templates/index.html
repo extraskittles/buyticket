@@ -2,56 +2,10 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Title</title>
 </head>
-<style>
-    #top {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-    }
-    /*第一页*/
-    #movie-cinema_tag {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .tags{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-
-    #logout {
-        align:right;
-    }
-
-
-    #choseSit{
-        display: flex;
-        flex-direction: column;
-    }
-
-    #choseSit_sits{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-    }
-
-    #choseSit_sits_sit{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 30%;
-    }
-    .active_title {
-        color: red;
-        text-decoration-line: underline;
-    }
-</style>
+<link type="text/css" rel="stylesheet" href="/css/index.css">
 
 <body>
 <div id="app"></div>
@@ -62,47 +16,38 @@
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <script type="text/x-template" id="template">
     <div>
-        <div id="top" >
+        <div id="top">
             <div v-if="user.name!=null">用户：{{user.name}}&nbsp&nbsp</div>
             <div id="logout" v-if="user.name!=null" v-on:click="logout()">注销</div>
-            <div v-if="user.name==null" ><a href="/login.html">登陆</a></div>
+            <div v-if="user.name==null"><a href="/login.html">登陆</a></div>
         </div>
         <!--第一页-->
         <div id="movie_cinema" v-if="displayNum==1">
-            <div id="movie-cinema_tag" class="tags">
-                <div id="movie-cinema_tag_tag1" class="tag" :class="{active_title: listNum === 1}" v-on:click="list(1)">所有电影</div>
-                <div id="movie-cinema_tag_tag2" class="tag" :class="{active_title: listNum === 2}" v-on:click="list(2)">所有影院</div>
-            </div>
             <!--显示所有电影-->
-            <table id="movie-cinema_table1" v-if="listNum==1">
-                <tr>
-                    <td>电影名</td>
-                    <td>描述</td>
-                    <td>票价</td>
-                    <td>影长</td>
-                    <td>购票</td>
-                </tr>
-                <tr v-for="movie in movies">
-                    <td>{{movie.name}}</td>
-                    <td>{{movie.description}}</td>
-                    <td>{{movie.price}}</td>
-                    <td>{{movie.movieLength}}分钟</td>
-                    <td v-on:click="setMovie(movie)">购票</td>
-                </tr>
-            </table>
+            <div id="movies" v-if="listNum==1">
+                <div v-on:click="setMovie(movie)" class="movies_movie" v-for="movie in movies">
+                    <div class="movies_movie_info">
+                        <div class="movies_movie_info_name">{{movie.name}}</div>
+                        <div class="movies_movie_info_description">{{movie.description}}</div>
+                        <div class="movies_movie_info_length">{{movie.movieLength}}分钟</div>
+                    </div>
+                    <div  class="movies_movie_buyTicket">购票</div>
+                </div>
+                <div id="noMore">无更多电影</div>
+            </div>
             <!--显示所有影院-->
-            <table id="movie_cinema_table2" v-if="listNum==2">
-                <tr>
-                    <td>电影院名</td>
-                    <td>地址</td>
-                    <td>购票</td>
-                </tr>
-                <tr v-for="cinema in cinemas">
-                    <td>{{cinema.name}}</td>
-                    <td>{{cinema.address}}</td>
-                    <td v-on:click="setCinema(cinema)">进入影院</td>
-                </tr>
-            </table>
+            <div id="cinemas" v-if="listNum==2">
+                <div id="cinemas_title">影院</div>
+                <div class="cinemas_cinema" v-for="cinema in cinemas">
+                    <div class="cinemas_cinema_name">{{cinema.name}}</div>
+                    <div class="cinemas_cinema_address">{{cinema.address}}</div>
+                </div>
+            </div>
+
+            <div id="movie_cinema_footer" class="tags">
+                <div class="tag" :class="{active_title: listNum === 1}" v-on:click="list(1)">电影</div>
+                <div class="tag" :class="{active_title: listNum === 2}" v-on:click="list(2)">影院</div>
+            </div>
         </div>
         <!--第二页，显示电影上映的影院信息-->
         <div id="movie" v-if="displayNum==2">
@@ -125,12 +70,16 @@
             <h3>{{cinema.name}}</h3>
             <p>{{cinema.address}}</p>
             <div class="tags">
-                <div :class="{active_title:selectedMovie==movie}" v-for="movie in movies" v-on:click="setSelectedMovie(movie)">{{movie.name}}</div>
+                <div :class="{active_title:selectedMovie==movie}" v-for="movie in movies"
+                     v-on:click="setSelectedMovie(movie)">{{movie.name}}
+                </div>
             </div>
 
             <div class="tags">
-                <div :class="{active_title:selectedDate==date[0]}" v-on:click="setSelectedDate(date[0])">今天{{date[0]}}</div>
-                <div :class="{active_title:selectedDate==date[1]}" v-on:click="setSelectedDate(date[1])">明天{{date[1]}}</div>
+                <div :class="{active_title:selectedDate==date[0]}" v-on:click="setSelectedDate(date[0])">今天{{date[0]}}
+                </div>
+                <div :class="{active_title:selectedDate==date[1]}" v-on:click="setSelectedDate(date[1])">明天{{date[1]}}
+                </div>
             </div>
 
 
@@ -139,7 +88,7 @@
                     <td>{{scene.time}}</td>
                     <td>{{scene.hallName}}</td>
                     <td>{{scene.price}}</td>
-                    <td  v-on:click="choseSit(scene.id)">购票</td>
+                    <td v-on:click="choseSit(scene.id)">购票</td>
                 </tr>
             </table>
             <div v-on:click="displayNum=2">返回</div>
@@ -150,10 +99,13 @@
             <div id="choseSit_sits">
                 <div id="choseSit_sits_sit" v-for="count in scene.sitNumber">
                     <div id="choseSit_sits_sit_num">{{count}}</div>
-                    <input v-if="leftSitArr.indexOf(count+'')>-1" v-on:click="choseTrigger(count)" id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="count" />
+                    <input v-if="leftSitArr.indexOf(count+'')>-1" v-on:click="choseTrigger(count)"
+                           id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="count"/>
                 </div>
             </div>
-            <input type="button" v-on:click="confirmSit()">
+            <div>
+                <input type="button" v-on:click="confirmSit()" value="">
+            </div>
             <div v-on:click="displayNum=3">返回</div>
         </div>
     </div>
@@ -161,25 +113,24 @@
 <script>
     let app = new Vue({
         el: '#app',
-        template:"#template",
+        template: "#template",
         data: function () {
             return {
-                user:{},
-                listNum: 1,
-                displayNum: 1,
-                movies: [],
-                cinemas: [],
-                cinema: null,
-                scenes: [],
+                user: {},//用户
+                listNum: 1,//显示所有影院或所有电影
+                displayNum: 1,//显示不同页数
+                movies: [],//所有正在上映的电影
+                cinemas: [],//所有营业的影院
+                cinema: null,//选择的影院
+                scenes: [],//某影院的所有场次
                 date: [],//记录今天明天日期
-                todayScenes: [],
-                tomorrowScenes: [],
-                selectedDate: '',
-                selectedMovie: '',
-                scenesByDateAndMovie: [],
-                leftSitArr: '',
-                scene: '',
-                chosedList: [],
+                /*todayScenes: [],
+                tomorrowScenes: [],*/
+                selectedDate: '',//选择的日期
+                selectedMovie: '',//选择的电影
+                leftSitArr: '',//剩余的座位
+                scene: '',//选定的场次
+                chosedList: [],//选择的作为
 
             };
         },
@@ -216,7 +167,6 @@
                     }
                 ).then((response) => {
                     this.scenes = response.data.data;
-                    //将场次信息分为今天场次和明天场次，并传入到todayScenes和tomorrowScenes
                     let sceneDate;
                     let arr1 = [];
                     let arr2 = [];
@@ -238,75 +188,75 @@
             },
             //判断是否为微信浏览器访问
             isWechat: function () {
-                if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                if (ua.match(/MicroMessenger/i) == 'micromessenger') {
                     return true;
-                }else{
+                } else {
                     return false;
                 }
             },
             //注销
-            logout:function () {
-                axios.get('http://zhouzhaorong.xyz/user/logout').then((response)=>{
-                        window.location="http://zhouzhaorong.xyz/login.html";
+            logout: function () {
+                axios.get('http://zhouzhaorong.xyz/user/logout').then((response) => {
+                        window.location = "http://zhouzhaorong.xyz/login.html";
                     }
                 )
             },
             //选座
-            choseSit:function (sceneId) {
-                this.displayNum=4;
-                axios.get('http://zhouzhaorong.xyz/order/selectSceneById',{
-                    params:{
-                        sceneId:sceneId
+            choseSit: function (sceneId) {
+                this.displayNum = 4;
+                axios.get('http://zhouzhaorong.xyz/order/selectSceneById', {
+                    params: {
+                        sceneId: sceneId
                     }
-                }).then((response)=>{
-                        let leftSitStr=response.data.data.leftSit;
-                        this.scene =response.data.data;
-                        this.leftSitArr=leftSitStr.split(',');
+                }).then((response) => {
+                        let leftSitStr = response.data.data.leftSit;
+                        this.scene = response.data.data;
+                        this.leftSitArr = leftSitStr.split(',');
                     }
                 )
             },
             //确定座位，将sceneId和sitNumbers储存到storage，跳转到确认订单页面
-            confirmSit:function () {
-                let sceneId=this.scene.id;
-                let list =this.chosedList;
-                let sitNumbers='';
-                list.map((value,index)=>{
-                   if(index==0){
-                       sitNumbers=value;
-                   }else{
-                       sitNumbers=sitNumbers+","+list[index];
-                   }
+            confirmSit: function () {
+                let sceneId = this.scene.id;
+                let list = this.chosedList;
+                let sitNumbers = '';
+                list.map((value, index) => {
+                    if (index == 0) {
+                        sitNumbers = value;
+                    } else {
+                        sitNumbers = sitNumbers + "," + list[index];
+                    }
                 })
                 axios({
-                    method:"post",
-                    url:"http://zhouzhaorong.xyz/order/confirmOrder",
-                    data:{
+                    method: "post",
+                    url: "http://zhouzhaorong.xyz/order/confirmOrder",
+                    data: {
                         sceneId: sceneId,
-                        sitNumbers:sitNumbers
+                        sitNumbers: sitNumbers
                     }
-                }).then((response)=>{
-                    if(response.data.code==200){
-                        localStorage.setItem("orderDetail",JSON.stringify(response.data.data));
-                        window.location="http://zhouzhaorong.xyz/confirmOrder.html";
-                    }else if(response.data.code==401){
+                }).then((response) => {
+                    if (response.data.code == 200) {
+                        localStorage.setItem("orderDetail", JSON.stringify(response.data.data));
+                        window.location = "http://zhouzhaorong.xyz/confirmOrder.html";
+                    } else if (response.data.code == 401) {
                         alert(response.data.msg)
-                        window.location="http://zhouzhaorong.xyz/login.html";
+                        window.location = "http://zhouzhaorong.xyz/login.html";
                     }
-                }).catch((error)=>{
+                }).catch((error) => {
                     alert("请求失败")
                 })
 
             },
-            choseTrigger:function (sitNumber) {
+            choseTrigger: function (sitNumber) {
                 let list = this.chosedList;
                 let isHas = false;
                 list.map((value, index) => {
-                    if(value === sitNumber){
+                    if (value === sitNumber) {
                         list.splice(index, 1);
                         isHas = true;
                     }
                 });
-                if(!isHas){
+                if (!isHas) {
                     list.push(sitNumber);
                 }
                 this.chosedList = list;
@@ -314,15 +264,15 @@
         },
         created: function () {
             //获取用户信息
-            axios.get("http://zhouzhaorong.xyz/user/").then((response)=>{
-                let code=response.data.code;
-                if(code==200){
-                    let user=response.data.data;
-                    this.user=user;
+            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+                let code = response.data.code;
+                if (code == 200) {
+                    let user = response.data.data;
+                    this.user = user;
                 }
-            }).catch(error=>{
-                /*alert("error")*/
-            }
+            }).catch(error => {
+                    /*alert("error")*/
+                }
             )
 
             //查询所有电影
@@ -342,33 +292,33 @@
 
 
         },
-        mounted:function(){
+        mounted: function () {
             //如果是微信浏览器访问则发ajax到微信服务器去登陆
-            let isWechat=null;
+            let isWechat = null;
             let ua = window.navigator.userAgent.toLowerCase();
-            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-                isWechat= true;
-            }else{
-                isWechat=false;
+            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                isWechat = true;
+            } else {
+                isWechat = false;
             }
-            if(isWechat){
+            if (isWechat) {
                 alert("微信浏览器访问")
                 axios.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect').then((response) => {
-                    if(respones.data.code==200){
+                    if (respones.data.code == 200) {
                         alert("登陆成功")
                     }
-                }).catch((error)=>{
+                }).catch((error) => {
                     alert("登陆失败")
                 });
-            }else{
-               /* alert("PC浏览器访问")*/
+            } else {
+                /* alert("PC浏览器访问")*/
             }
         },
         computed: {
-            selectedScenes:function () {
-                let selectedMovie=this.selectedMovie;
-                let selectedDate=this.selectedDate;
-                let scenes=this.scenes;
+            selectedScenes: function () {
+                let selectedMovie = this.selectedMovie;
+                let selectedDate = this.selectedDate;
+                let scenes = this.scenes;
                 let arr = [];
                 let sceneDate = null;
                 let time;
@@ -380,7 +330,7 @@
                         arr.push(scenes[i]);
                     }
                 }
-               return arr;
+                return arr;
             }
         },
         updated: function () {

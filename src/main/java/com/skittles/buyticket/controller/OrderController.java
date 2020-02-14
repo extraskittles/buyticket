@@ -109,12 +109,13 @@ public class OrderController {
 
     @ApiOperation("根据订单号查询该订单信息")
     @GetMapping("/selectOrderById")
-    public CommonResult selectOrderById(int orderId){
+    public CommonResult selectOrderById(int orderId,HttpServletRequest request){
+        Integer userId = HttpUtils.getIdByRequest(request);
         OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(orderId);
-        if(orderDetail!=null){
+        if(userId!=null&&userId==orderDetail.getUserId()){
             return CommonResult.success(orderDetail);
         }else{
-            return CommonResult.failed();
+            return CommonResult.failed("查询订单错误");
         }
     }
 }

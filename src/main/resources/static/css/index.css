@@ -1,0 +1,128 @@
+#top {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+/*第一页*/
+/*电影*/
+#movies{
+    display: flex;
+    flex-direction: column;
+}
+
+.movies_movie{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.movies_movie_info{
+    display: flex;
+    flex-direction: column;
+    margin: 0.4rem;
+    font-size: 13px;
+    color: #797d82;
+    width: 80%;
+}
+
+.movies_movie_info_name{
+    color: #191a1b;
+    font-size: 16px;
+    height: 22px;
+    line-height: 22px;
+    margin-right: 5px;
+}
+
+.movies_movie_buyTicket{
+    font-size: 0.75rem;
+    color: #ff5f16;
+    border: 1px solid #3e867f;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+}
+#noMore{
+    height: 59px;
+    background-color: #ededed;
+    color: #bdc0c5;
+    font-size: 13px;
+    text-align: center;
+    margin: auto;
+    line-height: 59px;
+    width: 100%;
+}
+/*第二页,影院*/
+#cinemas{
+    display: flex;
+    flex-direction: column;
+}
+#cinemas_title{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    line-height: 3.5rem;
+}
+.cinemas_cinema{
+    display: flex;
+    flex-direction: column;
+    margin: 0.4rem;
+}
+.cinemas_cinema_name{
+    color: #191a1b;
+    font-size: 15px;
+    float: left;
+}
+
+.cinemas_cinema_address{
+    color: #797d82;
+    font-size: 12px;
+    margin-top: 5px;
+}
+#movie_cinema_footer{
+    position: fixed;
+    height: 4%;
+    width: 100%;
+    bottom: 0;
+    font-size:1rem;
+}
+
+#movie-cinema_tag {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.tags{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+#logout {
+    align:right;
+}
+
+
+#choseSit{
+    display: flex;
+    flex-direction: column;
+}
+
+#choseSit_sits{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#choseSit_sits_sit{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 12.5%;
+}
+.active_title {
+    color: #ff5f16;
+}
+
