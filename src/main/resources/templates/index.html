@@ -25,14 +25,14 @@
         <div id="movie_cinema" v-if="displayNum==1">
             <!--显示所有电影-->
             <div id="movies" v-if="listNum==1">
-                <div v-on:click="setMovie(movie)" class="movies_movie" v-for="movie in movies">
+                <a :href="'/selectedMovie.html?movieId='+movie.id" class="movies_movie" v-for="movie in movies">
                     <div class="movies_movie_info">
                         <div class="movies_movie_info_name">{{movie.name}}</div>
                         <div class="movies_movie_info_description">{{movie.description}}</div>
                         <div class="movies_movie_info_length">{{movie.movieLength}}分钟</div>
                     </div>
                     <div  class="movies_movie_buyTicket">购票</div>
-                </div>
+                </a>
                 <div id="noMore">无更多电影</div>
             </div>
             <!--显示所有影院-->
@@ -50,6 +50,16 @@
             </div>
         </div>
         <!--第二页，显示电影上映的影院信息-->
+        <!--更改-->
+        <div id="selectedMovie">
+            <div id="selectedMovie_title">{{selectedMovie.name}}</div>
+            <div id="date">
+                <div id="date_today"></div>
+                <div id="date_tomorrow"></div>
+            </div>
+
+        </div>
+        <!--未更改-->
         <div id="movie" v-if="displayNum==2">
             <h3>{{selectedMovie.name}}</h3>
             <table id="table3">

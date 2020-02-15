@@ -1,0 +1,46 @@
+#selectedMovie{
+    display: flex;
+    flex-direction: column;
+
+}
+
+#selectedMovie_title{
+    text-align: center;
+    font-size: 17px;
+    color: #191a1b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#date{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0.5rem;
+}
+
+.cinema{
+    padding: 15px;
+    text-decoration-line: none;
+}
+
+.cinema_name{
+    font-size: 15px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cinema_address{
+    font-size: 13px;
+    color: #797d82;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.active_date{
+    color: #ff5f16;
+}

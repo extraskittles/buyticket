@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Title</title>
+</head>
+<link type="text/css" rel="stylesheet" href="/css/selectedMovie_cinema.css">
+<body>
+<div id="app"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="/JS/buyTicket.js"></script>
+<script type="text/x-template" id="template">
+    <div id="selectedMovie_cinema">
+        <div>{{cinema.name}}</div>
+        <div>{{cinema.address}}</div>
+        <div>{{movie.name}}</div>
+        <div>
+            <div>{{date[0]}}</div>
+            <div>{{date[1]}}</div>
+        </div>
+        <div id="sceneInfo">
+            <div id="time">
+                <div id="startTime"></div>
+                <div id="endTime"></div>
+            </div>
+            <div id="sceneInfo_hell"></div>
+            <div id="sceneInfo_price"></div>
+            <div id="sceneInfo_buy"></div>
+        </div>
+    </div>
+</script>
+<script >
+    let app = new Vue({
+        el: '#app',
+        template: "#template",
+        data: function () {
+            return {
+                user:{},//用户信息
+                cinema:[],//所有电影
+                movie:{},//电影信息
+            };
+        },
+        created:function () {
+            //从url获取用户movieId,并获取选择的电影和电影院信息
+            let movieId =getQuery('movieId');
+            let cinemaId=getQuery('cinemaId');
+            axiso.get('http://zhouzhaorong.xyz/order/selectMovieById',{
+                params:{
+                    movieId:movieId
+                }
+            }).then((response)=>{
+                this.movie=response.data.data;
+            })
+
+            axiso.get('http://zhouzhaorong.xyz/order/selectCinemaById',{
+                params:{
+                    cinemaId:cinemaId
+                }
+            }).then((response)=>{
+                this.cinema=response.data.data;
+            })
+
+
+            //获取用户信息
+            getUser();
+
+            //根据影院id获取所有场次的信息
+
+        }
+    })
+</script>
+</html>

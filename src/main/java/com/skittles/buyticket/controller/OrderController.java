@@ -3,6 +3,8 @@ package com.skittles.buyticket.controller;
 import com.skittles.buyticket.detailMapper.OrderDetailMapper;
 import com.skittles.buyticket.detailModel.OrderDetail;
 import com.skittles.buyticket.detailModel.SceneDetail;
+import com.skittles.buyticket.mapper.CinemaMapper;
+import com.skittles.buyticket.mapper.MovieMapper;
 import com.skittles.buyticket.model.Cinema;
 import com.skittles.buyticket.model.Movie;
 import com.skittles.buyticket.param.ConfirmOrderParam;
@@ -31,6 +33,10 @@ public class OrderController {
     OrderService orderService;
 @Autowired
     OrderDetailMapper orderDetailMapper;
+@Autowired
+    MovieMapper movieMapper;
+@Autowired
+    CinemaMapper cinemaMapper;
     @ApiOperation("根据电影院id查找该影院上映的所有场次的所有信息")
     @GetMapping("selectSceneByCinemaId")
     public CommonResult selectScene(int cinemaId) {
@@ -118,4 +124,34 @@ public class OrderController {
             return CommonResult.failed("查询订单错误");
         }
     }
+
+    @ApiOperation("根据电影id查询该电影的信息")
+    @GetMapping("/selectMovieById")
+    public CommonResult selectOrderById(Integer movieId){
+        if(movieId==null){
+            return CommonResult.failed("电影id不能为空");
+        }
+        Movie movie = movieMapper.selectByPrimaryKey(movieId);
+        if(movie!=null){
+            return CommonResult.success(movie);
+        }else{
+            return CommonResult.success("查询不到相关电影");
+        }
+    }
+
+    @ApiOperation("根据影院id查询该影院的信息")
+    @GetMapping("/selectCinemaById")
+    public CommonResult selectCinemaById(Integer cinemaId){
+        if(cinemaId==null){
+            return CommonResult.failed("影院id不能为空");
+        }
+        Cinema cinema = cinemaMapper.selectByPrimaryKey(cinemaId);
+        if(cinema!=null){
+            return CommonResult.success(cinema);
+        }else{
+            return CommonResult.success("查询不到相关影院");
+        }
+    }
+
+
 }

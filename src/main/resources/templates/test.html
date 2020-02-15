@@ -18,7 +18,11 @@
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <!--<script type="text/javascript" src="../static/JS/buyTicket.js"></script>-->
 <script type="text/x-template" id="template">
-<div :class="{test2:payPrice===50}">test</div>
+<a :href="'http://zhouzhaorong.xyz/selectedMovie.html?movieId='+movie" >test</a>
+    <div :href="'http://zhouzhaorong.xyz/selectedMovie.html?movieId='+movie">
+        <div>aaa</div>
+        <div>bbb</div>
+    </div>
 </script>
 <script>
    let app=new Vue({
@@ -27,20 +31,12 @@
        data:function () {
            return{
                 payPrice:50,
+                movie:50
            }
        },
-       methods:{
-         setPayPrice:function () {
-             let payPrice=100;
-             this.payPrice=payPrice;
-         }
-       },
-       computed: {
-           payPoint:function () {
-               let payPrice=this.payPrice;
-               let payPoint =payPrice*10;
-               return payPoint;
-           }
+
+       created:function () {
+
        }
    })
 </script>
