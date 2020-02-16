@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -16,21 +16,28 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="selectedMovie_cinema">
-        <div>{{cinema.name}}</div>
-        <div>{{cinema.address}}</div>
-        <div>{{movie.name}}</div>
-        <div>
-            <div>{{date[0]}}</div>
-            <div>{{date[1]}}</div>
-        </div>
-        <div id="sceneInfo">
-            <div id="time">
-                <div id="startTime"></div>
-                <div id="endTime"></div>
+        <div id="cinema_name">{{cinema.name}}</div>
+        <div id="cinema_address">地址:{{cinema.address}}</div>
+        <div id="movies">
+            <div  class="arrow" ><</div>
+            <div id="movie">
+                <div id="movie_name">{{selectedMovie.name}}</div>
+                <div id="movie_description">描述:{{selectedMovie.description}}</div>
             </div>
-            <div id="sceneInfo_hell"></div>
-            <div id="sceneInfo_price"></div>
-            <div id="sceneInfo_buy"></div>
+            <div  class="arrow">></div>
+        </div>
+        <div id="date">
+            <div v-on:click="selectedDate=date[0]" :class="{active_date:selectedDate==date[0]}">今天{{date[0]}}</div>
+            <div v-on:click="selectedDate=date[1]" :class="{active_date:selectedDate==date[1]}">明天{{date[1]}}</div>
+        </div>
+        <div id="scene" v-for="scene in selectedScenes">
+            <div id="scene_time">
+                <div id="scene_time_startTime">{{scene.time}}</div>
+                <div id="scene_time_endTime">{{scene.time2}}散场</div>
+            </div>
+            <div id="scene_hellName">{{scene.hallName}}</div>
+            <div id="scene_price">¥{{scene.price}}</div>
+            <div id="scene_buy">购票</div>
         </div>
     </div>
 </script>
@@ -40,37 +47,73 @@
         template: "#template",
         data: function () {
             return {
-                user:{},//用户信息
-                cinema:[],//所有电影
-                movie:{},//电影信息
+                user:{},//用户
+                cinema:{},//选择的影院详情
+                selectedMovie:{},//选择的电影
+                scenes:[],//所选择的影院上映的所有场次
+                date:[],//记录今天和明天日期
+                selectedDate:'',
             };
         },
         created:function () {
             //从url获取用户movieId,并获取选择的电影和电影院信息
             let movieId =getQuery('movieId');
             let cinemaId=getQuery('cinemaId');
-            axiso.get('http://zhouzhaorong.xyz/order/selectMovieById',{
+            axios.get('http://zhouzhaorong.xyz/order/selectMovieById',{
                 params:{
                     movieId:movieId
                 }
             }).then((response)=>{
-                this.movie=response.data.data;
+                this.selectedMovie=response.data.data;
             })
-
-            axiso.get('http://zhouzhaorong.xyz/order/selectCinemaById',{
+            //获取选择的影院信息
+            axios.get('http://zhouzhaorong.xyz/order/selectCinemaById',{
                 params:{
                     cinemaId:cinemaId
                 }
             }).then((response)=>{
                 this.cinema=response.data.data;
             })
-
+            //今天的时间
+            let todayDate = moment().format('YYYY-MM-DD');
+            //明天时间
+            let tomorrowDate = moment().add(1, 'days').format('YYYY-MM-DD');
+            this.date = [todayDate, tomorrowDate]
+            this.selectedDate=this.date[0];
+            //获取该影院所有场次的信息
+                axios.get('http://zhouzhaorong.xyz/order/selectSceneByCinemaId', {
+                        params: {
+                            cinemaId: cinemaId
+                        }
+                    }
+                ).then((response) => {
+                    this.scenes = response.data.data;
+                });
 
             //获取用户信息
             getUser();
 
-            //根据影院id获取所有场次的信息
-
+        },
+        computed:{
+            selectedScenes: function () {
+                let selectedMovie = this.selectedMovie;
+                let selectedDate = this.selectedDate;
+                let scenes = this.scenes;
+                let arr = [];
+                let sceneDate = null;
+                let time;
+                for (i = 0; i < scenes.length; i++) {
+                    sceneDate = moment(scenes[i].datetime).format('YYYY-MM-DD');
+                    if (selectedDate == sceneDate && selectedMovie.id == scenes[i].movieId) {
+                        time = moment(scenes[i].datetime).format('HH:mm');
+                        scenes[i].time = time;
+                        let time2= moment(scenes[i].datetime).add(110,'minutes').format('HH:mm');
+                        scenes[i].time2 = time2;
+                        arr.push(scenes[i]);
+                    }
+                }
+                return arr;
+            }
         }
     })
 </script>

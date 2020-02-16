@@ -21,7 +21,7 @@
             <div :class="{active_date:selectedDate==date[0]}" v-on:click="selectedDate=date[0]" id="date_today">今天{{date[0]}}</div>
             <div :class="{active_date:selectedDate==date[1]}" v-on:click="selectedDate=date[1]" id="date_tomorrow">明天{{date[1]}}</div>
         </div>
-        <a  class="cinema" v-for="cinema in cinemas">
+        <a  :href="'/selectedMovie_cinema.html?movieId='+movie.id+'&cinemaId='+cinema.id" class="cinema" v-for="cinema in cinemas">
             <div class="cinema_name">{{cinema.name}}</div>
             <div class="cinema_address">{{cinema.address}}</div>
         </a>
@@ -35,9 +35,8 @@
             return {
                 user:{},//用户信息
                 cinemas:[],//所有电影
-                movieId:'',//电影Id
-                movie:{},//电影信息
                 date:[],//记录今天明天的时间
+                movie:{},//电影信息
                 selectedDate:'' ,
             };
         },
