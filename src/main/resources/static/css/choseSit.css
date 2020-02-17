@@ -67,9 +67,13 @@
     text-align: center;
     border: solid #b5a9a9;
     width: 5.5%;
+    height: 70%;
     font-size: 0.7rem;
     margin: 0.2rem;
     border-radius: 0.3rem;
+}
+.columnNumber{
+
 }
 #bottom{
     position: fixed;

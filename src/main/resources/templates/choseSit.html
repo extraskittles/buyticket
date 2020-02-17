@@ -16,7 +16,7 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="cinema">
-       <div id="cinema_name">{{sceneDetail.cinemaName}}22</div>
+       <div id="cinema_name">{{sceneDetail.cinemaName}}</div>
         <div id="movie_name">{{sceneDetail.movieName}}</div>
         <div id="movie_datetime">{{datetime}}{{weekOfDay}}</div>
        <div id="cinemaBox">
@@ -27,7 +27,7 @@
                </div>
                <div id="cinemaBox_right">
                    <div class="cinemaBox_right_sits" v-for="count1 in 8">
-                        <div v-on:click="choseTrigger(count1,count2)"  :class="{takenSit:isTakenSit(count1,count2),chosedSit:isChosedSit(count1,count2)}" class="cinemaBox_right_sit" v-for="count2 in 10">{{count1}}</div>
+                        <div v-on:click="choseTrigger(count1,count2)"  :class="{takenSit:isTakenSit(count1,count2),chosedSit:isChosedSit(count1,count2)}" class="cinemaBox_right_sit" v-for="count2 in 10"></div>
                    </div>
                </div>
            </div>
