@@ -1,0 +1,90 @@
+#cinema{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+#cinemaBox{
+    display: flex;
+    flex-direction: column;
+    background-color: #f3f4f6;
+    height: 60%;
+}
+#cinema_name{
+    text-align: center;
+    margin: 2rem;
+    color: #191a1b;
+}
+#movie_name{
+    font-size: 15px;
+    line-height: 21px;
+    color: #191a1b;
+}
+#movie_datetime{
+    font-size: 13px;
+    line-height: 19px;
+    color: #797d82;
+    margin: 0.5rem 0 1rem 0;
+}
+
+#cinemaBox_top{
+    align-self: flex-end;
+    background-color: #dbdbdb;
+    padding: 0.2rem 5rem 0.2rem 5rem;
+    margin: 0 0 3rem 0;
+    text-align: center;
+}
+#cinemaBox_bottom{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#cinemaBox_left{
+    display: flex;
+    flex-direction: column;
+    width: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #acabab;
+    text-align: center;
+    border-radius: 0.5rem;
+}
+#cinemaBox_right{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-between;
+    width: 90%;
+}
+.cinemaBox_right_sits{
+    display: flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.cinemaBox_right_sit{
+    justify-content: space-between;
+    text-align: center;
+    border: solid #b5a9a9;
+    width: 5.5%;
+    font-size: 0.7rem;
+    margin: 0.2rem;
+    border-radius: 0.3rem;
+}
+#bottom{
+    position: fixed;
+    height: 4%;
+    width: 100%;
+    bottom: 0;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    height: 2.7rem;
+    background-color: #ff5f16;
+}
+.takenSit{
+    background-color: red;
+}
+.chosedSit{
+    background-color: #3e867f;
+}

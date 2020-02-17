@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Title</title>
+</head>
+<link type="text/css" rel="stylesheet" href="/css/choseSit.css">
+<body>
+<div id="app"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="/JS/buyTicket.js"></script>
+<script type="text/x-template" id="template">
+    <div id="cinema">
+       <div id="cinema_name">{{sceneDetail.cinemaName}}22</div>
+        <div id="movie_name">{{sceneDetail.movieName}}</div>
+        <div id="movie_datetime">{{datetime}}{{weekOfDay}}</div>
+       <div id="cinemaBox">
+           <div id="cinemaBox_top">{{sceneDetail.hallName}}</div>
+           <div id="cinemaBox_bottom">
+               <div id="cinemaBox_left">
+                   <div class="columnNumber" v-for="count in 8">{{count}}</div>
+               </div>
+               <div id="cinemaBox_right">
+                   <div class="cinemaBox_right_sits" v-for="count1 in 8">
+                        <div v-on:click="choseTrigger(count1,count2)"  :class="{takenSit:isTakenSit(count1,count2),chosedSit:isChosedSit(count1,count2)}" class="cinemaBox_right_sit" v-for="count2 in 10">{{count1}}</div>
+                   </div>
+               </div>
+           </div>
+       </div>
+        <div id="bottom">{{shouldPay}}元&nbsp;确认选座</div>
+    </div>
+</script>
+<script >
+    let app = new Vue({
+        el: '#app',
+        template: "#template",
+        data: function () {
+            return {
+               user:{},
+                sceneDetail:{},
+                leftSitArr:[],
+                chosedList:[],
+                datetime:'',//几月几日
+                weekOfDay:'',//周几
+            };
+        },
+        methods:{
+          isTakenSit:function (count1,count2) {
+              let sitNumber=(count1-1)*10+count2+'';
+              let leftSitArr=this.leftSitArr;
+              if(leftSitArr.indexOf(sitNumber)>-1){
+                  return false;
+              }
+              return true;
+          },
+            isChosedSit:function(count1,count2){
+                let sitNumber=(count1-1)*10+count2;
+                let chosedList=this.chosedList;
+                if(chosedList.indexOf(sitNumber)>-1){
+                    return true;
+                }
+                return false;
+            },
+            choseTrigger: function (count1,count2) {
+              let sitNumber=(count1-1)*10+count2;
+              let isTakenSit =this.isTakenSit(count1,count2);
+              if(isTakenSit){
+                  return;
+              }
+                let list = this.chosedList;
+                let isHas = false;
+                list.map((value, index) => {
+                    if (value === sitNumber) {
+                        list.splice(index, 1);
+                        isHas = true;
+                    }
+                });
+                if (!isHas) {
+                    list.push(sitNumber);
+                }
+                this.chosedList = list;
+            },
+        },
+        created:function () {
+            //获取用户信息
+            getUser();
+
+            //从url获取用户sceneId,并查询场次的相关信息
+            let sceneId = getQuery("sceneId");
+           axios.get('http://zhouzhaorong.xyz/order/selectSceneById',{
+               params:{
+                   sceneId:sceneId
+               }
+           }).then((response)=>{
+               this.sceneDetail=response.data.data;
+              //修改datetime格式
+               this.weekOfDay=moment(response.data.data.datetime).format('星期E');
+               this.datetime=moment(response.data.data.datetime).format('MM月DD日 HH:mm');
+               let leftSitStr=response.data.data.leftSit;
+               this.leftSitArr = leftSitStr.split(',');
+
+           })
+
+            //根据movieId获取该电影信息
+
+        },
+        computed:{
+            shouldPay:function () {
+                let chosedList=this.chosedList;
+                let sceneDetail=this.sceneDetail;
+                let shouldPay=chosedList.length*sceneDetail.price;
+                return shouldPay;
+            }
+        }
+    })
+</script>
+</html>

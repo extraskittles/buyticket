@@ -38,10 +38,10 @@
             <!--显示所有影院-->
             <div id="cinemas" v-if="listNum==2">
                 <div id="cinemas_title">影院</div>
-                <div class="cinemas_cinema" v-for="cinema in cinemas">
+                <a :href="'/selectedMovie_cinema.html?cinemaId='+cinema.id" class="cinemas_cinema" v-for="cinema in cinemas">
                     <div class="cinemas_cinema_name">{{cinema.name}}</div>
                     <div class="cinemas_cinema_address">{{cinema.address}}</div>
-                </div>
+                </a>
             </div>
 
             <div id="movie_cinema_footer" class="tags">

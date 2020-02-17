@@ -26,9 +26,15 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin: 2rem 0;
+
+}
+#movie{
+
 }
 .arrow{
     font-size: 2rem;
+    padding: 0 2rem;
 }
 #movie_name{
     text-align: center;
@@ -40,7 +46,7 @@
     color: #797d82;
     font-size: 13px;
     padding: 0 12%;
-    overflow: hidden;
+    overflow: inherit;
     text-overflow: ellipsis;
 }
 #date{
@@ -54,6 +60,8 @@
     justify-content: space-between;
     padding: 15px;
     align-items: center;
+    text-decoration-line: none;
+    color: #191a1b;
 }
 #scene_time{
     display: flex;
@@ -88,5 +96,9 @@
 }
 .active_date{
     color:#ff5f16
+}
+
+.hidden_arrow{
+    visibility: hidden;
 }
 

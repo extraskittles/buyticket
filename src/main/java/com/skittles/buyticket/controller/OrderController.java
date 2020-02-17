@@ -153,5 +153,17 @@ public class OrderController {
         }
     }
 
+    @ApiOperation("根据影院id查询该影院上映了哪些电影")
+    @GetMapping("/selectMoviesByCinemaId")
+    public CommonResult selectMoviesByCinemaId(Integer cinemaId){
+        List<Movie> movies = movieMapper.selectMoviesByCinemaId(cinemaId);
+        if(movies!=null){
+            return CommonResult.success(movies);
+        }else {
+            return CommonResult.failed("查询失败");
+        }
+    }
+
+
 
 }

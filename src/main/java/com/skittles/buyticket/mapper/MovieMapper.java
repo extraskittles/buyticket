@@ -63,4 +63,7 @@ public interface MovieMapper {
 
     @Select("select * from movie ORDER BY id DESC lIMIT 0,10")
     List<Movie> selectMovies();
+
+    @Select("SELECT DISTINCT movie.* FROM scene LEFT JOIN movie ON scene.movie_id=movie.id where cinema_id=#{cinemaId}")
+    List<Movie> selectMoviesByCinemaId(int cinemaId);
 }

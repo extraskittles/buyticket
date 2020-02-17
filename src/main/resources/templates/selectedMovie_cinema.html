@@ -19,18 +19,18 @@
         <div id="cinema_name">{{cinema.name}}</div>
         <div id="cinema_address">地址:{{cinema.address}}</div>
         <div id="movies">
-            <div  class="arrow" ><</div>
+            <div  class="arrow" :class="{hidden_arrow:!(arrowFlag(-1))}"  v-on:click="changeMovie(-1)"><</div>
             <div id="movie">
                 <div id="movie_name">{{selectedMovie.name}}</div>
                 <div id="movie_description">描述:{{selectedMovie.description}}</div>
             </div>
-            <div  class="arrow">></div>
+            <div class="arrow"  :class="{hidden_arrow:!(arrowFlag(1))}" v-on:click="changeMovie(1)" >></div>
         </div>
         <div id="date">
             <div v-on:click="selectedDate=date[0]" :class="{active_date:selectedDate==date[0]}">今天{{date[0]}}</div>
             <div v-on:click="selectedDate=date[1]" :class="{active_date:selectedDate==date[1]}">明天{{date[1]}}</div>
         </div>
-        <div id="scene" v-for="scene in selectedScenes">
+        <a :href="'/choseSit.html?sceneId='+scene.id" id="scene" v-for="scene in selectedScenes">
             <div id="scene_time">
                 <div id="scene_time_startTime">{{scene.time}}</div>
                 <div id="scene_time_endTime">{{scene.time2}}散场</div>
@@ -38,7 +38,7 @@
             <div id="scene_hellName">{{scene.hallName}}</div>
             <div id="scene_price">¥{{scene.price}}</div>
             <div id="scene_buy">购票</div>
-        </div>
+        </a>
     </div>
 </script>
 <script >
@@ -51,21 +51,51 @@
                 cinema:{},//选择的影院详情
                 selectedMovie:{},//选择的电影
                 scenes:[],//所选择的影院上映的所有场次
+                movies:[],//所选择的影院上映的电影
                 date:[],//记录今天和明天日期
                 selectedDate:'',
             };
         },
+        methods:{
+            //切换电影
+            changeMovie:function(j){
+                let selectedMovieId=this.selectedMovie.id;
+                let movies=this.movies;
+                for(let i=0;i<movies.length;i++){
+                    if(selectedMovieId==movies[i].id){
+                        this.selectedMovie=movies[i+j];
+                        if(!((i+j)<0)){
+                            this.selectedMovie.hasLast=true
+                        }
+                        if(!((i+j)>movies.length)){
+                            this.selectedMovie.hasNext=true;
+                        }
+                        return;
+                    }
+                }
+            },
+            //确定电影是否有上下部
+            arrowFlag:function (j) {
+                let selectedMovieId=this.selectedMovie.id;
+                let movies=this.movies;
+                for(let i=0;i<movies.length;i++){
+                    if(selectedMovieId==movies[i].id){
+                        if(j==-1&&i!=0){
+                            return true;
+                        }
+                        if(j==1&&i!=(movies.length-1)){
+                            return true;
+                        }
+                    }
+                }
+            }
+        },
         created:function () {
-            //从url获取用户movieId,并获取选择的电影和电影院信息
+            //从url获取用户movieId
+            // 获取选择的电影和电影院信息
             let movieId =getQuery('movieId');
             let cinemaId=getQuery('cinemaId');
-            axios.get('http://zhouzhaorong.xyz/order/selectMovieById',{
-                params:{
-                    movieId:movieId
-                }
-            }).then((response)=>{
-                this.selectedMovie=response.data.data;
-            })
+
             //获取选择的影院信息
             axios.get('http://zhouzhaorong.xyz/order/selectCinemaById',{
                 params:{
@@ -89,10 +119,32 @@
                 ).then((response) => {
                     this.scenes = response.data.data;
                 });
-
             //获取用户信息
             getUser();
+            //获取该影院上映的电影的信息
 
+            axios.get('http://zhouzhaorong.xyz/order/selectMoviesByCinemaId',{
+                params:{
+                    cinemaId:cinemaId
+                }
+            }).then((response)=>{
+                this.movies=response.data.data;
+                this.selectedMovie=response.data.data[0]
+            })
+
+                //获取选择的电影的信息
+
+            if(movieId!=false){
+                axios.get('http://zhouzhaorong.xyz/order/selectMovieById',{
+                    params:{
+                        movieId:movieId
+                    }
+                }).then((response)=>{
+                        this.selectedMovie=response.data.data;
+                })
+            }
+        },
+        mounted:function(){
         },
         computed:{
             selectedScenes: function () {

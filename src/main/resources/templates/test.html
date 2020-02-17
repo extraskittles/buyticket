@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 <style>
-    .test2{
-        color: yellow;
-    }
+#aaa{
+    visibility: hidden;
+}
 </style>
 <body>
 <div id="app"></div>
@@ -18,11 +18,11 @@
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <!--<script type="text/javascript" src="../static/JS/buyTicket.js"></script>-->
 <script type="text/x-template" id="template">
-<a :href="'http://zhouzhaorong.xyz/selectedMovie.html?movieId='+movie" >test</a>
-    <div :href="'http://zhouzhaorong.xyz/selectedMovie.html?movieId='+movie">
-        <div>aaa</div>
-        <div>bbb</div>
-    </div>
+<div >
+    <a id="aaa" href="/user/register">aaa</a>
+    <div id="bbb">bbb</div>
+</div>
+
 </script>
 <script>
    let app=new Vue({

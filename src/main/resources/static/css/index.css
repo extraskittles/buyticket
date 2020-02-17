@@ -67,6 +67,7 @@
     display: flex;
     flex-direction: column;
     margin: 0.4rem;
+    text-decoration-line: none;
 }
 .cinemas_cinema_name{
     color: #191a1b;
