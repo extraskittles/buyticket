@@ -102,6 +102,20 @@
     padding: 0.1rem 0.4rem;
     color:#ff5f16;
 }
+#noScene{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5rem;
+}
+#noScene_img{
+    height: 8rem;
+    width: 8rem;
+}
+#noScene_text{
+    font-size: 1.8rem;
+    color: #bdc0c5;
+}
 .active_date{
     color:#ff5f16
 }
