@@ -72,6 +72,8 @@ body{
     flex-direction: column;
     align-items: center;
     width: 33.3%;
+    color: black;
+    text-decoration-line: none;
 }
 .footer_div_img{
     width: 21px;
@@ -84,4 +86,7 @@ body{
     word-break: keep-all;
     color: #797d82;
     top: 32px;
+}
+#footer_me_text{
+    color: #ff5f16;
 }

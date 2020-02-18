@@ -16,6 +16,7 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="cinema">
+        <a id="fallBack" href="javascript:history.go(-1);"><</a>
        <div id="cinema_name">{{sceneDetail.cinemaName}}</div>
         <div id="movie_name">{{sceneDetail.movieName}}</div>
         <div id="movie_datetime">{{datetime}}{{weekOfDay}}</div>
@@ -88,7 +89,16 @@
         },
         created:function () {
             //获取用户信息
-            getUser();
+            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+                let code = response.data.code;
+                if (code == 200) {
+                    let user = response.data.data;
+                    this.user = user;
+                }
+            }).catch(error => {
+                    /*alert("error")*/
+                }
+            )
 
             //从url获取用户sceneId,并查询场次的相关信息
             let sceneId = getQuery("sceneId");

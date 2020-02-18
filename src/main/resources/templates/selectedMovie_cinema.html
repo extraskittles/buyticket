@@ -16,6 +16,7 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="selectedMovie_cinema">
+        <a id="fallBack" href="javascript:history.go(-1);"><</a>
         <div id="cinema_name">{{cinema.name}}</div>
         <div id="cinema_address">地址:{{cinema.address}}</div>
         <div id="movies">
@@ -120,7 +121,15 @@
                     this.scenes = response.data.data;
                 });
             //获取用户信息
-            getUser();
+            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+                let code = response.data.code;
+                if (code == 200) {
+                    let user = response.data.data;
+                    this.user = user;
+                }
+            }).catch(error => {
+                }
+            )
             //获取该影院上映的电影的信息
 
             axios.get('http://zhouzhaorong.xyz/order/selectMoviesByCinemaId',{

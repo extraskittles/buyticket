@@ -5,6 +5,8 @@ spring:
     password: skittles
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      max-lifetime: 0
   resources:
     static-locations: /META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/templates/
 

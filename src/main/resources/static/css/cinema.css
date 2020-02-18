@@ -1,27 +1,41 @@
+body{
+    margin: 0 ;
+    padding: 0;
+}
 #cinemas{
      display: flex;
      flex-direction: column;
  }
+#fallBack{
+    font-size: 2rem;
+    text-decoration-line: none;
+    color: #473d3d;
+    position: absolute;
+    left: 1rem;
+    top: 0.1rem;
+}
 #cinemas_title{
     display: flex;
     flex-direction: column;
     text-align: center;
     line-height: 3.5rem;
+    font-size: 1.35rem;
+    margin: 0 0 1.5rem 0;
 }
 .cinemas_cinema{
     display: flex;
     flex-direction: column;
-    margin: 0.4rem;
+    margin: 1rem 1rem 1rem 1rem;
     text-decoration-line: none;
 }
 .cinemas_cinema_name{
     color: #191a1b;
-    font-size: 15px;
-    float: left;
+    font-size: 1.2rem;
+
 }
 .cinemas_cinema_address{
     color: #797d82;
-    font-size: 12px;
+    font-size: 1rem;
     margin-top: 5px;
 }
 #footer{
@@ -39,6 +53,8 @@
     flex-direction: column;
     align-items: center;
     width: 33.3%;
+    color: black;
+    text-decoration-line: none;
 }
 .footer_div_img{
     width: 21px;
@@ -51,4 +67,7 @@
     word-break: keep-all;
     color: #797d82;
     top: 32px;
+}
+#footer_cinema_text{
+    color: #ff5f16;
 }

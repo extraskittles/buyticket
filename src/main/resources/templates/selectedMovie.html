@@ -16,6 +16,7 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="selectedMovie">
+        <a id="fallBack" href="javascript:history.go(-1);"><</a>
         <div id="selectedMovie_title">{{movie.name}}</div>
         <div id="date">
             <div :class="{active_date:selectedDate==date[0]}" v-on:click="selectedDate=date[0]" id="date_today">今天{{date[0]}}</div>

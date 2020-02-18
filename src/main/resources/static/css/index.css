@@ -1,6 +1,15 @@
+body{
+    margin: 0 ;
+    padding: 0;
+}
 #movies{
     display: flex;
     flex-direction: column;
+}
+#title{
+    text-align: center;
+    font-size: 1.1rem;
+    padding: 1rem 0 1rem 0;
 }
 .movies_movie{
     display: flex;
@@ -8,6 +17,7 @@
     justify-content: space-between;
     align-items: center;
     text-decoration-line: none;
+    margin: 0.5rem 1rem;
 }
 .movies_movie_info{
     display: flex;
@@ -56,6 +66,8 @@
     flex-direction: column;
     align-items: center;
     width: 33.3%;
+    color: black;
+    text-decoration-line: none;
 }
 .footer_div_img{
     width: 21px;
@@ -69,4 +81,6 @@
     color: #797d82;
     top: 32px;
 }
-
+#footer_movie_text{
+    color: #ff5f16;
+}
