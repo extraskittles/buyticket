@@ -61,9 +61,27 @@ body{
     display: flex;
     flex-direction: row;
     position: fixed;
-    height: 4%;
+    height: 7%;
     width: 100%;
     bottom: 0;
-    font-size:1rem;
+    font-size: 1rem;
     justify-content: space-between;
+}
+.footer_div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33.3%;
+}
+.footer_div_img{
+    width: 21px;
+    height: 21px;
+    margin: 0.2rem;
+}
+.footer_div_text{
+    font-size: 10px;
+    line-height: 12px;
+    word-break: keep-all;
+    color: #797d82;
+    top: 32px;
 }
