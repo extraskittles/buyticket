@@ -49,9 +49,15 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public List<SceneDetail> selectSceneByCinemaId(int cinemaId) {
-        /*  List<Scene> scenes = sceneMapper.selectSceneByCinemaId(cinemaId);*/
         List<SceneDetail> sceneDetails = sceneDetailMapper.selectSceneDetailByCinemaId(cinemaId);
-        return sceneDetails;
+        ArrayList<SceneDetail> list = new ArrayList<>();
+        Date date = new Date();
+        for(SceneDetail sceneDetail:sceneDetails){
+            if(date.getTime()<sceneDetail.getDatetime().getTime()){
+                list.add(sceneDetail);
+            }
+        }
+        return list;
     }
 
     @Override

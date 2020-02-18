@@ -6,14 +6,7 @@ body{
      display: flex;
      flex-direction: column;
  }
-#fallBack{
-    font-size: 2rem;
-    text-decoration-line: none;
-    color: #473d3d;
-    position: absolute;
-    left: 1rem;
-    top: 0.1rem;
-}
+
 #cinemas_title{
     display: flex;
     flex-direction: column;

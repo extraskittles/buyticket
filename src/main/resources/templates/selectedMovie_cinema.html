@@ -111,6 +111,11 @@
             let tomorrowDate = moment().add(1, 'days').format('YYYY-MM-DD');
             this.date = [todayDate, tomorrowDate]
             this.selectedDate=this.date[0];
+            //从url接收选择的日期参数
+            let datetime=getQuery("datetime");
+            if(datetime!=false){
+                this.selectedDate=datetime;
+            }
             //获取该影院所有场次的信息
                 axios.get('http://zhouzhaorong.xyz/order/selectSceneByCinemaId', {
                         params: {

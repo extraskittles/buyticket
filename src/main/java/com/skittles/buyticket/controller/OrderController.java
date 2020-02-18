@@ -37,7 +37,7 @@ public class OrderController {
     MovieMapper movieMapper;
 @Autowired
     CinemaMapper cinemaMapper;
-    @ApiOperation("根据电影院id查找该影院上映的所有场次的所有信息")
+    @ApiOperation("根据电影院id查找该影院上映的所有有效场次的所有信息")
     @GetMapping("selectSceneByCinemaId")
     public CommonResult selectScene(int cinemaId) {
         List<SceneDetail> sceneDetails = cinemaService.selectSceneByCinemaId(cinemaId);

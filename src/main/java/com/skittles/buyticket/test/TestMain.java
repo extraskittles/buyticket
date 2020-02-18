@@ -37,9 +37,7 @@ public class TestMain {
 
     @Test
     public void test2() {
-        /*Map<String,Object>params =new HashMap<>();
-        Map body = HttpUtils.sendHttpRequest("http://zhouzhaorong.xyz/test3", HttpMethod.GET, params);
-        System.out.println(body.get("11"));*/
+
     }
     @Test
     public void test3(){
