@@ -13,7 +13,7 @@ let getQuery = function (variable) {
 
 
 //获取用户信息
-let getUser=function(){
+/*let getUser=function(){
     axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
         let code = response.data.code;
         if (code == 200) {
@@ -21,10 +21,10 @@ let getUser=function(){
             this.user = user;
         }
     }).catch(error => {
-            /*alert("error")*/
+            /!*alert("error")*!/
         }
     )
-}
+}*/
 
 
 
