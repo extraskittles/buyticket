@@ -2,11 +2,11 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Title</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/index.css">
-
 <body>
 <div id="app"></div>
 </body>
@@ -15,105 +15,33 @@
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <script type="text/x-template" id="template">
-    <div>
-        <!--第一页-->
-        <div id="movie_cinema" v-if="displayNum==1">
             <!--显示所有电影-->
-            <div id="movies" v-if="listNum==1">
+            <div id="movies">
                 <a :href="'/selectedMovie.html?movieId='+movie.id" class="movies_movie" v-for="movie in movies">
                     <div class="movies_movie_info">
                         <div class="movies_movie_info_name">{{movie.name}}</div>
                         <div class="movies_movie_info_description">{{movie.description}}</div>
                         <div class="movies_movie_info_length">{{movie.movieLength}}分钟</div>
                     </div>
-                    <div  class="movies_movie_buyTicket">购票</div>
+                    <div class="movies_movie_buyTicket">购票</div>
                 </a>
                 <div id="noMore">无更多电影</div>
-            </div>
-            <!--显示所有影院-->
-            <div id="cinemas" v-if="listNum==2">
-                <div id="cinemas_title">影院</div>
-                <a :href="'/selectedMovie_cinema.html?cinemaId='+cinema.id" class="cinemas_cinema" v-for="cinema in cinemas">
-                    <div class="cinemas_cinema_name">{{cinema.name}}</div>
-                    <div class="cinemas_cinema_address">{{cinema.address}}</div>
-                </a>
-            </div>
 
-            <div id="movie_cinema_footer" class="tags">
-                <div class="tag" :class="{active_title: listNum === 1}" v-on:click="list(1)">电影</div>
-                <div class="tag" :class="{active_title: listNum === 2}" v-on:click="list(2)">影院</div>
-            </div>
-        </div>
-        <!--第二页，显示电影上映的影院信息-->
-        <!--更改-->
-        <div id="selectedMovie">
-            <div id="selectedMovie_title">{{selectedMovie.name}}</div>
-            <div id="date">
-                <div id="date_today"></div>
-                <div id="date_tomorrow"></div>
-            </div>
-
-        </div>
-        <!--未更改-->
-        <div id="movie" v-if="displayNum==2">
-            <h3>{{selectedMovie.name}}</h3>
-            <table id="table3">
-                <tr>
-                    <td>影院名</td>
-                    <td>地址</td>
-                </tr>
-                <tr v-for="cinema in cinemas">
-                    <td>{{cinema.name}}</td>
-                    <td>{{cinema.address}}</td>
-                    <td v-on:click="setCinema(cinema)">购票</td>
-                </tr>
-            </table>
-            <div v-on:click="displayNum=1">返回</div>
-        </div>
-        <!--第三页，电影和影院对应的场次-->
-        <div id="buyTicket" v-if="displayNum==3">
-            <h3>{{cinema.name}}</h3>
-            <p>{{cinema.address}}</p>
-            <div class="tags">
-                <div :class="{active_title:selectedMovie==movie}" v-for="movie in movies"
-                     v-on:click="setSelectedMovie(movie)">{{movie.name}}
+                <div id="footer" class="tags">
+                    <div id="footer_movie" class="footer_div">
+                        <img class="footer_div_img" src="picture/movie.png">
+                        <div class="footer_div_text">电影</div>
+                    </div>
+                    <div id="footer_cinema" class="footer_div">
+                        <img  class="footer_div_img" src="picture/cinema.png">
+                        <div  class="footer_div_text">影院</div>
+                    </div>
+                    <div id="footer_me" class="footer_div">
+                        <img  class="footer_div_img" src="picture/me.png">
+                        <div  class="footer_div_text">我的</div>
+                    </div>
                 </div>
             </div>
-
-            <div class="tags">
-                <div :class="{active_title:selectedDate==date[0]}" v-on:click="setSelectedDate(date[0])">今天{{date[0]}}
-                </div>
-                <div :class="{active_title:selectedDate==date[1]}" v-on:click="setSelectedDate(date[1])">明天{{date[1]}}
-                </div>
-            </div>
-
-
-            <table>
-                <tr v-for="scene in selectedScenes">
-                    <td>{{scene.time}}</td>
-                    <td>{{scene.hallName}}</td>
-                    <td>{{scene.price}}</td>
-                    <td v-on:click="choseSit(scene.id)">购票</td>
-                </tr>
-            </table>
-            <div v-on:click="displayNum=2">返回</div>
-        </div>
-        <!--第四页，选座-->
-        <div id="choseSit" v-if="displayNum==4">
-            <h3>选座</h3>
-            <div id="choseSit_sits">
-                <div id="choseSit_sits_sit" v-for="count in scene.sitNumber">
-                    <div id="choseSit_sits_sit_num">{{count}}</div>
-                    <input v-if="leftSitArr.indexOf(count+'')>-1" v-on:click="choseTrigger(count)"
-                           id="choseSit_sits_sit_chose" type="checkbox" name="vehicle" value="count"/>
-                </div>
-            </div>
-            <div>
-                <input type="button" v-on:click="confirmSit()" value="">
-            </div>
-            <div v-on:click="displayNum=3">返回</div>
-        </div>
-    </div>
 </script>
 <script>
     let app = new Vue({
@@ -122,75 +50,10 @@
         data: function () {
             return {
                 user: {},//用户
-                listNum: 1,//显示所有影院或所有电影
-                displayNum: 1,//显示不同页数
                 movies: [],//所有正在上映的电影
-                cinemas: [],//所有营业的影院
-                cinema: null,//选择的影院
-                scenes: [],//某影院的所有场次
-                date: [],//记录今天明天日期
-                /*todayScenes: [],
-                tomorrowScenes: [],*/
-                selectedDate: '',//选择的日期
-                selectedMovie: '',//选择的电影
-                leftSitArr: '',//剩余的座位
-                scene: '',//选定的场次
-                chosedList: [],//选择的作为
-
             };
         },
         methods: {
-            //第一页显示表格1或者显示表格2
-            list: function (listNum) {
-                this.listNum = listNum;
-            },
-            setSelectedMovie(movie) {
-                this.selectedMovie = movie;
-            },
-            //将场次按所选日期和电影进行筛选
-            setSelectedDate: function (date) {
-                this.selectedDate = date;
-            },
-            //往vue.movie传入参数
-            setMovie: function (movie) {
-                this.selectedMovie = movie;
-                this.displayNum = 2;
-            },
-            //往vue.cinema传入参数
-            setCinema: function (cinema) {
-                this.cinema = cinema;
-                this.getScenes(cinema.id);
-                this.displayNum = 3;
-            },
-            //设置selectedMovie和selectedDate
-            //获取该影院所有场次的信息
-            getScenes: function (cinemaId) {
-                axios.get('http://zhouzhaorong.xyz/order/selectSceneByCinemaId', {
-                        params: {
-                            cinemaId: cinemaId
-                        }
-                    }
-                ).then((response) => {
-                    this.scenes = response.data.data;
-                    let sceneDate;
-                    let arr1 = [];
-                    let arr2 = [];
-                    for (i = 0; i < this.scenes.length; i++) {
-                        sceneDate = moment(this.scenes[i].datetime).format('YYYY-MM-DD');
-                        if (this.date[0] == sceneDate) {
-                            arr1.push(this.scenes[i])
-                        } else if (this.date[1] == sceneDate) {
-                            arr2.push(this.scenes[i])
-                        }
-                    }
-                    this.todayScenes = arr1;
-                    this.tomorrowScenes = arr2;
-                });
-            },
-            //将timestamp转化为日期格式
-            getDate: function (timestamp) {
-                return moment(timestamp).format('YYYY-MM-DD')
-            },
             //判断是否为微信浏览器访问
             isWechat: function () {
                 if (ua.match(/MicroMessenger/i) == 'micromessenger') {
@@ -198,150 +61,44 @@
                 } else {
                     return false;
                 }
-            },
-            //注销
-            logout: function () {
-                axios.get('http://zhouzhaorong.xyz/user/logout').then((response) => {
-                        window.location = "http://zhouzhaorong.xyz/login.html";
-                    }
-                )
-            },
-            //选座
-            choseSit: function (sceneId) {
-                this.displayNum = 4;
-                axios.get('http://zhouzhaorong.xyz/order/selectSceneById', {
-                    params: {
-                        sceneId: sceneId
-                    }
-                }).then((response) => {
-                        let leftSitStr = response.data.data.leftSit;
-                        this.scene = response.data.data;
-                        this.leftSitArr = leftSitStr.split(',');
-                    }
-                )
-            },
-            //确定座位，将sceneId和sitNumbers储存到storage，跳转到确认订单页面
-            confirmSit: function () {
-                let sceneId = this.scene.id;
-                let list = this.chosedList;
-                let sitNumbers = '';
-                list.map((value, index) => {
-                    if (index == 0) {
-                        sitNumbers = value;
-                    } else {
-                        sitNumbers = sitNumbers + "," + list[index];
+            }
+        },
+            created: function () {
+                //获取用户信息
+                axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+                    let code = response.data.code;
+                    if (code == 200) {
+                        let user = response.data.data;
+                        this.user = user;
                     }
                 })
-                axios({
-                    method: "post",
-                    url: "http://zhouzhaorong.xyz/order/confirmOrder",
-                    data: {
-                        sceneId: sceneId,
-                        sitNumbers: sitNumbers
-                    }
-                }).then((response) => {
-                    if (response.data.code == 200) {
-                        localStorage.setItem("orderDetail", JSON.stringify(response.data.data));
-                        window.location = "http://zhouzhaorong.xyz/confirmOrder.html";
-                    } else if (response.data.code == 401) {
-                        alert(response.data.msg)
-                        window.location = "http://zhouzhaorong.xyz/login.html";
-                    }
-                }).catch((error) => {
-                    alert("请求失败")
-                })
+                //查询所有电影
+                axios.get('http://zhouzhaorong.xyz/order/selectMovies').then((response) => {
+                    this.movies = response.data.data;
 
+                });
             },
-            choseTrigger: function (sitNumber) {
-                let list = this.chosedList;
-                let isHas = false;
-                list.map((value, index) => {
-                    if (value === sitNumber) {
-                        list.splice(index, 1);
-                        isHas = true;
-                    }
-                });
-                if (!isHas) {
-                    list.push(sitNumber);
+            mounted: function () {
+                //如果是微信浏览器访问则发ajax到微信服务器去登陆
+                let isWechat = null;
+                let ua = window.navigator.userAgent.toLowerCase();
+                if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                    isWechat = true;
+                } else {
+                    isWechat = false;
                 }
-                this.chosedList = list;
-            }
-        },
-        created: function () {
-            //获取用户信息
-            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
-                let code = response.data.code;
-                if (code == 200) {
-                    let user = response.data.data;
-                    this.user = user;
+                if (isWechat) {
+                    alert("微信浏览器访问")
+                    axios.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect').then((response) => {
+                        if (respones.data.code == 200) {
+                            alert("登陆成功")
+                        }
+                    }).catch((error) => {
+                        alert("登陆失败")
+                    });
+                } else {
                 }
-            }).catch(error => {
-                    /*alert("error")*/
-                }
-            )
-
-            //查询所有电影
-            axios.get('http://zhouzhaorong.xyz/order/selectMovies').then((response) => {
-                this.movies = response.data.data;
-            });
-            //查询所有影院
-            axios.get('http://zhouzhaorong.xyz/order/selectCinemas').then((response) => {
-                this.cinemas = response.data.data;
-            });
-
-            //今天的时间
-            let todayDate = moment().format('YYYY-MM-DD');
-            //明天时间
-            let tomorrowDate = moment().add(1, 'days').format('YYYY-MM-DD');
-            this.date = [todayDate, tomorrowDate]
-
-
-        },
-        mounted: function () {
-            //如果是微信浏览器访问则发ajax到微信服务器去登陆
-            let isWechat = null;
-            let ua = window.navigator.userAgent.toLowerCase();
-            if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-                isWechat = true;
-            } else {
-                isWechat = false;
-            }
-            if (isWechat) {
-                alert("微信浏览器访问")
-                axios.get('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect').then((response) => {
-                    if (respones.data.code == 200) {
-                        alert("登陆成功")
-                    }
-                }).catch((error) => {
-                    alert("登陆失败")
-                });
-            } else {
-                /* alert("PC浏览器访问")*/
-            }
-        },
-        computed: {
-            selectedScenes: function () {
-                let selectedMovie = this.selectedMovie;
-                let selectedDate = this.selectedDate;
-                let scenes = this.scenes;
-                let arr = [];
-                let sceneDate = null;
-                let time;
-                for (i = 0; i < scenes.length; i++) {
-                    sceneDate = moment(scenes[i].datetime).format('YYYY-MM-DD');
-                    if (selectedDate == sceneDate && selectedMovie.id == scenes[i].movieId) {
-                        time = moment(scenes[i].datetime).format('HH:mm');
-                        scenes[i].time = time;
-                        arr.push(scenes[i]);
-                    }
-                }
-                return arr;
-            }
-        },
-        updated: function () {
-
-        }
+            },
     })
-
 </script>
 </html>

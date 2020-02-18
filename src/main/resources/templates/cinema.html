@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -21,6 +21,20 @@
             <div class="cinemas_cinema_name">{{cinema.name}}</div>
             <div class="cinemas_cinema_address">{{cinema.address}}</div>
         </a>
+        <div id="footer" class="tags">
+            <div id="footer_movie" class="footer_div">
+                <img class="footer_div_img" src="picture/movie.png">
+                <div class="footer_div_text">电影</div>
+            </div>
+            <div id="footer_cinema" class="footer_div">
+                <img  class="footer_div_img" src="picture/cinema.png">
+                <div  class="footer_div_text">影院</div>
+            </div>
+            <div id="footer_me" class="footer_div">
+                <img  class="footer_div_img" src="picture/me.png">
+                <div  class="footer_div_text">我的</div>
+            </div>
+        </div>
     </div>
 </script>
 <script >
@@ -30,6 +44,7 @@
         data: function () {
             return {
                 user:{},//用户信息
+                cinemas:[],//所有影院信息
 
             };
         },
@@ -42,10 +57,12 @@
                     this.user = user;
                 }
             }).catch(error => {
-                    /*alert("error")*/
                 }
             )
-
+            //查询所有影院
+            axios.get('http://zhouzhaorong.xyz/order/selectCinemas').then((response) => {
+                this.cinemas = response.data.data;
+            });
 
         }
     })

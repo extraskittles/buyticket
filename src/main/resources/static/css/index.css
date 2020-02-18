@@ -1,15 +1,7 @@
-#top {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-}
-/*第一页*/
-/*电影*/
 #movies{
     display: flex;
     flex-direction: column;
 }
-
 .movies_movie{
     display: flex;
     flex-direction: row;
@@ -17,7 +9,6 @@
     align-items: center;
     text-decoration-line: none;
 }
-
 .movies_movie_info{
     display: flex;
     flex-direction: column;
@@ -26,7 +17,6 @@
     color: #797d82;
     width: 80%;
 }
-
 .movies_movie_info_name{
     color: #191a1b;
     font-size: 16px;
@@ -34,7 +24,6 @@
     line-height: 22px;
     margin-right: 5px;
 }
-
 .movies_movie_buyTicket{
     font-size: 0.75rem;
     color: #ff5f16;
@@ -52,79 +41,32 @@
     line-height: 59px;
     width: 100%;
 }
-/*第二页,影院*/
-#cinemas{
+#footer{
     display: flex;
-    flex-direction: column;
-}
-#cinemas_title{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    line-height: 3.5rem;
-}
-.cinemas_cinema{
-    display: flex;
-    flex-direction: column;
-    margin: 0.4rem;
-    text-decoration-line: none;
-}
-.cinemas_cinema_name{
-    color: #191a1b;
-    font-size: 15px;
-    float: left;
-}
-
-.cinemas_cinema_address{
-    color: #797d82;
-    font-size: 12px;
-    margin-top: 5px;
-}
-#movie_cinema_footer{
+    flex-direction: row;
     position: fixed;
-    height: 4%;
+    height: 7%;
     width: 100%;
     bottom: 0;
-    font-size:1rem;
+    font-size: 1rem;
+    justify-content: space-between;
 }
-
-#movie-cinema_tag {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-.tags{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
-
-
-#logout {
-    align:right;
-}
-
-
-#choseSit{
+.footer_div{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    width: 33.3%;
 }
-
-#choseSit_sits{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 100%;
+.footer_div_img{
+    width: 21px;
+    height: 21px;
+    margin: 0.2rem;
 }
-
-#choseSit_sits_sit{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 12.5%;
-}
-.active_title {
-    color: #ff5f16;
+.footer_div_text{
+    font-size: 10px;
+    line-height: 12px;
+    word-break: keep-all;
+    color: #797d82;
+    top: 32px;
 }
 
