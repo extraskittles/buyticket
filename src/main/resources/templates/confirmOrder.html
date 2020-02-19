@@ -2,6 +2,8 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Title</title>
 </head>
 <body>
@@ -13,37 +15,32 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
-    <div>
-
-        <h2>确认订单</h2>
-        <div>
-            <table>
-                <tr>
-                    <td>电影名</td>
-                    <td>时间</td>
-                    <td>影院名字</td>
-                    <td>厅号</td>
-                    <td>座位</td>
-                    <td>单价</td>
-                    <td>总价</td>
-                </tr>
-                <tr>
-                    <td>{{orderDetail.movieName}}</td>
-                    <td>{{orderDetail.datetime}}</td>
-                    <td>{{orderDetail.cinemaName}}</td>
-                    <td>{{orderDetail.hallName}}</td>
-                    <td>{{orderDetail.sitNumbers}}</td>
-                    <td>{{orderDetail.price}}</td>
-                    <td>{{orderDetail.payPrice}}</td>
-                </tr>
-            </table>
-        </div>
-        <div>
-            <div>实付积分：{{payPoint}}</div>
-            <div><input  v-on:click="pay" type="button" value="付款"></div>
+<div id="confirmOrder">
+    <div id="movie">
+        <div id="movie_name">{{orderDetail.movieName}}</div>
+        <div id="movie_length">110分钟</div>
+        <div id="movie_hallName">{{orderDetail.hallName}}</div>
+        <div id="movie_SitPositions">
+            <div id="movie_SitPosition" v-for="sitPosition in sitPositionArr">{{sitPosition}}</div>
         </div>
     </div>
+    <div id="cinema">
+        <div id="cinema_name">{{orderDetail.cinemaName}}</div>
+        <div id="cinema_address">{{orderDetail.address}}</div>
+    </div>
+    <div id="time">
+        <div id="time_day"></div>
+        <div id="time_date"></div>
+        <div id="time_datetime"></div>
+    </div>
+    <div id="pay">
+        <div id="price"></div>
+        <div id="number"></div>
+        <div id="shouldPay"></div>
+    </div>
+</div>
 </script>
 <script>
     let app=new Vue({
@@ -51,12 +48,14 @@
         template:'#template',
         data:function () {
             return{
-                orderDetail:JSON.parse(localStorage.getItem("orderDetail"))
+                orderDetail:{},
+                sitPositionArr:[],
             }
         },
 
         methods:{
-            pay:function () {
+            //支付
+            /*pay:function () {
                 let orderDetail=this.orderDetail;
                 let orderId=orderDetail.id;
                 axios({
@@ -70,22 +69,41 @@
                 }).then((response)=>{
                     window.location="http://zhouzhaorong.xyz/orderDetail.html?orderId="+orderId;
                 })
-            }
+            }*/
         },
-
+      /*  GET /order/selectOrderById*/
         created:function () {
-
-
+            let orderId=getQuery("orderId");
+            axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{
+                params:{
+                    orderId:orderId,
+                }
+            }).then((response)=>{
+                this.orderDetail=response.data.data;
+                let sitNumbers=response.data.data.sitNumbers;
+                let sitNumberArr =sitNumbers.split(',');
+                let sitPositionArr=[];
+                let position=null   ;
+                for(let index in sitNumberArr){
+                    let i=parseInt(sitNumberArr[index]);
+                    position=(parseInt(i/10)+1)+'排'+i%10+'座'
+                    if(i%10==0){
+                        position=parseInt(i/10)+'排10座';
+                    }
+                   sitPositionArr.push(position);
+                }
+                this.sitPositionArr=sitPositionArr;
+            })
         },
         mounted:function () {
 
         },
         computed: {
-            payPoint:function f() {
+            payPoint:function () {
                 let payPrice=this.orderDetail.payPrice;
                 let payPoint=payPrice*10;
                 return payPoint;
-            }
+            },
         }
     })
 </script>

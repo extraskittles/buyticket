@@ -10,7 +10,7 @@
 <div id="app"></div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="/JS/buyTicket.js"></script>
@@ -33,7 +33,7 @@
                </div>
            </div>
        </div>
-        <div id="bottom">{{shouldPay}}元&nbsp;确认选座</div>
+        <div id="bottom" v-on:click="confirmOrder()">{{shouldPay}}元&nbsp;确认选座</div>
     </div>
 </script>
 <script >
@@ -86,6 +86,35 @@
                 }
                 this.chosedList = list;
             },
+            confirmOrder:function () {
+              let confirmOrderParam=new Object();
+              let sceneDetail=this.sceneDetail;
+              confirmOrderParam.sceneId=sceneDetail.id;
+              /*计算chosedSitStr*/
+                debugger
+                let chosedList=this.chosedList;
+                let chosedSitStr=null;
+                if(chosedList.length<1){
+                    return chosedSitStr;
+                }
+                chosedSitStr=chosedList[0];
+                for(let i=1;i<chosedList.length;i++){
+                    chosedSitStr=chosedSitStr+','+chosedList[i]
+                }
+
+              confirmOrderParam.sitNumbers=chosedSitStr;
+                axios({
+                    method:"post",
+                    url:"http://zhouzhaorong.xyz/order/confirmOrder",
+                    headers:
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                    data:confirmOrderParam
+                }).then((response)=>{
+                    window.location="http://zhouzhaorong.xyz/confirmOrder.html?orderId="+response.data.data.id;
+                })
+            }
         },
         created:function () {
             //获取用户信息
@@ -125,6 +154,19 @@
                 let sceneDetail=this.sceneDetail;
                 let shouldPay=chosedList.length*sceneDetail.price;
                 return shouldPay;
+            },
+            chosedSitStr:function () {
+                debugger
+                let chosedList=this.chosedList;
+                let chosedSitStr=null;
+                if(chosedList.length<1){
+                    return chosedSitStr;
+                }
+                chosedSitStr=chosedList[0];
+                for(let i=1;i<chosedList.length;i++){
+                    chosedSitStr+=chosedList[i]
+                }
+                return chosedSitStr;
             }
         }
     })
