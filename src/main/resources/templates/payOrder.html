@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Title</title>
+</head>
+<link type="text/css" rel="stylesheet" href="/css/payOrder.css">
+<body>
+<div id="app"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="/JS/buyTicket.js"></script>
+<script type="text/x-template" id="template">
+    <div id="payOrder">
+        <a id="fallBack" href="javascript:history.go(-1);"><</a>
+        <div id="title">支付订单</div>
+        <div id="payInfo">
+            <div id="payInfo_shouldPay">{{orderDetail.payPrice}}</div>
+            <div id="payInfo_orderId">zzr卖座-订单编号:{{orderDetail.id}}</div>
+        </div>
+        <div id="pointPay">
+            <img id="pointPay_img" src="picture/pointPay.jpg">
+            <div id="pointPay_text">积分支付</div>
+            <img id="pointPay_chose" src="picture/yes.jpg">
+        </div>
+        <div id="wechatPay">
+            <img id="wechatPay_img" src="picture/wechatPay.jpg">
+            <div id="wechatPay_text">微信支付</div>
+            <div id="wechatPay_chose">○</div>
+        </div>
+        <div id="payNow">马上支付</div>
+    </div>
+</script>
+<script>
+    let app = new Vue({
+        el: '#app',
+        template: "#template",
+        data: function () {
+            return {
+                user: {},//用户信息
+                orderDetail:{}//订单详细
+            };
+        },
+        created: function () {
+            //获取用户信息
+            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+                let code = response.data.code;
+                if (code == 200) {
+                    let user = response.data.data;
+                    this.user = user;
+                }
+            })
+            //从rul获取orderId，并获取订单详细
+            let orderId=getQuery("orderId");
+            axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{
+                params:{
+                    orderId:orderId,
+                }
+            }).then((response)=>{
+                this.orderDetail=response.data.data;
+            })
+        }
+    })
+</script>
+</html>

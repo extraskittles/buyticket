@@ -40,7 +40,7 @@
             <div id="scene_price">¥{{scene.price}}</div>
             <div id="scene_buy">购票</div>
         </a>
-        <div id="noScene" v-if="scenes.length<1">
+        <div id="noScene" v-if="selectedScenes.length<1">
             <img id="noScene_img" src="picture/noScene.png">
             <div id="noScene_text">暂无场次</div>
         </div>

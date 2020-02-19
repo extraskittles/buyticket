@@ -1,0 +1,142 @@
+body{
+    margin: 0;
+    padding: 0
+}
+#confirmOrder{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f0ecec;
+}
+#fallBack{
+    font-size: 2rem;
+    text-decoration-line: none;
+    color: #473d3d;
+    position: fixed;
+    left: 1rem;
+    top: 0.1rem;
+}
+#title{
+    text-align: center;
+    padding: 0.5rem;
+    background-color: white;
+    font-size: 1.2rem;
+}
+#movie{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 0.2rem 0 0.4rem 0;
+    height: 12rem;
+    justify-content: space-around;
+    padding: 0 0.9rem;
+    color: #6e6969;
+}
+#movie_name{
+    font-size: 1.2rem;
+    color: #191a1b;
+}
+#movie_length{
+
+}
+#movie_hallName{
+
+}
+#movie_SitPositions{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+#movie_SitPosition{
+    margin-right: 1rem;
+}
+#movie_datetime{
+    margin-right: 0.8rem;
+}
+#cinema{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 0 0 0.4rem 0;
+    height: 5rem;
+    justify-content: space-around;
+    padding: 0 0.9rem;
+    color: #6e6969;
+}
+#cinema_name{
+
+}
+#cinema_address{
+
+}
+#movie_time{
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    margin: 0 0 0.4rem 0;
+    color: #40b8c7;
+}
+#pay{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 0 0 0.4rem 0;
+    height: 7.5rem;
+    justify-content: space-around;
+    padding: 0 0.9rem;
+}
+#pay_number{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#pay_price{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#pay_shouldPay{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#bottom{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    height: 3rem;
+    align-items: center;
+}
+#bottom_text{
+    margin-left: 1rem;
+}
+#bottom_shouldPay{
+    margin-left: 0.6rem;
+    color: #0fad9e;
+}
+#bottom_payNow{
+    position: absolute;
+    right: 0;
+    background-color: #ff5f16;
+    line-height: 3rem;
+    width: 40%;
+    text-align: center;
+    height: 100%;
+    color: white;
+    text-decoration-line: none;
+}
+#price_text{
+    color: #6e6969;
+}
+#number_text{
+    color: #6e6969;
+}
+#shouldPay_text{
+    color: #6e6969;
+}
+#time_datetime{
+    margin-right: 0.8rem;
+}

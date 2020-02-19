@@ -6,9 +6,9 @@
           content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Title</title>
 </head>
+<link type="text/css" rel="stylesheet" href="/css/confirmOrder.css">
 <body>
 <div id="app">
-
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -18,8 +18,14 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
 <div id="confirmOrder">
+    <a id="fallBack" href="javascript:history.go(-1);"><</a>
+    <div id="title">确认购票</div>
     <div id="movie">
-        <div id="movie_name">{{orderDetail.movieName}}</div>
+        <div id="movie_name">电影:{{orderDetail.movieName}}</div>
+        <div id="movie_time">
+            <div id="time_datetime">{{datetime}}</div>
+            <div id="time_day">{{weekOfDay}}</div>
+        </div>
         <div id="movie_length">110分钟</div>
         <div id="movie_hallName">{{orderDetail.hallName}}</div>
         <div id="movie_SitPositions">
@@ -28,17 +34,27 @@
     </div>
     <div id="cinema">
         <div id="cinema_name">{{orderDetail.cinemaName}}</div>
-        <div id="cinema_address">{{orderDetail.address}}</div>
+        <div id="cinema_address">地址:{{orderDetail.address}}</div>
     </div>
-    <div id="time">
-        <div id="time_day"></div>
-        <div id="time_date"></div>
-        <div id="time_datetime"></div>
-    </div>
+
     <div id="pay">
-        <div id="price"></div>
-        <div id="number"></div>
-        <div id="shouldPay"></div>
+        <div id="pay_price">
+            <div id="price_text">价格</div>
+            <div id="price_value">¥{{orderDetail.price}}</div>
+        </div>
+        <div id="pay_number">
+            <div id="number_text">数量</div>
+            <div id="number_value">{{ticketNumber}}</div>
+        </div>
+        <div id="pay_shouldPay">
+            <div id="shouldPay_text">总价</div>
+            <div id="shouldPay_value">¥{{orderDetail.payPrice}}</div>
+        </div>
+    </div>
+    <div id="bottom">
+        <div id="bottom_text">应付</div>
+        <div id="bottom_shouldPay">¥{{orderDetail.payPrice}}</div>
+        <a :href="'/payOrder.html?orderId='+orderDetail.id" id="bottom_payNow" >立即支付</a>
     </div>
 </div>
 </script>
@@ -50,6 +66,8 @@
             return{
                 orderDetail:{},
                 sitPositionArr:[],
+                datetime:'',//几月几日
+                weekOfDay:'',//周几
             }
         },
 
@@ -80,6 +98,7 @@
                 }
             }).then((response)=>{
                 this.orderDetail=response.data.data;
+                //计算几排几座
                 let sitNumbers=response.data.data.sitNumbers;
                 let sitNumberArr =sitNumbers.split(',');
                 let sitPositionArr=[];
@@ -93,6 +112,10 @@
                    sitPositionArr.push(position);
                 }
                 this.sitPositionArr=sitPositionArr;
+                //计算日期
+                //修改datetime格式
+                this.weekOfDay=moment(response.data.data.datetime).format('星期E');
+                this.datetime=moment(response.data.data.datetime).format('MM月DD日 HH:mm');
             })
         },
         mounted:function () {
@@ -103,6 +126,12 @@
                 let payPrice=this.orderDetail.payPrice;
                 let payPoint=payPrice*10;
                 return payPoint;
+            },
+            ticketNumber:function () {
+                let payPrice=this.orderDetail.payPrice;
+                let price=this.orderDetail.price;
+                let ticketNumber=payPrice/price;
+                return ticketNumber;
             },
         }
     })

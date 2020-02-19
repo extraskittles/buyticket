@@ -30,12 +30,13 @@ body{
     font-size: 15px;
     line-height: 21px;
     color: #191a1b;
+    margin: 0.5rem 0 1rem 0.8rem;
 }
 #movie_datetime{
     font-size: 13px;
     line-height: 19px;
     color: #797d82;
-    margin: 0.5rem 0 1rem 0;
+    margin: 0.5rem 0 1rem 0.8rem;
 }
 
 #cinemaBox_top{
@@ -97,6 +98,7 @@ body{
     color: white;
     text-align: center;
     height: 2.7rem;
+    line-height: 2.7rem;
     background-color: #ff5f16;
 }
 .takenSit{
