@@ -164,6 +164,15 @@ public class OrderController {
         }
     }
 
-
-
+    @ApiOperation("查看当前用户的所有订单")
+    @GetMapping("/selectOrderDetails")
+    public CommonResult selectOrderDetails(HttpServletRequest request){
+        Integer userId = HttpUtils.getIdByRequest(request);
+        List<OrderDetail> orderDetails = orderDetailMapper.selectOrderDetailByUserId(userId);
+        if(orderDetails!=null){
+            return CommonResult.success(orderDetails);
+        }else {
+            return CommonResult.success("当前用户没有任何订单");
+        }
+    }
 }

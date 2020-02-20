@@ -5,11 +5,7 @@
     <title>Title</title>
 </head>
 <style>
-   /* body
-    {
-        background-image:url('picture/order.png');
-        background-color:#cccccc;
-    }*/
+
 </style>
 <body>
 <div id="app"></div>
@@ -21,8 +17,8 @@
 <!--<script type="text/javascript" src="../static/JS/buyTicket.js"></script>-->
 <script type="text/x-template" id="template">
 <div >
-   <div>hello</div>
-    <div>hello</div>
+   <div>{{a.weekOfDay}}</div>
+    <div>{{a.datetime}}</div>
 </div>
 
 </script>
@@ -32,13 +28,21 @@
        template:"#template",
        data:function () {
            return{
-                payPrice:50,
-                movie:50
+                a:[],
            }
        },
 
        created:function () {
-
+           //获取该用户的所有订单
+           axios.get("http://zhouzhaorong.xyz/order/selectOrderDetails").then((response) => {
+               //修改datetime格式
+               let a =response.data.data;
+               let weekOfDay=moment(a[0].datetime).valueOf();
+               let datetime=moment(a[0].datetime).valueOf();
+               a.weekOfDay=weekOfDay;
+               a.datetime=datetime;
+               this.a=a;
+           })
        }
    })
 </script>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Title</title>
+</head>
+<link type="text/css" rel="stylesheet" href="/css/orderList.css">
+<body>
+<div id="app"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="/JS/buyTicket.js"></script>
+<script type="text/x-template" id="template">
+    <div id="box">
+        <a id="fallBack" href="javascript:history.go(-1);"><</a>
+        <div id="title">电影订单</div>
+        <div id="orderList">
+            <div id="orderDetail" v-for="orderDetail in orderList">
+                <div id="info">
+                    <div id="movieName">{{orderDetail.movieName}}</div>
+                    <div id="time">{{orderDetail.weekOfDay}}&nbsp;&nbsp;{{orderDetail.dateAndTime}}</div>
+                    <div id="money">
+                        <div id="money_price">¥{{orderDetail.price}}</div>
+                        <div id="money_number">×{{orderDetail.number}}</div>
+                    </div>
+                </div>
+                <div id="itemNumber">共{{orderDetail.number}}件商品</div>
+                <div id="isExpire">{{orderDetail.isExpire}}</div>
+            </div>
+        </div>
+    </div>
+</script>
+<script>
+    let app = new Vue({
+        el: '#app',
+        template: "#template",
+        data: function () {
+            return {
+                user: {},//用户信息
+                orderList: [],//订单列表
+            };
+        },
+        created: function () {
+            //获取用户信息
+            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+                let code = response.data.code;
+                if (code == 200) {
+                    let user = response.data.data;
+                    this.user = user;
+                }
+            })
+            //获取该用户的所有订单
+            axios.get("http://zhouzhaorong.xyz/order/selectOrderDetails").then((response) => {
+                //修改datetime格式
+                let orderList = response.data.data;
+                    let date=moment();
+                for (let index in orderList) {
+                    orderList[index].weekOfDay = moment(orderList[index].datetime).format('星期E');
+                    orderList[index].dateAndTime = moment(orderList[index].datetime).format('MM月DD日 HH:mm');
+                    orderList[index].number=orderList[index].payPrice/orderList[index].price;
+                    if(date>moment(orderList[index].datetime).valueOf()+120*60*1000){
+                        orderList[index].isExpire="放映结束"
+                    }else{
+                        orderList[index].isExpire="等待进场"
+                    }
+                }
+                this.orderList = orderList;
+            })
+        },
+        mounted:function () {
+
+        },
+        computed:{
+            number:function () {
+
+            }
+        }
+    })
+</script>
+</html>

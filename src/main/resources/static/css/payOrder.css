@@ -82,4 +82,6 @@ body{
     line-height: 3rem;
     text-align: center;
     font-size: 1.3rem;
+    text-decoration-line: none;
+    color: white;
 }

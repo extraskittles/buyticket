@@ -20,7 +20,7 @@
         <a id="fallBack" href="javascript:history.go(-1);"><</a>
         <div id="title">支付订单</div>
         <div id="payInfo">
-            <div id="payInfo_shouldPay">{{orderDetail.payPrice}}</div>
+            <div id="payInfo_shouldPay">¥{{orderDetail.payPrice}}</div>
             <div id="payInfo_orderId">zzr卖座-订单编号:{{orderDetail.id}}</div>
         </div>
         <div id="pointPay">
@@ -33,7 +33,7 @@
             <div id="wechatPay_text">微信支付</div>
             <div id="wechatPay_chose">○</div>
         </div>
-        <div id="payNow">马上支付</div>
+        <a :href="'/pointPay.html?orderId='+orderDetail.id" id="payNow">马上支付</a>
     </div>
 </script>
 <script>

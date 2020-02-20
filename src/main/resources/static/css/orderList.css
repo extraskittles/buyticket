@@ -1,0 +1,70 @@
+body{
+    padding:0;
+    margin: 0;
+}
+#box{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f0efef;
+}
+#fallBack{
+    font-size: 2rem;
+    text-decoration-line: none;
+    color: #473d3d;
+    position: fixed;
+    left: 1rem;
+    top: 0.1rem;
+}
+#title{
+    text-align: center;
+    font-size: 17px;
+    color: #191a1b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    background: #fff;
+    height: 44px;
+    line-height: 44px;
+}
+#orderList{
+    display: flex;
+    flex-direction: column;
+}
+#money{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+#money_price{
+    font-size: 15px;
+    color: #ff5f16;;
+}
+#money_number{
+    color: #bdc0c5;
+    font-size: 13px;
+}
+#info{
+    display: flex;
+    flex-direction: column;
+    height: 5rem;
+    justify-content: space-around;
+}
+#orderDetail{
+    background-color: white;
+    padding: 1rem 0.8rem;
+    margin: 0.2rem 0;
+}
+#itemNumber{
+    text-align: center;
+    font-size: 13px;
+    color: #191a1b;
+}
+#time{
+    font-size: 13px;
+    color: #797d82;
+}
+#isExpire{
+    color: #bdc0c5;
+    font-size: 13px;
+}

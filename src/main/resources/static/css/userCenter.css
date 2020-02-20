@@ -30,6 +30,8 @@ body{
     align-self: center;
     align-items: center;
     margin: 1rem 0;
+    color: black;
+    text-decoration-line: none;
 }
 #order_img{
     width: 2rem;
