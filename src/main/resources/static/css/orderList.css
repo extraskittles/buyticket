@@ -54,6 +54,8 @@ body{
     background-color: white;
     padding: 1rem 0.8rem;
     margin: 0.2rem 0;
+    text-decoration-line: none;
+    color: black;
 }
 #itemNumber{
     text-align: center;

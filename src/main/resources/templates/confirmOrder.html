@@ -70,26 +70,8 @@
                 weekOfDay:'',//周几
             }
         },
-
         methods:{
-            //支付
-            /*pay:function () {
-                let orderDetail=this.orderDetail;
-                let orderId=orderDetail.id;
-                axios({
-                    method:"post",
-                    url:"http://zhouzhaorong.xyz/order/pay",
-                    headers:
-                      {
-                        'Content-Type': 'application/json'
-                       },
-                    data:orderId
-                }).then((response)=>{
-                    window.location="http://zhouzhaorong.xyz/orderDetail.html?orderId="+orderId;
-                })
-            }*/
         },
-      /*  GET /order/selectOrderById*/
         created:function () {
             let orderId=getQuery("orderId");
             axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{

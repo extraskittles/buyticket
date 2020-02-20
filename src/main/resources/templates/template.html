@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Title</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/selectedMovie_cinema.css">
@@ -18,16 +19,16 @@
     <div id="selectedMovie">
     </div>
 </script>
-<script >
+<script>
     let app = new Vue({
         el: '#app',
         template: "#template",
         data: function () {
             return {
-                user:{},//用户信息
+                user: {},//用户信息
             };
         },
-        created:function () {
+        created: function () {
             //获取用户信息
             axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
                 let code = response.data.code;

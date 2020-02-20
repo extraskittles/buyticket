@@ -20,7 +20,7 @@
         <a id="fallBack" href="javascript:history.go(-1);"><</a>
         <div id="title">电影订单</div>
         <div id="orderList">
-            <div id="orderDetail" v-for="orderDetail in orderList">
+            <a :href="'/orderDetail.html?orderId='+orderDetail.id" id="orderDetail" v-for="orderDetail in orderList">
                 <div id="info">
                     <div id="movieName">{{orderDetail.movieName}}</div>
                     <div id="time">{{orderDetail.weekOfDay}}&nbsp;&nbsp;{{orderDetail.dateAndTime}}</div>
@@ -31,7 +31,7 @@
                 </div>
                 <div id="itemNumber">共{{orderDetail.number}}件商品</div>
                 <div id="isExpire">{{orderDetail.isExpire}}</div>
-            </div>
+            </a>
         </div>
     </div>
 </script>
