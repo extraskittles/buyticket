@@ -12,33 +12,36 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="box">
+        <a id="fallBack" :href="'/orderList.html'"><</a>
         <div id="title">订单详情</div>
         <div id="orderStatus">{{orderDetail.isExpire}}</div>
         <div id="scene">
             <div id="scene_movieName">{{orderDetail.movieName}}</div>
-            <div id="scene_time"></div>
             <div id="scene_cinemaName">{{orderDetail.cinemaName}}</div>
-            <div id="scene_position">{{orderDetail.weekOfDay}}{{orderDetail.dateAndTime}}</div>
+            <div id="scene_time">{{orderDetail.weekOfDay}}&nbsp;{{orderDetail.dateAndTime}}</div>
+            <div id="scene_position">{{orderDetail.hallName}}&nbsp;{{orderDetail.sitPositionStr}}</div>
             <div id="scene_priceAndNumber">
-                <div id="scene_price">{{orderDetail.price}}</div>
-                <div id="scene_number">{{orderDetail.number}}</div>
+                <div id="scene_price">¥{{orderDetail.price}}</div>
+                <div id="scene_number">×{{orderDetail.number}}</div>
             </div>
         </div>
         <div id="takeTicket">
+            <div id="takeTicket_code"></div>
             <div id="takeTicket_number">{{orderDetail.number}}张电影票</div>
+            <div id="takeTicket_text">取款码:</div>
             <div id="takeTicket_uuuId">{{orderDetail.uuid}}</div>
         </div>
         <div id="payPrice">
             <div id="payPrice_text">商品金额</div>
-            <div id="payPrice_value">{{orderDetail.payPrice}}</div>
+            <div id="payPrice_value">¥{{orderDetail.payPrice}}</div>
         </div>
         <div id="cinema">
             <div id="cinema_name">{{orderDetail.cinemaName}}</div>
-            <div id="cinema_address">{{orderDetail.cinemaAddress}}</div>
+            <div id="cinema_address">{{orderDetail.address}}</div>
         </div>
     </div>
 </script>
@@ -53,6 +56,7 @@
             };
         },
         created:function () {
+
             //获取某个订单的信息
             let orderId=getQuery("orderId");
             axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{
@@ -64,7 +68,7 @@
                 //计算几排几座
                 let sitNumbers=orderDetail.sitNumbers;
                 let sitNumberArr =sitNumbers.split(',');
-                let sitPositionArr=[];
+                let sitPositionStr='';
                 let position=null   ;
                 for(let index in sitNumberArr){
                     let i=parseInt(sitNumberArr[index]);
@@ -72,13 +76,13 @@
                     if(i%10==0){
                         position=parseInt(i/10)+'排10座';
                     }
-                    sitPositionArr.push(position);
+                    sitPositionStr=sitPositionStr+" "+position;
                 }
-                orderDetail.sitPositionArr=sitPositionArr;
+                orderDetail.sitPositionStr=sitPositionStr;
                 //计算日期
                 //修改datetime格式
                 orderDetail.weekOfDay=moment(orderDetail.datetime).format('星期E');
-                orderDetail.dateAndTime=moment(orderDetail.datetime).format('MM月DD日 HH:mm');
+                orderDetail.dateAndTime=moment(orderDetail.datetime).format('YYYY年MM月DD日 HH:mm');
                 //计算该票的状态
                 let date=moment();
                 if(date>moment(orderDetail.datetime).valueOf()+120*60*1000){
@@ -98,6 +102,16 @@
                     this.user = user;
                 }
             })
+        },
+        mounted:function () {
+            let qrcode = new QRCode("takeTicket_code", {
+                text: "http://www.runoob.com",
+                width: 128,
+                height: 128,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
         }
     })
 </script>

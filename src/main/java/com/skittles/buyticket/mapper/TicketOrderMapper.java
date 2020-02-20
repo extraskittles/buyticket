@@ -60,4 +60,10 @@ public interface TicketOrderMapper {
         "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(TicketOrder record);
+
+    //删除表所有数据
+    @Delete({
+            "delete from ticket_order"
+    })
+    int deleteAll();
 }

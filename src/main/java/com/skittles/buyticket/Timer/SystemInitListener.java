@@ -1,6 +1,8 @@
 package com.skittles.buyticket.Timer;
 
+import com.skittles.buyticket.detailMapper.OrderDetailMapper;
 import com.skittles.buyticket.mapper.SceneMapper;
+import com.skittles.buyticket.mapper.TicketOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -15,11 +17,14 @@ public class SystemInitListener implements ApplicationListener<ContextRefreshedE
     @Autowired
     SceneMapper sceneMapper;
     @Autowired
+    TicketOrderMapper orderMapper;
+    @Autowired
     DataTask dataTask;
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         //删除场次表所有数据
         sceneMapper.deleteAll();
+        orderMapper.deleteAll();
         //插入今天，明天的数据
         dataTask.updateTodayData();
         dataTask.updateTomorrowData();

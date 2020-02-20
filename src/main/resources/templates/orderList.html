@@ -17,22 +17,25 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="box">
-        <a id="fallBack" href="javascript:history.go(-1);"><</a>
-        <div id="title">电影订单</div>
-        <div id="orderList">
-            <a :href="'/orderDetail.html?orderId='+orderDetail.id" id="orderDetail" v-for="orderDetail in orderList">
-                <div id="info">
-                    <div id="movieName">{{orderDetail.movieName}}</div>
-                    <div id="time">{{orderDetail.weekOfDay}}&nbsp;&nbsp;{{orderDetail.dateAndTime}}</div>
-                    <div id="money">
-                        <div id="money_price">¥{{orderDetail.price}}</div>
-                        <div id="money_number">×{{orderDetail.number}}</div>
-                    </div>
-                </div>
-                <div id="itemNumber">共{{orderDetail.number}}件商品</div>
-                <div id="isExpire">{{orderDetail.isExpire}}</div>
-            </a>
+        <div id="top">
+            <div class="fallBack"></div>
+            <div id="title">电影订单</div>
+
         </div>
+            <div id="orderList">
+                <a :href="'/orderDetail.html?orderId='+orderDetail.id" id="orderDetail" v-for="orderDetail in orderList">
+                    <div id="info">
+                        <div id="movieName">{{orderDetail.movieName}}</div>
+                        <div id="time">{{orderDetail.weekOfDay}}&nbsp;&nbsp;{{orderDetail.dateAndTime}}</div>
+                        <div id="money">
+                            <div id="money_price">¥{{orderDetail.price}}</div>
+                            <div id="money_number">×{{orderDetail.number}}</div>
+                        </div>
+                    </div>
+                    <div id="itemNumber">共{{orderDetail.number}}件商品</div>
+                    <div id="isExpire">{{orderDetail.isExpire}}</div>
+                </a>
+            </div>
     </div>
 </script>
 <script>

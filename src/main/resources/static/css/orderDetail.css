@@ -2,3 +2,100 @@ body{
     margin: 0;
     padding: 0;
 }
+#box{
+    display: flex;
+    flex-direction: column;
+    background-color: #f0efef;
+    height: 100vh;
+}
+#fallBack{
+    font-size: 2rem;
+    text-decoration-line: none;
+    color: #473d3d;
+    position: fixed;
+    left: 1rem;
+    top: 0.1rem;
+}
+#title{
+    text-align: center;
+    font-size: 17px;
+    color: #191a1b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    background: #fff;
+    height: 44px;
+    line-height: 44px;
+}
+#scene{
+    padding: 0.8rem 1rem;
+    background-color: white;
+    margin: 0.5rem 0;
+    font-size: 13px;
+    color: #797d82;
+    line-height: 1.2rem;
+}
+#scene_movieName{
+    margin: 0.5rem 0;
+    color: black;
+    font-size: 1rem;
+}
+
+#takeTicket{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.8rem 0.6rem;
+    background-color: white;
+}
+
+#payPrice{
+    display: flex;
+    flex-direction: row;
+    padding: 0.8rem 1rem;
+    justify-content: space-between;
+    background-color: white;
+    margin: 0.5rem 0;
+}
+#cinema{
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem 1rem;
+    background-color: white;
+    line-height: 1.5rem;
+}
+#orderStatus{
+    height: 4.5rem;
+    line-height: 4.5rem;
+    padding: 0 0 0 3rem;
+    background-color: #ff6f22c9;
+    color: white;
+}
+#scene_priceAndNumber{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0.4rem 0;
+}
+#takeTicket_code{
+    display: block;
+    margin: 1rem 0;
+}
+#takeTicket_number{
+    margin: 0.5rem 0;
+}
+#takeTicket_uuuId{
+    margin: 0.5rem 0;
+    color: #ff5f16;
+}
+#payPrice_text{
+    color: #787c82;
+    font-size: 13px;
+}
+#payPrice_value{
+    color: #ff5f16;
+    font-size: 13px;
+}
+#cinema_address{
+    color: #797d82;
+}
