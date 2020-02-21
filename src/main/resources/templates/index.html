@@ -18,29 +18,31 @@
     <!--显示所有电影-->
     <div id="movies">
         <div id="title">正在热映</div>
-        <a :href="'/selectedMovie.html?movieId='+movie.id" class="movies_movie" v-for="movie in movies">
-            <div class="movies_movie_info">
-                <div class="movies_movie_info_name">{{movie.name}}</div>
-                <div class="movies_movie_info_description">{{movie.description}}</div>
-                <div class="movies_movie_info_length">{{movie.movieLength}}分钟</div>
-            </div>
-            <div class="movies_movie_buyTicket">购票</div>
-        </a>
-        <div id="noMore">无更多电影</div>
+        <div id="remain">
+            <a :href="'/selectedMovie.html?movieId='+movie.id" class="movies_movie" v-for="movie in movies">
+                <div class="movies_movie_info">
+                    <div class="movies_movie_info_name">{{movie.name}}</div>
+                    <div class="movies_movie_info_description">{{movie.description}}</div>
+                    <div class="movies_movie_info_length">{{movie.movieLength}}分钟</div>
+                </div>
+                <div class="movies_movie_buyTicket">购票</div>
+            </a>
+            <div id="noMore">无更多电影</div>
 
-        <div id="footer">
-            <div id="footer_movie" class="footer_div">
-                <img class="footer_div_img" src="picture/active_movie.png">
-                <div id="footer_movie_text" class="footer_div_text">电影</div>
+            <div id="footer">
+                <div id="footer_movie" class="footer_div">
+                    <img class="footer_div_img" src="picture/active_movie.png">
+                    <div id="footer_movie_text" class="footer_div_text">电影</div>
+                </div>
+                <a :href="'/cinema.html'" id="footer_cinema" class="footer_div">
+                    <img class="footer_div_img" src="picture/cinema.png">
+                    <div class="footer_div_text">影院</div>
+                </a>
+                <a :href="'/userCenter.html'" id="footer_me" class="footer_div">
+                    <img class="footer_div_img" src="picture/me.png">
+                    <div class="footer_div_text">我的</div>
+                </a>
             </div>
-            <a :href="'/cinema.html'" id="footer_cinema" class="footer_div">
-                <img class="footer_div_img" src="picture/cinema.png">
-                <div class="footer_div_text">影院</div>
-            </a>
-            <a :href="'/userCenter.html'" id="footer_me" class="footer_div">
-                <img class="footer_div_img" src="picture/me.png">
-                <div class="footer_div_text">我的</div>
-            </a>
         </div>
     </div>
 </script>
@@ -74,11 +76,9 @@
                 isWechat = false;
             }
             if (isWechat) {
-                alert("微信浏览器访问")
                 axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
                     let code = response.data.code;
                     if (code == 200) {
-                        alert("登录成功")
                         let user = response.data.data;
                         this.user = user;
                     }else {

@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
             if(dataUser==null){
                 User user = new User();
                 user.setOpenid(openid);
-                userMapper.insertSelective(user);
+                userMapper.insert(user);
                 id = user.getId();
             }else {
                 id=dataUser.getId();

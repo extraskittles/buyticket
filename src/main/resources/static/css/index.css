@@ -6,10 +6,19 @@ body{
     display: flex;
     flex-direction: column;
 }
+#remain{
+    display: flex;
+    flex-direction: column;
+    height: 93vh;
+    padding-top: 7vh;
+}
 #title{
     text-align: center;
-    font-size: 1.1rem;
-    padding: 1rem 0 1rem 0;
+    position: fixed;
+    width: 100%;
+    background: white;
+    height: 7vh;
+    line-height: 7vh;
 }
 .movies_movie{
     display: flex;
@@ -47,7 +56,6 @@ body{
     color: #bdc0c5;
     font-size: 13px;
     text-align: center;
-    margin: auto;
     line-height: 59px;
     width: 100%;
 }
@@ -60,6 +68,7 @@ body{
     bottom: 0;
     font-size: 1rem;
     justify-content: space-between;
+    background-color: white;
 }
 .footer_div{
     display: flex;

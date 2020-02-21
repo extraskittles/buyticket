@@ -67,6 +67,7 @@ body{
     bottom: 0;
     font-size: 1rem;
     justify-content: space-between;
+    background-color: white;
 }
 .footer_div{
     display: flex;
