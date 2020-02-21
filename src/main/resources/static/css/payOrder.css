@@ -75,7 +75,7 @@ body{
     font-size: 1.2rem;
 }
 #pointPay_chose{
-    height: 2rem;
+    font-size: 3rem;
 }
 #wechatPay{
     display: flex;
