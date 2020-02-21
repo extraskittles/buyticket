@@ -18,9 +18,8 @@
 <script type="text/x-template" id="template">
     <div id="box">
         <div id="top">
-            <div class="fallBack"></div>
+            <a :href="'/userCenter.html'" id="fallBack"></a>
             <div id="title">电影订单</div>
-
         </div>
             <div id="orderList">
                 <a :href="'/orderDetail.html?orderId='+orderDetail.id" id="orderDetail" v-for="orderDetail in orderList">

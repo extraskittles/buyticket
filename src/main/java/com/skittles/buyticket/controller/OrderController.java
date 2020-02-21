@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +48,6 @@ public class OrderController {
         return CommonResult.failed();
     }
     @ApiOperation("查询所有影院的信息")
-    @CrossOrigin(origins = "*")
     @GetMapping("/selectCinemas")
     public CommonResult selectCinemas(){
         List<Cinema> cinemas = cinemaService.selectCinemas();
@@ -58,7 +58,6 @@ public class OrderController {
     }
 
     @ApiOperation("根据电影id查找有上映该电影的所有电影院信息（影院名字)")
-    @CrossOrigin(origins = "*")
     @GetMapping("selectCinema")
     public CommonResult selectCinema(int movieId) {
         List<Cinema> cinemas = cinemaService.selectCinemaByMovieId(movieId);
@@ -102,7 +101,6 @@ public class OrderController {
     }
 
     @ApiOperation("查询所有电影的信息")
-    @CrossOrigin(origins = "*")
     @GetMapping("/selectMovies")
     public CommonResult selectMovies(){
         List<Movie> movies = cinemaService.selectMovies();
@@ -173,6 +171,18 @@ public class OrderController {
             return CommonResult.success(orderDetails);
         }else {
             return CommonResult.success("当前用户没有任何订单");
+        }
+    }
+
+    @ApiOperation("取消用户一个未支付订单")
+    @PostMapping(value = "/cancelUnpaidOrder", produces = "application/json")
+    public CommonResult cancelUnpaidOrder(@RequestBody @NotNull Integer orderId, HttpServletRequest request){
+        int userId = HttpUtils.getIdByRequest(request);
+        boolean b = orderService.cancelOrder(orderId, userId);
+        if(b==true){
+            return CommonResult.success();
+        }else {
+            return CommonResult.failed("取消失败");
         }
     }
 }

@@ -22,6 +22,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,9 +66,9 @@ public class TestController {
     }
 
     @RequestMapping("/test4")
-    public String test4(){
-        dataTask.updateTomorrowData();
-        return "test3";
+    public String test4(HttpServletResponse response) throws IOException {
+        response.sendRedirect("/test2.html");
+        return null;
     }
 
 

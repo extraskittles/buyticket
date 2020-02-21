@@ -16,10 +16,15 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="pointPay">
-       <div id="title">支付</div>
-        <div id="orderId">zzr卖座订单-{{orderDetail.id}}</div>
-        <div id="payPrice">¥{{orderDetail.payPrice}}</div>
-        <div v-on:click="pay()" id="payNow">确认支付</div>
+        <div id="top">
+            <a href="javascript:history.go(-1);" id="fallBack"></a>
+            <div id="title">支付</div>
+        </div>
+        <div id="remain">
+            <div id="orderId">zzr卖座订单-{{orderDetail.id}}</div>
+            <div id="payPrice">¥{{orderDetail.payPrice}}</div>
+            <div v-on:click="pay()" id="payNow">确认支付</div>
+        </div>
     </div>
 </script>
 <script >

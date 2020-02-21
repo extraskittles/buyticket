@@ -16,16 +16,20 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="selectedMovie">
-        <a id="fallBack" href="javascript:history.go(-1);"><</a>
-        <div id="selectedMovie_title">{{movie.name}}</div>
-        <div id="date">
-            <div :class="{active_date:selectedDate==date[0]}" v-on:click="selectedDate=date[0]" id="date_today">今天{{date[0]}}</div>
-            <div :class="{active_date:selectedDate==date[1]}" v-on:click="selectedDate=date[1]" id="date_tomorrow">明天{{date[1]}}</div>
+        <div id="top">
+            <a :href="'/index.html'" id="fallBack"></a>
+            <div id="title">{{movie.name}}</div>
         </div>
-        <a  :href="'/selectedMovie_cinema.html?movieId='+movie.id+'&cinemaId='+cinema.id+'&datetime='+selectedDate" class="cinema" v-for="cinema in cinemas">
-            <div class="cinema_name">{{cinema.name}}</div>
-            <div class="cinema_address">{{cinema.address}}</div>
-        </a>
+      <div id="remain">
+          <div id="date">
+              <div :class="{active_date:selectedDate==date[0]}" v-on:click="selectedDate=date[0]" id="date_today">今天{{date[0]}}</div>
+              <div :class="{active_date:selectedDate==date[1]}" v-on:click="selectedDate=date[1]" id="date_tomorrow">明天{{date[1]}}</div>
+          </div>
+          <a  :href="'/selectedMovie_cinema.html?movieId='+movie.id+'&cinemaId='+cinema.id+'&datetime='+selectedDate" class="cinema" v-for="cinema in cinemas">
+              <div class="cinema_name">{{cinema.name}}</div>
+              <div class="cinema_address">{{cinema.address}}</div>
+          </a>
+      </div>
     </div>
 </script>
 <script >

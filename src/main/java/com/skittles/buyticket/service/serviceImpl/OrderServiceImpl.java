@@ -135,4 +135,34 @@ UserMapper userMapper;
         map.put("orderDetail",orderDetail);
         return map;
     }
+
+    @Override
+    public boolean cancelOrder(int orderId, int userId) {
+        //判断订单是否支付，支付无法取消
+        OrderDetail order = orderDetailMapper.selectOrderDetailById(orderId);
+        if(order==null){
+            return false;
+        }
+        if("已支付".equals(order.getStatus())){
+            return false;
+        }
+        //确认订单是否属于本用户
+        if(order!=null&&userId==order.getUserId()){
+            //增加回座位号
+            String sitNumbers = order.getSitNumbers();
+            Integer sceneId = order.getSceneId();
+            Scene scene = sceneMapper.selectByPrimaryKey(sceneId);
+            String leftSit = scene.getLeftSit();
+            String newLeftSit=leftSit+","+sitNumbers;
+            scene.setLeftSit(newLeftSit);
+            sceneMapper.updateByPrimaryKeySelective(scene);
+            //删除订单
+            orderMapper.deleteByPrimaryKey(orderId);
+
+
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

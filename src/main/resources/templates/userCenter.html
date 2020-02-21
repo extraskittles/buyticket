@@ -62,13 +62,14 @@
             //获取用户信息
                 axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
                     let code = response.data.code;
+                    let user={};
                     if (code == 200) {
-                        let user = response.data.data;
-                        this.user = user;
-                    }
-                }).catch(error => {
-                    }
-                )
+                        user = response.data.data;
+                    }else {
+                        user.name="未登录";
+                        }
+                    this.user = user;
+                })
         }
     })
 </script>

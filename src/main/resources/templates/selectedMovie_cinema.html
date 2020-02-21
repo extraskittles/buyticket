@@ -16,33 +16,37 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="selectedMovie_cinema">
-        <a id="fallBack" href="javascript:history.go(-1);"><</a>
-        <div id="cinema_name">{{cinema.name}}</div>
-        <div id="cinema_address">地址:{{cinema.address}}</div>
-        <div id="movies">
-            <div  class="arrow" :class="{hidden_arrow:!(arrowFlag(-1))}"  v-on:click="changeMovie(-1)"><</div>
-            <div id="movie">
-                <div id="movie_name">{{selectedMovie.name}}</div>
-                <div id="movie_description">描述:{{selectedMovie.description}}</div>
-            </div>
-            <div class="arrow"  :class="{hidden_arrow:!(arrowFlag(1))}" v-on:click="changeMovie(1)" >></div>
+        <div id="top">
+            <a href="javascript:history.go(-1);" id="fallBack"></a>
+            <div id="title">{{cinema.name}}</div>
         </div>
-        <div id="date">
-            <div v-on:click="selectedDate=date[0]" :class="{active_date:selectedDate==date[0]}">今天{{date[0]}}</div>
-            <div v-on:click="selectedDate=date[1]" :class="{active_date:selectedDate==date[1]}">明天{{date[1]}}</div>
-        </div>
-        <a :href="'/choseSit.html?sceneId='+scene.id" id="scene" v-for="scene in selectedScenes">
-            <div id="scene_time">
-                <div id="scene_time_startTime">{{scene.time}}</div>
-                <div id="scene_time_endTime">{{scene.time2}}散场</div>
+        <div id="remain">
+            <div id="cinema_address">地址:{{cinema.address}}</div>
+            <div id="movies">
+                <div  class="arrow" :class="{hidden_arrow:!(arrowFlag(-1))}"  v-on:click="changeMovie(-1)"><</div>
+                <div id="movie">
+                    <div id="movie_name">{{selectedMovie.name}}</div>
+                    <div id="movie_description">描述:{{selectedMovie.description}}</div>
+                </div>
+                <div class="arrow"  :class="{hidden_arrow:!(arrowFlag(1))}" v-on:click="changeMovie(1)" >></div>
             </div>
-            <div id="scene_hellName">{{scene.hallName}}</div>
-            <div id="scene_price">¥{{scene.price}}</div>
-            <div id="scene_buy">购票</div>
-        </a>
-        <div id="noScene" v-if="selectedScenes.length<1">
-            <img id="noScene_img" src="picture/noScene.png">
-            <div id="noScene_text">暂无场次</div>
+            <div id="date">
+                <div v-on:click="selectedDate=date[0]" :class="{active_date:selectedDate==date[0]}">今天{{date[0]}}</div>
+                <div v-on:click="selectedDate=date[1]" :class="{active_date:selectedDate==date[1]}">明天{{date[1]}}</div>
+            </div>
+            <a :href="'/choseSit.html?sceneId='+scene.id" id="scene" v-for="scene in selectedScenes">
+                <div id="scene_time">
+                    <div id="scene_time_startTime">{{scene.time}}</div>
+                    <div id="scene_time_endTime">{{scene.time2}}散场</div>
+                </div>
+                <div id="scene_hellName">{{scene.hallName}}</div>
+                <div id="scene_price">¥{{scene.price}}</div>
+                <div id="scene_buy">购票</div>
+            </a>
+            <div id="noScene" v-if="selectedScenes.length<1">
+                <img id="noScene_img" src="picture/noScene.png">
+                <div id="noScene_text">暂无场次</div>
+            </div>
         </div>
     </div>
 </script>

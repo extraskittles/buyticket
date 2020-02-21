@@ -16,32 +16,36 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="box">
-        <a id="fallBack" :href="'/orderList.html'"><</a>
-        <div id="title">订单详情</div>
-        <div id="orderStatus">{{orderDetail.isExpire}}</div>
-        <div id="scene">
-            <div id="scene_movieName">{{orderDetail.movieName}}</div>
-            <div id="scene_cinemaName">{{orderDetail.cinemaName}}</div>
-            <div id="scene_time">{{orderDetail.weekOfDay}}&nbsp;{{orderDetail.dateAndTime}}</div>
-            <div id="scene_position">{{orderDetail.hallName}}&nbsp;{{orderDetail.sitPositionStr}}</div>
-            <div id="scene_priceAndNumber">
-                <div id="scene_price">¥{{orderDetail.price}}</div>
-                <div id="scene_number">×{{orderDetail.number}}</div>
+        <div id="top">
+            <a :href="'/index.html'" id="fallBack"></a>
+            <div id="title">订单详情</div>
+        </div>
+        <div id="remain">
+            <div id="orderStatus">{{orderDetail.isExpire}}</div>
+            <div id="scene">
+                <div id="scene_movieName">{{orderDetail.movieName}}</div>
+                <div id="scene_cinemaName">{{orderDetail.cinemaName}}</div>
+                <div id="scene_time">{{orderDetail.weekOfDay}}&nbsp;{{orderDetail.dateAndTime}}</div>
+                <div id="scene_position">{{orderDetail.hallName}}&nbsp;{{orderDetail.sitPositionStr}}</div>
+                <div id="scene_priceAndNumber">
+                    <div id="scene_price">¥{{orderDetail.price}}</div>
+                    <div id="scene_number">×{{orderDetail.number}}</div>
+                </div>
             </div>
-        </div>
-        <div id="takeTicket">
-            <div id="takeTicket_code"></div>
-            <div id="takeTicket_number">{{orderDetail.number}}张电影票</div>
-            <div id="takeTicket_text">取款码:</div>
-            <div id="takeTicket_uuuId">{{orderDetail.uuid}}</div>
-        </div>
-        <div id="payPrice">
-            <div id="payPrice_text">商品金额</div>
-            <div id="payPrice_value">¥{{orderDetail.payPrice}}</div>
-        </div>
-        <div id="cinema">
-            <div id="cinema_name">{{orderDetail.cinemaName}}</div>
-            <div id="cinema_address">{{orderDetail.address}}</div>
+            <div id="takeTicket">
+                <div id="takeTicket_code"></div>
+                <div id="takeTicket_number">{{orderDetail.number}}张电影票</div>
+                <div id="takeTicket_text">取款码:</div>
+                <div id="takeTicket_uuuId">{{orderDetail.uuid}}</div>
+            </div>
+            <div id="payPrice">
+                <div id="payPrice_text">商品金额</div>
+                <div id="payPrice_value">¥{{orderDetail.payPrice}}</div>
+            </div>
+            <div id="cinema">
+                <div id="cinema_name">{{orderDetail.cinemaName}}</div>
+                <div id="cinema_address">{{orderDetail.address}}</div>
+            </div>
         </div>
     </div>
 </script>

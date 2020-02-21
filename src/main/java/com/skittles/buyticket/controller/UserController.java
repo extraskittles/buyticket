@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.resource.HttpResource;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,6 @@ import java.io.IOException;
 
 @Api(tags = "用户信息中心")
 @RequestMapping("/user")
-@CrossOrigin(origins = "*")
 @RestController
 public class UserController {
     @Autowired
@@ -36,7 +36,6 @@ public class UserController {
 
     @ApiOperation("登陆")
     @ApiImplicitParam("用户")
-    @CrossOrigin(origins = "*")
     @PostMapping(value = "/login", produces = "application/json")
     public CommonResult login(@Validated @RequestBody User user, HttpServletResponse response) {
         String token = userService.login(user);
@@ -51,7 +50,6 @@ public class UserController {
     }
 
     @ApiOperation("注册")
-    @CrossOrigin(origins = "*")
     @PostMapping("/register")
     public CommonResult register(@Validated @RequestBody User user) {
         boolean flag = userService.register(user);
@@ -64,7 +62,6 @@ public class UserController {
 
     @ApiOperation("注销")
     @ApiImplicitParam("用户")
-    @CrossOrigin(origins = "*")
     @GetMapping("/logout")
     public CommonResult logout(HttpServletResponse response) {
         return CommonResult.success();
@@ -72,7 +69,6 @@ public class UserController {
 
 
     @ApiOperation("查看用户信息")
-    @CrossOrigin(origins = "*")
     @GetMapping("")
     public CommonResult selectUser(HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
@@ -81,7 +77,6 @@ public class UserController {
     }
 
     @ApiOperation("修改用户信息")
-    @CrossOrigin(origins = "*")
     @PostMapping("")
     public CommonResult updataUser(@RequestBody User user, HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
@@ -94,8 +89,8 @@ public class UserController {
     }
 
     @ApiOperation("微信登陆")
-    @ApiImplicitParam("用户")
     @CrossOrigin(origins = "*")
+    @ApiImplicitParam("用户")
     @GetMapping(value = "/wechatLogin")
     public CommonResult weChatlogin(String code, HttpServletResponse response) throws IOException {
         String token = userService.wechatLogin(code);
@@ -105,8 +100,9 @@ public class UserController {
             Cookie cookie = new Cookie("token", token);
             cookie.setPath("/");
             response.addCookie(cookie);
-            return CommonResult.success(token);
+            response.sendRedirect("/index.html");
          }
+        return null;
     }
 }
 

@@ -1,24 +1,47 @@
+body{
+    margin: 0;
+    padding: 0;
+}
 #selectedMovie{
     display: flex;
     flex-direction: column;
 
 }
-#fallBack{
-    font-size: 2rem;
-    text-decoration-line: none;
-    color: #473d3d;
+#top{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     position: fixed;
-    left: 1rem;
-    top: 0.1rem;
+    width: 100%;
+    background: white;
+    height: 7vh;
 }
-#selectedMovie_title{
+#fallBack{
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 2rem;
+    background: url(../picture/fallback.png);
+    background-size: 1rem 1rem;
+    background-position: center;
+    background-repeat: no-repeat;
+;
+}
+#title{
     text-align: center;
     font-size: 17px;
     color: #191a1b;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    margin: 0.2rem 0 3rem 0;
+    height: 7vh;
+    line-height: 7vh;
+}
+#remain{
+    display: flex;
+    flex-direction: column;
+    height: 93vh;
+    padding-top: 7vh;
 }
 #date{
     display: flex;
