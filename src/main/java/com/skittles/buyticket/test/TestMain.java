@@ -9,12 +9,11 @@ import com.foxinmy.weixin4j.mp.model.User;
 
 import com.skittles.buyticket.mapper.UserMapper;
 import com.skittles.buyticket.model.Scene;
-import com.skittles.buyticket.utils.HttpUtils;
-import com.skittles.buyticket.utils.JsonUtils;
-import com.skittles.buyticket.utils.StringUtils;
+import com.skittles.buyticket.utils.*;
 import org.junit.Test;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
+import redis.clients.jedis.Jedis;
 
 import java.sql.Time;
 import java.util.*;
@@ -37,7 +36,10 @@ public class TestMain {
 
     @Test
     public void test2() {
-
+        /*Jedis jedis = RedisUtils.cli_pool();
+        String aa = jedis.get("AA");
+        jedis.expire("AA",1000);
+        System.out.println(aa);*/
     }
     @Test
     public void test3(){

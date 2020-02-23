@@ -19,7 +19,7 @@ public interface UserMapper {
         "#{points,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, ",
         "#{roles,jdbcType=VARCHAR}, #{openid,jdbcType=VARCHAR})"
     })
-    @Options(useGeneratedKeys=true, keyProperty="record.id")
+    @Options(useGeneratedKeys=true, keyProperty="id")
     int insert(User record);
 
 

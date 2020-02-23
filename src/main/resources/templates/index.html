@@ -66,6 +66,9 @@
                 }
             }
         },
+        beforecreated:function(){
+
+        },
         created: function () {
             //如果是微信浏览器访问则发ajax到微信服务器去登陆
             let isWechat = null;
@@ -86,8 +89,6 @@
                     }
                 })
             }
-
-
             //查询所有电影
             axios.get('http://zhouzhaorong.xyz/order/selectMovies').then((response) => {
                 this.movies = response.data.data;

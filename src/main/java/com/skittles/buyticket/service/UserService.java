@@ -7,4 +7,6 @@ public interface UserService {
      User selectUser(int id);
      int updateUser(int id,User user);
      String wechatLogin(String code);
+     boolean getMsgCode(String phoneNumber);
+     String msgLogin(String phoneNumber,String msgCode);
 }
