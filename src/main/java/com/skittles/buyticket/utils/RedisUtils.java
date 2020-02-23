@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-@Component
+
 public class RedisUtils {
     /**
      * 单个连接
@@ -29,7 +29,7 @@ public class RedisUtils {
      *
      * @return
      */
-    @Bean
+  /*  @Bean*/
     public Jedis cli_pool() {
         String host="111.231.237.220";
         int port=6379;

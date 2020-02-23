@@ -12,10 +12,8 @@ import com.skittles.buyticket.model.Scene;
 import com.skittles.buyticket.utils.*;
 import org.junit.Test;
 import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
-import redis.clients.jedis.Jedis;
 
-import java.sql.Time;
+
 import java.util.*;
 
 
@@ -24,22 +22,19 @@ public class TestMain {
 
     @Test
     public void test1() {
-        WeixinProxy weixinProxy = new WeixinProxy();
-        List<User> users = null;
-        try {
-            users = weixinProxy.getAllFollowing();
-        } catch (WeixinException e) {
-            e.printStackTrace();
-        }
-        System.out.println(users);
+        String url="http://zhouzhaorong.xyz/order/confirmOrder";
+        Map<String,Object> map=new HashMap<>();
+        map.put("sceneId",38035);
+        map.put("sitNumbers","2");
+        Map<String, Object> map1 = HttpUtils.sendPost(url,map);
+        System.out.println(map1);
     }
 
     @Test
     public void test2() {
-        /*Jedis jedis = RedisUtils.cli_pool();
-        String aa = jedis.get("AA");
-        jedis.expire("AA",1000);
-        System.out.println(aa);*/
+        String url="http://zhouzhaorong.xyz/order/selectMovieById?movieId=2";
+        Map<String, Object> map = HttpUtils.sendGet(url);
+        System.out.println(map);
     }
     @Test
     public void test3(){
@@ -56,18 +51,12 @@ public class TestMain {
 
     @Test
     public void test4(){
-        String s = HttpUtils.sendHttpRequest("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect", HttpMethod.GET, new HashMap<>());
-        System.out.println(s);
+
     }
 
     @Test
     public void test5(){
-        new Timer("testTime").schedule(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("计数");
-            }
-        },1000,2000);
+
     }
 
     public static void main(String[] args) {

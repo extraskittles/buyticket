@@ -30,8 +30,6 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
     @Autowired
     UserMapper userMapper;
-    @Autowired
-    Jedis jedis;
 
 
     @Override
@@ -95,9 +93,7 @@ public class UserServiceImpl implements UserService {
         String token = null;
         //获取网页授权的access_token和openid
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx290c9f6319d3532c&secret=7aaa74e1564eef0d9b0c2bade4bfe9dd&code=" + code + "&grant_type=authorization_code";
-        Map<String, Object> params = new HashMap<>();
-        String strBody = HttpUtils.sendHttpRequest(url, HttpMethod.GET, params);
-        Map<String, Object> body = JsonUtils.toMap(strBody);
+        Map<String,Object> body= HttpUtils.sendGet(url);
         String openid = (String) body.get("openid");
         String access_token = (String) body.get("access_token");
         //获取用户信息
@@ -105,8 +101,7 @@ public class UserServiceImpl implements UserService {
        /* params2.put("access_token",access_token);
         params2.put("openid",openid);
         params2.put("lang","zh_CN");*/
-        String strBody2 = HttpUtils.sendHttpRequest(url2, HttpMethod.GET, params);
-        Map<String, Object> body2 = JsonUtils.toMap(strBody2);
+        Map<String,Object>body2 = HttpUtils.sendGet(url2);
         String name = (String) body2.get("nickname");
         //判断是否已经微信登陆
         if (openid != null) {
@@ -151,8 +146,8 @@ public class UserServiceImpl implements UserService {
             Random random = new Random();
             String str = random.nextInt(999999)+ "";
             //储存在redis
-            jedis.set(phoneNumber,str);
-            jedis.expire(phoneNumber, 600);
+            /*jedis.set(phoneNumber,str);
+            jedis.expire(phoneNumber, 600);*/
             //发送短信
             return true;
         } else {
@@ -162,7 +157,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String msgLogin(String phoneNumber, String msgCode) {
-        String token=null;
+       /* String token=null;
         String s = jedis.get(phoneNumber);
         if (msgCode.equals(s)) {
             //判断是否第一次登陆，第一次登陆需将手机号写入数据库
@@ -183,7 +178,7 @@ public class UserServiceImpl implements UserService {
                 e.printStackTrace();
             }
 
-        }
-        return token;
+        }*/
+        return null;
     }
 }

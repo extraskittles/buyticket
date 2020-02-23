@@ -4,22 +4,19 @@ import com.skittles.buyticket.Timer.DataTask;
 import com.skittles.buyticket.detailMapper.OrderDetailMapper;
 import com.skittles.buyticket.detailMapper.SceneDetailMapper;
 import com.skittles.buyticket.detailMapper.TestMapper;
-import com.skittles.buyticket.detailModel.OrderDetail;
 import com.skittles.buyticket.mapper.SceneMapper;
 import com.skittles.buyticket.mapper.UserMapper;
 
 
-import com.skittles.buyticket.detailModel.SceneDetail;
 import com.skittles.buyticket.model.Scene;
-import com.skittles.buyticket.model.User;
+
 import com.skittles.buyticket.test.MyObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.validation.annotation.Validated;
-
 import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,12 +43,15 @@ public class TestController {
     SceneMapper sceneMapper;
     @Autowired
     DataTask dataTask;
-
+    @Autowired
+    JedisPool jedisPool;
     @ApiOperation(value = "第一个接口", notes = "这是第一个接口")
     @GetMapping(value = "/test")
     public Object test(HttpServletRequest request) {
-        String remoteHost = request.getRemoteAddr();
-        return remoteHost;
+        Jedis jedis = jedisPool.getResource();
+        jedis.set("test","test");
+        jedis.close();
+        return null;
     }
 
     @PostMapping(value = "/test1", produces = "application/json")
