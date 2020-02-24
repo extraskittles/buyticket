@@ -47,7 +47,7 @@
         data: function () {
             return {
                 user: {},//用户信息
-                orderDetail:{}//订单详细
+                orderDetail: {}//订单详细
             };
         },
         created: function () {
@@ -60,13 +60,13 @@
                 }
             })
             //从rul获取orderId，并获取订单详细
-            let orderId=getQuery("orderId");
-            axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{
-                params:{
-                    orderId:orderId,
+            let orderId = getQuery("orderId");
+            axios.get('http://zhouzhaorong.xyz/order/selectOrderById', {
+                params: {
+                    orderId: orderId,
                 }
-            }).then((response)=>{
-                this.orderDetail=response.data.data;
+            }).then((response) => {
+                this.orderDetail = response.data.data;
             })
         }
     })

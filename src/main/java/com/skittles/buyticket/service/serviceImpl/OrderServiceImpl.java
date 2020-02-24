@@ -27,52 +27,53 @@ import java.util.*;
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
-@Autowired
-UserMapper userMapper;
-@Autowired
+    @Autowired
+    UserMapper userMapper;
+    @Autowired
     TicketOrderMapper orderMapper;
-@Autowired
+    @Autowired
     OrderDetailMapper orderDetailMapper;
-@Autowired
+    @Autowired
     SceneDetailMapper sceneDetailMapper;
-@Autowired
+    @Autowired
     HallMapper hallMapper;
-@Autowired
+    @Autowired
     SceneMapper sceneMapper;
 //  扣取一定用户积分来获得电影票
 
     @Override
-    public Map<String,Boolean> pay(int orderId, HttpServletRequest request) {
-        Map map =new HashMap();
+    public Map<String, Boolean> pay(int orderId, HttpServletRequest request) {
+        Map map = new HashMap();
         //先判断用户积分是否够积分支付
         int userId = HttpUtils.getIdByRequest(request);
         User user = userMapper.selectByPrimaryKey(userId);
         Integer points = user.getPoints();
         TicketOrder order = orderMapper.selectByPrimaryKey(orderId);
         double payPrice = order.getPayPrice();
-        map.put("noPoints",false);
-        if(points/10<payPrice){
-            map.put("noPoints",true);
+        map.put("noPoints", false);
+        if (points / 10 < payPrice) {
+            map.put("noPoints", true);
             return map;
         }
-       //扣取订单所需要的积分
-        points=(int)(points-payPrice*10);
+        //扣取订单所需要的积分
+        points = (int) (points - payPrice * 10);
         user.setPoints(points);
         int count1 = userMapper.updateByPrimaryKeySelective(user);
         //生成唯一码并修改订单状态
         order.setStatus("已支付");
         UUID uuid = UUID.randomUUID();
         String uuidString = uuid.toString();
-        uuidString.replaceAll("-","");
+        uuidString.replaceAll("-", "");
         order.setUuid(uuidString);
         int count2 = orderMapper.updateByPrimaryKeySelective(order);
-        if(count1>0&&count2>0){
-            map.put("success",true);
-            map.put("data",order);
+        if (count1 > 0 && count2 > 0) {
+            map.put("success", true);
+            map.put("data", order);
         }
         return map;
     }
-//确认订单
+
+    //确认订单
     @Override
     public Map<String, Object> confirmOrder(ConfirmOrderParam confirmOrderParam, int id) {
         Map<String, Object> map = new HashMap<>();
@@ -83,10 +84,10 @@ UserMapper userMapper;
         String[] sitNumbers = numbersString.split(",");
         SceneDetail sceneDetail = sceneDetailMapper.selectSceneDetailById(sceneId);
         String leftSitString = sceneDetail.getLeftSit();
-        if(leftSitString==null){
+        if (leftSitString == null) {
             Integer sitNumber = sceneDetail.getSitNumber();
-            List<Integer> sitNumberString =new ArrayList<>();
-            for(int i=1;i<sitNumber;i++){
+            List<Integer> sitNumberString = new ArrayList<>();
+            for (int i = 1; i < sitNumber; i++) {
                 sitNumberString.add(i);
             }
             leftSitString = StringUtils.join(sitNumberString, ",");
@@ -132,7 +133,7 @@ UserMapper userMapper;
         sceneMapper.updateByPrimaryKeySelective(scene);
         //将应付价格
         OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(orderId);
-        map.put("orderDetail",orderDetail);
+        map.put("orderDetail", orderDetail);
         return map;
     }
 
@@ -140,20 +141,20 @@ UserMapper userMapper;
     public boolean cancelOrder(int orderId, int userId) {
         //判断订单是否支付，支付无法取消
         OrderDetail order = orderDetailMapper.selectOrderDetailById(orderId);
-        if(order==null){
+        if (order == null) {
             return false;
         }
-        if("已支付".equals(order.getStatus())){
+        if ("已支付".equals(order.getStatus())) {
             return false;
         }
         //确认订单是否属于本用户
-        if(order!=null&&userId==order.getUserId()){
+        if (order != null && userId == order.getUserId()) {
             //增加回座位号
             String sitNumbers = order.getSitNumbers();
             Integer sceneId = order.getSceneId();
             Scene scene = sceneMapper.selectByPrimaryKey(sceneId);
             String leftSit = scene.getLeftSit();
-            String newLeftSit=leftSit+","+sitNumbers;
+            String newLeftSit = leftSit + "," + sitNumbers;
             scene.setLeftSit(newLeftSit);
             sceneMapper.updateByPrimaryKeySelective(scene);
             //删除订单
@@ -161,7 +162,7 @@ UserMapper userMapper;
 
 
             return true;
-        }else {
+        } else {
             return false;
         }
     }

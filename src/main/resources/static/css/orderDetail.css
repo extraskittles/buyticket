@@ -1,14 +1,16 @@
-body{
+body {
     margin: 0;
     padding: 0;
 }
-#box{
+
+#box {
     display: flex;
     flex-direction: column;
     background-color: #f0efef;
     height: 100vh;
 }
-#top{
+
+#top {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -18,7 +20,8 @@ body{
     background: white;
     height: 7vh;
 }
-#fallBack{
+
+#fallBack {
     position: absolute;
     left: 0;
     height: 100%;
@@ -26,10 +29,10 @@ body{
     background: url(../picture/fallback.png);
     background-size: 1rem 1rem;
     background-position: center;
-    background-repeat: no-repeat;
-;
+    background-repeat: no-repeat;;
 }
-#title{
+
+#title {
     text-align: center;
     font-size: 17px;
     color: #191a1b;
@@ -38,13 +41,15 @@ body{
     height: 7vh;
     line-height: 7vh;
 }
-#remain{
+
+#remain {
     display: flex;
     flex-direction: column;
     height: 93vh;
     padding-top: 7vh;
 }
-#scene{
+
+#scene {
     padding: 0.8rem 1rem;
     background-color: white;
     margin: 0.5rem 0;
@@ -52,13 +57,14 @@ body{
     color: #797d82;
     line-height: 1.2rem;
 }
-#scene_movieName{
+
+#scene_movieName {
     margin: 0.5rem 0;
     color: black;
     font-size: 1rem;
 }
 
-#takeTicket{
+#takeTicket {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -66,7 +72,7 @@ body{
     background-color: white;
 }
 
-#payPrice{
+#payPrice {
     display: flex;
     flex-direction: row;
     padding: 0.8rem 1rem;
@@ -74,45 +80,54 @@ body{
     background-color: white;
     margin: 0.5rem 0;
 }
-#cinema{
+
+#cinema {
     display: flex;
     flex-direction: column;
     padding: 0.8rem 1rem;
     background-color: white;
     line-height: 1.5rem;
 }
-#orderStatus{
+
+#orderStatus {
     height: 4.5rem;
     line-height: 4.5rem;
     padding: 0 0 0 3rem;
     background-color: #ff6f22;
     color: white;
 }
-#scene_priceAndNumber{
+
+#scene_priceAndNumber {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin: 0.4rem 0;
 }
-#takeTicket_code{
+
+#takeTicket_code {
     display: block;
     margin: 1rem 0;
 }
-#takeTicket_number{
+
+#takeTicket_number {
     margin: 0.5rem 0;
 }
-#takeTicket_uuuId{
+
+#takeTicket_uuuId {
     margin: 0.5rem 0;
     color: #ff5f16;
 }
-#payPrice_text{
+
+#payPrice_text {
     color: #787c82;
     font-size: 13px;
 }
-#payPrice_value{
+
+#payPrice_value {
     color: #ff5f16;
     font-size: 13px;
 }
-#cinema_address{
+
+#cinema_address {
     color: #797d82;
 }

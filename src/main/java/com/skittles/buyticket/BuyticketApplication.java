@@ -16,7 +16,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableTransactionManagement
 @SpringBootApplication
 @MapperScan(value = "com.skittles.buyticket.mapper")
-@MapperScan({"com.skittles.buyticket.mapper","com.skittles.buyticket.detailMapper"})
+@MapperScan({"com.skittles.buyticket.mapper", "com.skittles.buyticket.detailMapper"})
 public class BuyticketApplication /*extends SpringBootServletInitializer*/ {
 
     public static void main(String[] args) {

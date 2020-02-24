@@ -15,15 +15,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
 @Api(value = "测试模块", tags = "测试controller的控制")
@@ -48,10 +44,10 @@ public class TestController {
     @ApiOperation(value = "第一个接口", notes = "这是第一个接口")
     @GetMapping(value = "/test")
     public Object test(HttpServletRequest request) {
-        Jedis jedis = jedisPool.getResource();
-        jedis.set("test","test");
-        jedis.close();
-        return null;
+      /*  SendSms sendSms = new SendSms();
+        String s = sendSms.send();
+        return s;*/
+      return null;
     }
 
     @PostMapping(value = "/test1", produces = "application/json")

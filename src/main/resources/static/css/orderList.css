@@ -1,14 +1,16 @@
-body{
-    padding:0;
+body {
+    padding: 0;
     margin: 0;
 }
+
 #box {
     display: flex;
     flex-direction: column;
     height: 100vh;
     background-color: #f0efef;
 }
-#top{
+
+#top {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -18,7 +20,8 @@ body{
     background: white;
     height: 7vh;
 }
-#fallBack{
+
+#fallBack {
     position: absolute;
     left: 0;
     height: 100%;
@@ -26,10 +29,10 @@ body{
     background: url(../picture/fallback.png);
     background-size: 1rem 1rem;
     background-position: center;
-    background-repeat: no-repeat;
-;
+    background-repeat: no-repeat;;
 }
-#title{
+
+#title {
     text-align: center;
     font-size: 17px;
     color: #191a1b;
@@ -38,48 +41,57 @@ body{
     height: 7vh;
     line-height: 7vh;
 }
-#orderList{
+
+#orderList {
     display: flex;
     flex-direction: column;
     height: 93vh;
     padding-top: 7vh;
 }
-#money{
+
+#money {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-#money_price{
+
+#money_price {
     font-size: 15px;
     color: #ff5f16;;
 }
-#money_number{
+
+#money_number {
     color: #bdc0c5;
     font-size: 13px;
 }
-#info{
+
+#info {
     display: flex;
     flex-direction: column;
     height: 5rem;
     justify-content: space-around;
 }
-#orderDetail{
+
+#orderDetail {
     background-color: white;
     padding: 1rem 0.8rem;
     margin: 0.2rem 0;
     text-decoration-line: none;
     color: black;
 }
-#itemNumber{
+
+#itemNumber {
     text-align: center;
     font-size: 13px;
     color: #191a1b;
 }
-#time{
+
+#time {
     font-size: 13px;
     color: #797d82;
 }
-#isExpire{
+
+#isExpire {
     color: #bdc0c5;
     font-size: 13px;
 }

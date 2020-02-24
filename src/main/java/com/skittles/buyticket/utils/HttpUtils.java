@@ -43,17 +43,17 @@ public class HttpUtils {
     }
 
     //服务器向微信服务器发送请求
-    public static Map<String,Object> sendGet(String url) {
+    public static Map<String, Object> sendGet(String url) {
         RestTemplate client = new RestTemplate();
         client.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
-        ResponseEntity<String> bodyStr = client.getForEntity(url,String.class);
+        ResponseEntity<String> bodyStr = client.getForEntity(url, String.class);
         String body = bodyStr.getBody();
         Gson gson = new Gson();
         Map map = gson.fromJson(body, Map.class);
         return map;
     }
 
-    public static Map<String,Object> sendPost(String url, Map<String, Object> params){
+    public static Map<String, Object> sendPost(String url, Map<String, Object> params) {
         RestTemplate client = new RestTemplate();
         client.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
         HttpHeaders headers = new HttpHeaders();

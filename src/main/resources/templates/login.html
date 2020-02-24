@@ -78,11 +78,11 @@
 <script>
     let app = new Vue({
         el: '#app',
-        template:'#template',
+        template: '#template',
         data: function () {
             return {
-                name:'',
-                password:''
+                name: '',
+                password: ''
             }
         },
         methods: {
@@ -92,14 +92,14 @@
                     url: "http://zhouzhaorong.xyz/user/login",
                     data: {
                         name: $("#name").val(),
-                        password:$("#password").val()
+                        password: $("#password").val()
                     },
                 }).then((response) => {
-                    let code=response.data.code
-                    if(code==200){
+                    let code = response.data.code
+                    if (code == 200) {
                         alert("登陆成功")
-                        window.location="http://zhouzhaorong.xyz/index.html"
-                    }else{
+                        window.location = "http://zhouzhaorong.xyz/index.html"
+                    } else {
                         alert("密码错误")
                     }
                 })

@@ -21,20 +21,20 @@
             <a :href="'/userCenter.html'" id="fallBack"></a>
             <div id="title">电影订单</div>
         </div>
-            <div id="orderList">
-                <a :href="'/orderDetail.html?orderId='+orderDetail.id" id="orderDetail" v-for="orderDetail in orderList">
-                    <div id="info">
-                        <div id="movieName">{{orderDetail.movieName}}</div>
-                        <div id="time">{{orderDetail.weekOfDay}}&nbsp;&nbsp;{{orderDetail.dateAndTime}}</div>
-                        <div id="money">
-                            <div id="money_price">¥{{orderDetail.price}}</div>
-                            <div id="money_number">×{{orderDetail.number}}</div>
-                        </div>
+        <div id="orderList">
+            <a :href="'/orderDetail.html?orderId='+orderDetail.id" id="orderDetail" v-for="orderDetail in orderList">
+                <div id="info">
+                    <div id="movieName">{{orderDetail.movieName}}</div>
+                    <div id="time">{{orderDetail.weekOfDay}}&nbsp;&nbsp;{{orderDetail.dateAndTime}}</div>
+                    <div id="money">
+                        <div id="money_price">¥{{orderDetail.price}}</div>
+                        <div id="money_number">×{{orderDetail.number}}</div>
                     </div>
-                    <div id="itemNumber">共{{orderDetail.number}}件商品</div>
-                    <div id="isExpire">{{orderDetail.isExpire}}</div>
-                </a>
-            </div>
+                </div>
+                <div id="itemNumber">共{{orderDetail.number}}件商品</div>
+                <div id="isExpire">{{orderDetail.isExpire}}</div>
+            </a>
+        </div>
     </div>
 </script>
 <script>
@@ -60,25 +60,25 @@
             axios.get("http://zhouzhaorong.xyz/order/selectOrderDetails").then((response) => {
                 //修改datetime格式
                 let orderList = response.data.data;
-                    let date=moment();
+                let date = moment();
                 for (let index in orderList) {
                     orderList[index].weekOfDay = moment(orderList[index].datetime).format('星期E');
                     orderList[index].dateAndTime = moment(orderList[index].datetime).format('MM月DD日 HH:mm');
-                    orderList[index].number=orderList[index].payPrice/orderList[index].price;
-                    if(date>moment(orderList[index].datetime).valueOf()+120*60*1000){
-                        orderList[index].isExpire="放映结束"
-                    }else{
-                        orderList[index].isExpire="等待进场"
+                    orderList[index].number = orderList[index].payPrice / orderList[index].price;
+                    if (date > moment(orderList[index].datetime).valueOf() + 120 * 60 * 1000) {
+                        orderList[index].isExpire = "放映结束"
+                    } else {
+                        orderList[index].isExpire = "等待进场"
                     }
                 }
                 this.orderList = orderList;
             })
         },
-        mounted:function () {
+        mounted: function () {
 
         },
-        computed:{
-            number:function () {
+        computed: {
+            number: function () {
 
             }
         }

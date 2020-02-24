@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
+
 //项目启动后每天0点更新数据库
 @Component
 public class SystemInitListener implements ApplicationListener<ContextRefreshedEvent> {
@@ -20,6 +21,7 @@ public class SystemInitListener implements ApplicationListener<ContextRefreshedE
     TicketOrderMapper orderMapper;
     @Autowired
     DataTask dataTask;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         //删除场次表所有数据
@@ -30,14 +32,14 @@ public class SystemInitListener implements ApplicationListener<ContextRefreshedE
         dataTask.updateTomorrowData();
         Timer timer = new Timer();
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE,1);
-        calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DATE),0,0,0);
-        long interval=24*60*60*1000;
+        calendar.add(Calendar.DATE, 1);
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
+        long interval = 24 * 60 * 60 * 1000;
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 dataTask.updateTomorrowData();
             }
-        },calendar.getTime(),interval);
+        }, calendar.getTime(), interval);
     }
 }

@@ -15,43 +15,43 @@ import java.util.List;
 
 public interface CinemaMapper {
     @Delete({
-        "delete from cinema",
-        "where id = #{id,jdbcType=INTEGER}"
+            "delete from cinema",
+            "where id = #{id,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer id);
 
     @Insert({
-        "insert into cinema (id, name, ",
-        "address)",
-        "values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
-        "#{address,jdbcType=VARCHAR})"
+            "insert into cinema (id, name, ",
+            "address)",
+            "values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
+            "#{address,jdbcType=VARCHAR})"
     })
     int insert(Cinema record);
 
-    @InsertProvider(type=CinemaSqlProvider.class, method="insertSelective")
+    @InsertProvider(type = CinemaSqlProvider.class, method = "insertSelective")
     int insertSelective(Cinema record);
 
     @Select({
-        "select",
-        "id, name, address",
-        "from cinema",
-        "where id = #{id,jdbcType=INTEGER}"
+            "select",
+            "id, name, address",
+            "from cinema",
+            "where id = #{id,jdbcType=INTEGER}"
     })
     @Results({
-        @Result(column="id", property="id", jdbcType=JdbcType.INTEGER, id=true),
-        @Result(column="name", property="name", jdbcType=JdbcType.VARCHAR),
-        @Result(column="address", property="address", jdbcType=JdbcType.VARCHAR)
+            @Result(column = "id", property = "id", jdbcType = JdbcType.INTEGER, id = true),
+            @Result(column = "name", property = "name", jdbcType = JdbcType.VARCHAR),
+            @Result(column = "address", property = "address", jdbcType = JdbcType.VARCHAR)
     })
     Cinema selectByPrimaryKey(Integer id);
 
-    @UpdateProvider(type=CinemaSqlProvider.class, method="updateByPrimaryKeySelective")
+    @UpdateProvider(type = CinemaSqlProvider.class, method = "updateByPrimaryKeySelective")
     int updateByPrimaryKeySelective(Cinema record);
 
     @Update({
-        "update cinema",
-        "set name = #{name,jdbcType=VARCHAR},",
-          "address = #{address,jdbcType=VARCHAR}",
-        "where id = #{id,jdbcType=INTEGER}"
+            "update cinema",
+            "set name = #{name,jdbcType=VARCHAR},",
+            "address = #{address,jdbcType=VARCHAR}",
+            "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Cinema record);
 

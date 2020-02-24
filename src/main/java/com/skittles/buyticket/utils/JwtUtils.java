@@ -56,13 +56,14 @@ public class JwtUtils {
         }
         return resultMap;
     }
-//根据token获取payload
+
+    //根据token获取payload
     public static Map<String, Object> getPayLord(String token) throws Exception {
         String roles = JWSObject.parse(token).getPayload().toJSONObject().get("roles").toString();
         int id = Integer.valueOf(JWSObject.parse(token).getPayload().toJSONObject().get("id").toString());
-        Map<String,Object> map =new HashMap<>();
-        map.put("roles",roles);
-        map.put("id",id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("roles", roles);
+        map.put("id", id);
         return map;
     }
 }

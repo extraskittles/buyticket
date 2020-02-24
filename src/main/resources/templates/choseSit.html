@@ -2,7 +2,8 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>zzr卖座</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/choseSit.css">
@@ -31,7 +32,9 @@
                     </div>
                     <div id="cinemaBox_right">
                         <div class="cinemaBox_right_sits" v-for="count1 in 8">
-                            <div v-on:click="choseTrigger(count1,count2)"  :class="{takenSit:isTakenSit(count1,count2),chosedSit:isChosedSit(count1,count2)}" class="cinemaBox_right_sit" v-for="count2 in 10"></div>
+                            <div v-on:click="choseTrigger(count1,count2)"
+                                 :class="{takenSit:isTakenSit(count1,count2),chosedSit:isChosedSit(count1,count2)}"
+                                 class="cinemaBox_right_sit" v-for="count2 in 10"></div>
                         </div>
                     </div>
                 </div>
@@ -40,43 +43,43 @@
         </div>
     </div>
 </script>
-<script >
+<script>
     let app = new Vue({
         el: '#app',
         template: "#template",
         data: function () {
             return {
-               user:{},
-                sceneDetail:{},
-                leftSitArr:[],
-                chosedList:[],
-                datetime:'',//几月几日
-                weekOfDay:'',//周几
+                user: {},
+                sceneDetail: {},
+                leftSitArr: [],
+                chosedList: [],
+                datetime: '',//几月几日
+                weekOfDay: '',//周几
             };
         },
-        methods:{
-          isTakenSit:function (count1,count2) {
-              let sitNumber=(count1-1)*10+count2+'';
-              let leftSitArr=this.leftSitArr;
-              if(leftSitArr.indexOf(sitNumber)>-1){
-                  return false;
-              }
-              return true;
-          },
-            isChosedSit:function(count1,count2){
-                let sitNumber=(count1-1)*10+count2;
-                let chosedList=this.chosedList;
-                if(chosedList.indexOf(sitNumber)>-1){
+        methods: {
+            isTakenSit: function (count1, count2) {
+                let sitNumber = (count1 - 1) * 10 + count2 + '';
+                let leftSitArr = this.leftSitArr;
+                if (leftSitArr.indexOf(sitNumber) > -1) {
+                    return false;
+                }
+                return true;
+            },
+            isChosedSit: function (count1, count2) {
+                let sitNumber = (count1 - 1) * 10 + count2;
+                let chosedList = this.chosedList;
+                if (chosedList.indexOf(sitNumber) > -1) {
                     return true;
                 }
                 return false;
             },
-            choseTrigger: function (count1,count2) {
-              let sitNumber=(count1-1)*10+count2;
-              let isTakenSit =this.isTakenSit(count1,count2);
-              if(isTakenSit){
-                  return;
-              }
+            choseTrigger: function (count1, count2) {
+                let sitNumber = (count1 - 1) * 10 + count2;
+                let isTakenSit = this.isTakenSit(count1, count2);
+                if (isTakenSit) {
+                    return;
+                }
                 let list = this.chosedList;
                 let isHas = false;
                 list.map((value, index) => {
@@ -90,36 +93,36 @@
                 }
                 this.chosedList = list;
             },
-            confirmOrder:function () {
-              let confirmOrderParam=new Object();
-              let sceneDetail=this.sceneDetail;
-              confirmOrderParam.sceneId=sceneDetail.id;
-              /*计算chosedSitStr*/
-                let chosedList=this.chosedList;
-                let chosedSitStr=null;
-                if(chosedList.length<1){
+            confirmOrder: function () {
+                let confirmOrderParam = new Object();
+                let sceneDetail = this.sceneDetail;
+                confirmOrderParam.sceneId = sceneDetail.id;
+                /*计算chosedSitStr*/
+                let chosedList = this.chosedList;
+                let chosedSitStr = null;
+                if (chosedList.length < 1) {
                     return chosedSitStr;
                 }
-                chosedSitStr=chosedList[0];
-                for(let i=1;i<chosedList.length;i++){
-                    chosedSitStr=chosedSitStr+','+chosedList[i]
+                chosedSitStr = chosedList[0];
+                for (let i = 1; i < chosedList.length; i++) {
+                    chosedSitStr = chosedSitStr + ',' + chosedList[i]
                 }
-              confirmOrderParam.sitNumbers=chosedSitStr;
+                confirmOrderParam.sitNumbers = chosedSitStr;
 
                 axios({
-                    method:"post",
-                    url:"http://zhouzhaorong.xyz/order/confirmOrder",
+                    method: "post",
+                    url: "http://zhouzhaorong.xyz/order/confirmOrder",
                     headers:
                         {
                             'Content-Type': 'application/json'
                         },
-                    data:confirmOrderParam
-                }).then((response)=>{
-                    window.location="http://zhouzhaorong.xyz/confirmOrder.html?orderId="+response.data.data.id;
+                    data: confirmOrderParam
+                }).then((response) => {
+                    window.location = "http://zhouzhaorong.xyz/confirmOrder.html?orderId=" + response.data.data.id;
                 })
             }
         },
-        created:function () {
+        created: function () {
             //获取用户信息
             axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
                 let code = response.data.code;
@@ -134,39 +137,39 @@
 
             //从url获取用户sceneId,并查询场次的相关信息
             let sceneId = getQuery("sceneId");
-           axios.get('http://zhouzhaorong.xyz/order/selectSceneById',{
-               params:{
-                   sceneId:sceneId
-               }
-           }).then((response)=>{
-               this.sceneDetail=response.data.data;
-              //修改datetime格式
-               this.weekOfDay=moment(response.data.data.datetime).format('星期E');
-               this.datetime=moment(response.data.data.datetime).format('MM月DD日 HH:mm');
-               let leftSitStr=response.data.data.leftSit;
-               this.leftSitArr = leftSitStr.split(',');
+            axios.get('http://zhouzhaorong.xyz/order/selectSceneById', {
+                params: {
+                    sceneId: sceneId
+                }
+            }).then((response) => {
+                this.sceneDetail = response.data.data;
+                //修改datetime格式
+                this.weekOfDay = moment(response.data.data.datetime).format('星期E');
+                this.datetime = moment(response.data.data.datetime).format('MM月DD日 HH:mm');
+                let leftSitStr = response.data.data.leftSit;
+                this.leftSitArr = leftSitStr.split(',');
 
-           })
+            })
 
             //根据movieId获取该电影信息
 
         },
-        computed:{
-            shouldPay:function () {
-                let chosedList=this.chosedList;
-                let sceneDetail=this.sceneDetail;
-                let shouldPay=chosedList.length*sceneDetail.price;
+        computed: {
+            shouldPay: function () {
+                let chosedList = this.chosedList;
+                let sceneDetail = this.sceneDetail;
+                let shouldPay = chosedList.length * sceneDetail.price;
                 return shouldPay;
             },
-            chosedSitStr:function () {
-                let chosedList=this.chosedList;
-                let chosedSitStr=null;
-                if(chosedList.length<1){
+            chosedSitStr: function () {
+                let chosedList = this.chosedList;
+                let chosedSitStr = null;
+                if (chosedList.length < 1) {
                     return chosedSitStr;
                 }
-                chosedSitStr=chosedList[0];
-                for(let i=1;i<chosedList.length;i++){
-                    chosedSitStr+=chosedList[i]
+                chosedSitStr = chosedList[0];
+                for (let i = 1; i < chosedList.length; i++) {
+                    chosedSitStr += chosedList[i]
                 }
                 return chosedSitStr;
             }

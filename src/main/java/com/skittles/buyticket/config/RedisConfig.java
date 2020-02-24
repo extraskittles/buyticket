@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 
-
 @Component
 @ConfigurationProperties(prefix = "spring.redis")
 

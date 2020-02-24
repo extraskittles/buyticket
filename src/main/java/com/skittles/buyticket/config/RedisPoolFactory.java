@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+
 @Service
 public class RedisPoolFactory {
     @Autowired
@@ -17,7 +18,9 @@ public class RedisPoolFactory {
         poolConfig.setMaxIdle(Integer.valueOf(redisConfig.getPool().get("maxIdle")));
         poolConfig.setMaxWaitMillis(Integer.valueOf(redisConfig.getPool().get("maxWait")) * 1000);  //注意单位是ms，要转换单位
         poolConfig.setMinIdle(Integer.valueOf(redisConfig.getPool().get("minIdle")));
-        return new JedisPool(poolConfig, redisConfig.getHost(), redisConfig.getPort(),
+        JedisPool jedisPool = new JedisPool(poolConfig, redisConfig.getHost(), redisConfig.getPort(),
                 redisConfig.getTimeout() * 1000, redisConfig.getPassword(), 0);
+        return jedisPool;
+
     }
 }

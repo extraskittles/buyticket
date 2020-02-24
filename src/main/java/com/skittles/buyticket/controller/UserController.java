@@ -106,24 +106,24 @@ public class UserController {
             cookie.setPath("/");
             response.addCookie(cookie);
             response.sendRedirect("/index.html");
-         }
+        }
         return null;
     }
 
     @ApiOperation("发送短信")
-    @PostMapping(value = "/getMsgCode",produces = "application/json")
+    @PostMapping(value = "/getMsgCode", produces = "application/json")
     public CommonResult getMsgCode(@Validated @NotNull @RequestBody String phoneNumber) {
         boolean flag = userService.getMsgCode(phoneNumber);
-        if(flag){
+        if (flag) {
             return CommonResult.success();
-        }else {
+        } else {
             return CommonResult.failed("手机不符合格式");
         }
     }
 
     @ApiOperation("短信登陆")
-    @PostMapping(value = "/msgLogin",produces = "application/json")
-    public CommonResult getMsgCode(@Validated @NotNull @RequestBody MsgLoginParam msgLoginParam,HttpServletResponse response) {
+    @PostMapping(value = "/msgLogin", produces = "application/json")
+    public CommonResult getMsgCode(@Validated @NotNull @RequestBody MsgLoginParam msgLoginParam, HttpServletResponse response) {
         String phoneNumber = msgLoginParam.getPhoneNumber();
         String msgCode = msgLoginParam.getMsgCode();
         String token = userService.msgLogin(phoneNumber, msgCode);

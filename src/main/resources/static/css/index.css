@@ -1,18 +1,21 @@
-body{
-    margin: 0 ;
+body {
+    margin: 0;
     padding: 0;
 }
-#movies{
+
+#movies {
     display: flex;
     flex-direction: column;
 }
-#remain{
+
+#remain {
     display: flex;
     flex-direction: column;
     height: 93vh;
     padding-top: 7vh;
 }
-#title{
+
+#title {
     text-align: center;
     position: fixed;
     width: 100%;
@@ -20,7 +23,8 @@ body{
     height: 7vh;
     line-height: 7vh;
 }
-.movies_movie{
+
+.movies_movie {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -28,7 +32,8 @@ body{
     text-decoration-line: none;
     margin: 0.5rem 1rem;
 }
-.movies_movie_info{
+
+.movies_movie_info {
     display: flex;
     flex-direction: column;
     margin: 0.4rem;
@@ -36,21 +41,24 @@ body{
     color: #797d82;
     width: 80%;
 }
-.movies_movie_info_name{
+
+.movies_movie_info_name {
     color: #191a1b;
     font-size: 16px;
     height: 22px;
     line-height: 22px;
     margin-right: 5px;
 }
-.movies_movie_buyTicket{
+
+.movies_movie_buyTicket {
     font-size: 0.75rem;
     color: #ff5f16;
     border: 1px solid #3e867f;
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
 }
-#noMore{
+
+#noMore {
     height: 59px;
     background-color: #ededed;
     color: #bdc0c5;
@@ -59,7 +67,8 @@ body{
     line-height: 59px;
     width: 100%;
 }
-#footer{
+
+#footer {
     display: flex;
     flex-direction: row;
     position: fixed;
@@ -70,7 +79,8 @@ body{
     justify-content: space-between;
     background-color: white;
 }
-.footer_div{
+
+.footer_div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,18 +88,21 @@ body{
     color: black;
     text-decoration-line: none;
 }
-.footer_div_img{
+
+.footer_div_img {
     width: 21px;
     height: 21px;
     margin: 0.2rem;
 }
-.footer_div_text{
+
+.footer_div_text {
     font-size: 10px;
     line-height: 12px;
     word-break: keep-all;
     color: #797d82;
     top: 32px;
 }
-#footer_movie_text{
+
+#footer_movie_text {
     color: #ff5f16;
 }

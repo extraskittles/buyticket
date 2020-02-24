@@ -16,34 +16,34 @@
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <!--<script type="text/javascript" src="../static/JS/buyTicket.js"></script>-->
 <script type="text/x-template" id="template">
-<div >
-   <div>{{a.weekOfDay}}</div>
-    <div>{{a.datetime}}</div>
-</div>
+    <div>
+        <div>{{a.weekOfDay}}</div>
+        <div>{{a.datetime}}</div>
+    </div>
 
 </script>
 <script>
-   let app=new Vue({
-       el:"#app",
-       template:"#template",
-       data:function () {
-           return{
-                a:[],
-           }
-       },
+    let app = new Vue({
+        el: "#app",
+        template: "#template",
+        data: function () {
+            return {
+                a: [],
+            }
+        },
 
-       created:function () {
-           //获取该用户的所有订单
-           axios.get("http://zhouzhaorong.xyz/order/selectOrderDetails").then((response) => {
-               //修改datetime格式
-               let a =response.data.data;
-               let weekOfDay=moment(a[0].datetime).valueOf();
-               let datetime=moment(a[0].datetime).valueOf();
-               a.weekOfDay=weekOfDay;
-               a.datetime=datetime;
-               this.a=a;
-           })
-       }
-   })
+        created: function () {
+            //获取该用户的所有订单
+            axios.get("http://zhouzhaorong.xyz/order/selectOrderDetails").then((response) => {
+                //修改datetime格式
+                let a = response.data.data;
+                let weekOfDay = moment(a[0].datetime).valueOf();
+                let datetime = moment(a[0].datetime).valueOf();
+                a.weekOfDay = weekOfDay;
+                a.datetime = datetime;
+                this.a = a;
+            })
+        }
+    })
 </script>
 </html>

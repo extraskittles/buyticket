@@ -16,14 +16,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @ComponentScan(basePackages = {"com.skittles.buyticket.controller"})
 public class swaggerConfig {
     @Bean
-    public Docket customDocket(){
+    public Docket customDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .host("zhouzhaorong.xyz")
                 .apiInfo(apiinfo());
     }
 
-    private ApiInfo apiinfo(){
-        Contact contact=new Contact("skittles","www.test.com","583846780@qq.com");
+    private ApiInfo apiinfo() {
+        Contact contact = new Contact("skittles", "www.test.com", "583846780@qq.com");
         return new ApiInfoBuilder()
                 .title("skittles项目API接口")
                 .description("包括用户、商家、购物车、订单的接口")

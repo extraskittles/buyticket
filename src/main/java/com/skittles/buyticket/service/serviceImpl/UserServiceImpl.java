@@ -1,5 +1,6 @@
 package com.skittles.buyticket.service.serviceImpl;
 
+import com.google.gson.Gson;
 import com.nimbusds.jose.JOSEException;
 import com.skittles.buyticket.mapper.UserMapper;
 import com.skittles.buyticket.mapper.WechatUserMapper;
@@ -9,6 +10,7 @@ import com.skittles.buyticket.model.WechatUser;
 import com.skittles.buyticket.service.UserService;
 import com.skittles.buyticket.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +18,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import sun.tools.asm.CatchData;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,6 +34,8 @@ public class UserServiceImpl implements UserService {
     PasswordEncoder passwordEncoder;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    JedisPool jedisPool;
 
 
     @Override
@@ -93,7 +99,7 @@ public class UserServiceImpl implements UserService {
         String token = null;
         //获取网页授权的access_token和openid
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx290c9f6319d3532c&secret=7aaa74e1564eef0d9b0c2bade4bfe9dd&code=" + code + "&grant_type=authorization_code";
-        Map<String,Object> body= HttpUtils.sendGet(url);
+        Map<String, Object> body = HttpUtils.sendGet(url);
         String openid = (String) body.get("openid");
         String access_token = (String) body.get("access_token");
         //获取用户信息
@@ -101,7 +107,7 @@ public class UserServiceImpl implements UserService {
        /* params2.put("access_token",access_token);
         params2.put("openid",openid);
         params2.put("lang","zh_CN");*/
-        Map<String,Object>body2 = HttpUtils.sendGet(url2);
+        Map<String, Object> body2 = HttpUtils.sendGet(url2);
         String name = (String) body2.get("nickname");
         //判断是否已经微信登陆
         if (openid != null) {
@@ -121,7 +127,6 @@ public class UserServiceImpl implements UserService {
             } else {
                 user.setOpenid(openid);
                 user.setName(name);
-                user.setId(dataUser.getId());
                 userMapper.updateByPrimaryKeySelective(user);
                 id = dataUser.getId();
             }
@@ -144,41 +149,50 @@ public class UserServiceImpl implements UserService {
         if (flag) {
             //生成随机6位数字
             Random random = new Random();
-            String str = random.nextInt(999999)+ "";
+            String str = random.nextInt(999999) + "";
             //储存在redis
-            /*jedis.set(phoneNumber,str);
-            jedis.expire(phoneNumber, 600);*/
+            Jedis jedis = jedisPool.getResource();
+            jedis.set(phoneNumber, str);
+            jedis.expire(phoneNumber, 600);
+            jedis.close();
             //发送短信
-            return true;
-        } else {
-            return false;
+            String response = SmsUtils.send(phoneNumber, str);
+            Gson gson = new Gson();
+            Map map = gson.fromJson(response, Map.class);
+            if (map != null && map.get("Code").equals("Ok")) {
+                return true;
+            }
         }
+        return false;
     }
 
     @Override
     public String msgLogin(String phoneNumber, String msgCode) {
-       /* String token=null;
-        String s = jedis.get(phoneNumber);
-        if (msgCode.equals(s)) {
-            //判断是否第一次登陆，第一次登陆需将手机号写入数据库
+        String token=null;
+        Jedis jedis = jedisPool.getResource();
+        String dataCode = jedis.get(phoneNumber);
+        if(dataCode!=null&&dataCode.equals(msgCode)){
+            //判断是否第一次登录，第一次登陆需插入数据
             User user = userMapper.selectByUserName(phoneNumber);
-            if (user == null) {
-                user=new User();
-                user.setName(phoneNumber);
+            if(user==null){
+                user.setPoints(2000000);
                 user.setRoles("ROLE_USER");
-                user.setPoints(200000);
+                user.setName(phoneNumber);
                 userMapper.insert(user);
+            }else {
+                //非第一次就更新用户信息
+                user.setName(phoneNumber);
+                userMapper.updateByPrimaryKeySelective(user);
             }
             Map<String, Object> map = new HashMap<>();
-            map.put("roles", "ROLE_USER");
             map.put("id", user.getId());
+            map.put("roles", "ROLE_USER");
             try {
                 token = JwtUtils.createToken(map);
             } catch (JOSEException e) {
                 e.printStackTrace();
             }
-
-        }*/
-        return null;
+        }
+        return token;
     }
 }

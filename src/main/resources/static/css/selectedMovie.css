@@ -1,13 +1,15 @@
-body{
+body {
     margin: 0;
     padding: 0;
 }
-#selectedMovie{
+
+#selectedMovie {
     display: flex;
     flex-direction: column;
 
 }
-#top{
+
+#top {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -17,7 +19,8 @@ body{
     background: white;
     height: 7vh;
 }
-#fallBack{
+
+#fallBack {
     position: absolute;
     left: 0;
     height: 100%;
@@ -25,10 +28,10 @@ body{
     background: url(../picture/fallback.png);
     background-size: 1rem 1rem;
     background-position: center;
-    background-repeat: no-repeat;
-;
+    background-repeat: no-repeat;;
 }
-#title{
+
+#title {
     text-align: center;
     font-size: 17px;
     color: #191a1b;
@@ -37,26 +40,28 @@ body{
     height: 7vh;
     line-height: 7vh;
 }
-#remain{
+
+#remain {
     display: flex;
     flex-direction: column;
     height: 93vh;
     padding-top: 7vh;
 }
-#date{
+
+#date {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin: 0.5rem;
 }
 
-.cinema{
+.cinema {
     padding: 15px;
     text-decoration-line: none;
     color: #191a1b;
 }
 
-.cinema_name{
+.cinema_name {
     font-size: 15px;
     margin-bottom: 5px;
     overflow: hidden;
@@ -64,7 +69,7 @@ body{
     white-space: nowrap;
 }
 
-.cinema_address{
+.cinema_address {
     font-size: 13px;
     color: #797d82;
     overflow: hidden;
@@ -72,6 +77,6 @@ body{
     white-space: nowrap;
 }
 
-.active_date{
+.active_date {
     color: #ff5f16;
 }

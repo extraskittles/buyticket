@@ -1,12 +1,14 @@
-body{
-    margin: 0 ;
+body {
+    margin: 0;
     padding: 0;
 }
-#cinemas{
-     display: flex;
-     flex-direction: column;
- }
-#top{
+
+#cinemas {
+    display: flex;
+    flex-direction: column;
+}
+
+#top {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -16,7 +18,8 @@ body{
     background: white;
     height: 7vh;
 }
-#fallBack{
+
+#fallBack {
     position: absolute;
     left: 0;
     height: 100%;
@@ -24,10 +27,10 @@ body{
     background: url(../picture/fallback.png);
     background-size: 1rem 1rem;
     background-position: center;
-    background-repeat: no-repeat;
-;
+    background-repeat: no-repeat;;
 }
-#title{
+
+#title {
     text-align: center;
     font-size: 17px;
     color: #191a1b;
@@ -36,29 +39,34 @@ body{
     height: 7vh;
     line-height: 7vh;
 }
-#remain{
+
+#remain {
     display: flex;
     flex-direction: column;
     height: 93vh;
     padding-top: 7vh;
 }
-.cinemas_cinema{
+
+.cinemas_cinema {
     display: flex;
     flex-direction: column;
     margin: 1rem 1rem 1rem 1rem;
     text-decoration-line: none;
 }
-.cinemas_cinema_name{
+
+.cinemas_cinema_name {
     color: #191a1b;
     font-size: 15px;
 
 }
-.cinemas_cinema_address{
+
+.cinemas_cinema_address {
     color: #797d82;
     font-size: 13px;
     margin-top: 5px;
 }
-#footer{
+
+#footer {
     display: flex;
     flex-direction: row;
     position: fixed;
@@ -69,7 +77,8 @@ body{
     justify-content: space-between;
     background-color: white;
 }
-.footer_div{
+
+.footer_div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -77,18 +86,21 @@ body{
     color: black;
     text-decoration-line: none;
 }
-.footer_div_img{
+
+.footer_div_img {
     width: 21px;
     height: 21px;
     margin: 0.2rem;
 }
-.footer_div_text{
+
+.footer_div_text {
     font-size: 10px;
     line-height: 12px;
     word-break: keep-all;
     color: #797d82;
     top: 32px;
 }
-#footer_cinema_text{
+
+#footer_cinema_text {
     color: #ff5f16;
 }

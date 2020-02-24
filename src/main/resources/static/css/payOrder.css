@@ -1,12 +1,14 @@
-body{
+body {
     margin: 0;
     padding: 0;
 }
-#payOrder{
+
+#payOrder {
     display: flex;
     flex-direction: column;
 }
-#top{
+
+#top {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -16,7 +18,8 @@ body{
     background: white;
     height: 7vh;
 }
-#fallBack{
+
+#fallBack {
     position: absolute;
     left: 0;
     height: 100%;
@@ -24,10 +27,10 @@ body{
     background: url(../picture/fallback.png);
     background-size: 1rem 1rem;
     background-position: center;
-    background-repeat: no-repeat;
-;
+    background-repeat: no-repeat;;
 }
-#title{
+
+#title {
     text-align: center;
     font-size: 17px;
     color: #191a1b;
@@ -36,32 +39,39 @@ body{
     height: 7vh;
     line-height: 7vh;
 }
-#remain{
+
+#remain {
     display: flex;
     flex-direction: column;
     height: 93vh;
     padding-top: 7vh;
 }
-#payInfo{
+
+#payInfo {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 2.5rem 0;
 }
-#payInfo_shouldPay{
+
+#payInfo_shouldPay {
     font-size: 2rem;
 }
-#payInfo_orderId{
+
+#payInfo_orderId {
     font-size: 0.9rem;
     color: #9E9E9E;
 }
-#pointPay_img{
+
+#pointPay_img {
     height: 2rem;
 }
-#wechatPay_img{
+
+#wechatPay_img {
     height: 2rem;
 }
-#pointPay{
+
+#pointPay {
     display: flex;
     flex-direction: row;
     margin: 1.5rem 0;
@@ -69,15 +79,18 @@ body{
     padding: 0 1rem;
     align-items: center;
 }
-#pointPay_text{
+
+#pointPay_text {
     position: relative;
     left: -5.5rem;
     font-size: 1.2rem;
 }
-#pointPay_chose{
+
+#pointPay_chose {
     font-size: 3rem;
 }
-#wechatPay{
+
+#wechatPay {
     display: flex;
     flex-direction: row;
     margin: 1.5rem 0;
@@ -86,15 +99,18 @@ body{
     align-items: center;
     color: #bdbaba;
 }
-#wechatPay_text{
+
+#wechatPay_text {
     position: relative;
     left: -5.5rem;
     font-size: 1.2rem;
 }
-#wechatPay_chose{
+
+#wechatPay_chose {
     font-size: 3rem;
 }
-#payNow{
+
+#payNow {
     position: fixed;
     bottom: 0;
     background-color: #f6c228;

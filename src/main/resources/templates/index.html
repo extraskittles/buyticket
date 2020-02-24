@@ -66,7 +66,7 @@
                 }
             }
         },
-        beforecreated:function(){
+        beforecreated: function () {
 
         },
         created: function () {
@@ -84,8 +84,8 @@
                     if (code == 200) {
                         let user = response.data.data;
                         this.user = user;
-                    }else {
-                            window.location="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
+                    } else {
+                        window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx290c9f6319d3532c&redirect_uri=http://zhouzhaorong.xyz/user/wechatLogin&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect"
                     }
                 })
             }

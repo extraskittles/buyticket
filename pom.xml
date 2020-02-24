@@ -55,11 +55,7 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
+
         <!--swaggerAPI-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -123,7 +119,7 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.42.Final</version>
         </dependency>
-<!--热部署工具-->
+        <!--热部署工具-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -136,12 +132,16 @@
         </dependency>
         <!--22-->
         <dependency>
-            <groupId> org.springframework.boot </groupId>
-            <artifactId> spring-boot-configuration-processor </artifactId>
-            <optional> true </optional>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
-
-
+        <!--腾讯短信服务-->
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <version>3.1.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -149,16 +149,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.mybatis.generator</groupId>
-                <artifactId>mybatis-generator-maven-plugin</artifactId>
-                <version>1.3.2</version>
-                <configuration>
-                    <configurationFile>src/main/resources/generator/generatorConfig.xml</configurationFile>
-                    <overwrite>true</overwrite>
-                    <verbose>true</verbose>
-                </configuration>
             </plugin>
         </plugins>
     </build>

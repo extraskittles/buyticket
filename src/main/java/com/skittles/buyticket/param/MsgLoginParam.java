@@ -3,7 +3,7 @@ package com.skittles.buyticket.param;
 import javax.validation.constraints.NotNull;
 
 public class MsgLoginParam {
-   @NotNull
+    @NotNull
     private String phoneNumber;
     @NotNull
     private String msgCode;

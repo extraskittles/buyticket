@@ -5,42 +5,45 @@
     <title>Title</title>
 </head>
 <style>
-    body{
+    body {
         display: flex;
-        justify-content:space-around;
+        justify-content: space-around;
         margin-top: 10%;
     }
-    form{
+
+    form {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
         align-items: center;
 
-        width:160%;
+        width: 160%;
         height: 15rem;
         border: solid black;
     }
 
 
-    input{
+    input {
         width: 60%;
         height: 10%;
     }
 
 
-
-    a{
+    a {
         font-size: 0.9rem;
 
     }
-    #register{
+
+    #register {
         background-color: dodgerblue;
         color: aliceblue;
     }
-    a:hover{
-        color:red;
+
+    a:hover {
+        color: red;
     }
-    #register:hover{
+
+    #register:hover {
         background-color: cyan;
         cursor: pointer;
     }
@@ -60,37 +63,35 @@
             <input id="name" type="text" name="name" placeholder="请设置用户名">
             <input id="password" type="password" name="password" placeholder="请设置登录密码">
             <input id="register" type="button" value="注册" v-on:click="register()">
-            <a class="href" href="login.html" >返回登录</a>
+            <a class="href" href="login.html">返回登录</a>
         </form>
     </div>
 </script>
 <script>
-    let app=new Vue({
-        el:"#app",
-        template:"#template",
-        data:function () {
-            return{
-
-            }
+    let app = new Vue({
+        el: "#app",
+        template: "#template",
+        data: function () {
+            return {}
         },
-        methods:{
-            register:function () {
+        methods: {
+            register: function () {
                 axios({
-                    method:"post",
-                    url:"http://localhost:9090/user/register",
-                    data:{
-                        name:$("#name").val(),
-                        password:$("#password").val()
+                    method: "post",
+                    url: "http://localhost:9090/user/register",
+                    data: {
+                        name: $("#name").val(),
+                        password: $("#password").val()
                     }
-                }).then((response=>{
-                    let code=response.data.code
-                    if(code==200){
+                }).then((response => {
+                    let code = response.data.code
+                    if (code == 200) {
                         alert("注册成功")
-                        window.location="http://localhost:9090/login.html"
-                    }else{
+                        window.location = "http://localhost:9090/login.html"
+                    } else {
                         alert("用户名已被注册，注册失败")
                     }
-                })).catch(error=>{
+                })).catch(error => {
                     alert("注册错误")
                 })
             }

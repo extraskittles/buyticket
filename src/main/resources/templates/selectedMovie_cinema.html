@@ -2,7 +2,8 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>zzr卖座</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/selectedMovie_cinema.css">
@@ -23,12 +24,12 @@
         <div id="remain">
             <div id="cinema_address">地址:{{cinema.address}}</div>
             <div id="movies">
-                <div  class="arrow" :class="{hidden_arrow:!(arrowFlag(-1))}"  v-on:click="changeMovie(-1)"><</div>
+                <div class="arrow" :class="{hidden_arrow:!(arrowFlag(-1))}" v-on:click="changeMovie(-1)"><</div>
                 <div id="movie">
                     <div id="movie_name">{{selectedMovie.name}}</div>
                     <div id="movie_description">描述:{{selectedMovie.description}}</div>
                 </div>
-                <div class="arrow"  :class="{hidden_arrow:!(arrowFlag(1))}" v-on:click="changeMovie(1)" >></div>
+                <div class="arrow" :class="{hidden_arrow:!(arrowFlag(1))}" v-on:click="changeMovie(1)">></div>
             </div>
             <div id="date">
                 <div v-on:click="selectedDate=date[0]" :class="{active_date:selectedDate==date[0]}">今天{{date[0]}}</div>
@@ -50,89 +51,89 @@
         </div>
     </div>
 </script>
-<script >
+<script>
     let app = new Vue({
         el: '#app',
         template: "#template",
         data: function () {
             return {
-                user:{},//用户
-                cinema:{},//选择的影院详情
-                selectedMovie:{},//选择的电影
-                scenes:[],//所选择的影院上映的所有场次
-                movies:[],//所选择的影院上映的电影
-                date:[],//记录今天和明天日期
-                selectedDate:'',
+                user: {},//用户
+                cinema: {},//选择的影院详情
+                selectedMovie: {},//选择的电影
+                scenes: [],//所选择的影院上映的所有场次
+                movies: [],//所选择的影院上映的电影
+                date: [],//记录今天和明天日期
+                selectedDate: '',
             };
         },
-        methods:{
+        methods: {
             //切换电影
-            changeMovie:function(j){
-                let selectedMovieId=this.selectedMovie.id;
-                let movies=this.movies;
-                for(let i=0;i<movies.length;i++){
-                    if(selectedMovieId==movies[i].id){
-                        this.selectedMovie=movies[i+j];
-                        if(!((i+j)<0)){
-                            this.selectedMovie.hasLast=true
+            changeMovie: function (j) {
+                let selectedMovieId = this.selectedMovie.id;
+                let movies = this.movies;
+                for (let i = 0; i < movies.length; i++) {
+                    if (selectedMovieId == movies[i].id) {
+                        this.selectedMovie = movies[i + j];
+                        if (!((i + j) < 0)) {
+                            this.selectedMovie.hasLast = true
                         }
-                        if(!((i+j)>movies.length)){
-                            this.selectedMovie.hasNext=true;
+                        if (!((i + j) > movies.length)) {
+                            this.selectedMovie.hasNext = true;
                         }
                         return;
                     }
                 }
             },
             //确定电影是否有上下部
-            arrowFlag:function (j) {
-                let selectedMovieId=this.selectedMovie.id;
-                let movies=this.movies;
-                for(let i=0;i<movies.length;i++){
-                    if(selectedMovieId==movies[i].id){
-                        if(j==-1&&i!=0){
+            arrowFlag: function (j) {
+                let selectedMovieId = this.selectedMovie.id;
+                let movies = this.movies;
+                for (let i = 0; i < movies.length; i++) {
+                    if (selectedMovieId == movies[i].id) {
+                        if (j == -1 && i != 0) {
                             return true;
                         }
-                        if(j==1&&i!=(movies.length-1)){
+                        if (j == 1 && i != (movies.length - 1)) {
                             return true;
                         }
                     }
                 }
             }
         },
-        created:function () {
+        created: function () {
             //从url获取用户movieId
             // 获取选择的电影和电影院信息
-            let movieId =getQuery('movieId');
-            let cinemaId=getQuery('cinemaId');
+            let movieId = getQuery('movieId');
+            let cinemaId = getQuery('cinemaId');
 
             //获取选择的影院信息
-            axios.get('http://zhouzhaorong.xyz/order/selectCinemaById',{
-                params:{
-                    cinemaId:cinemaId
+            axios.get('http://zhouzhaorong.xyz/order/selectCinemaById', {
+                params: {
+                    cinemaId: cinemaId
                 }
-            }).then((response)=>{
-                this.cinema=response.data.data;
+            }).then((response) => {
+                this.cinema = response.data.data;
             })
             //今天的时间
             let todayDate = moment().format('YYYY-MM-DD');
             //明天时间
             let tomorrowDate = moment().add(1, 'days').format('YYYY-MM-DD');
             this.date = [todayDate, tomorrowDate]
-            this.selectedDate=this.date[0];
+            this.selectedDate = this.date[0];
             //从url接收选择的日期参数
-            let datetime=getQuery("datetime");
-            if(datetime!=false){
-                this.selectedDate=datetime;
+            let datetime = getQuery("datetime");
+            if (datetime != false) {
+                this.selectedDate = datetime;
             }
             //获取该影院所有场次的信息
-                axios.get('http://zhouzhaorong.xyz/order/selectSceneByCinemaId', {
-                        params: {
-                            cinemaId: cinemaId
-                        }
+            axios.get('http://zhouzhaorong.xyz/order/selectSceneByCinemaId', {
+                    params: {
+                        cinemaId: cinemaId
                     }
-                ).then((response) => {
-                    this.scenes = response.data.data;
-                });
+                }
+            ).then((response) => {
+                this.scenes = response.data.data;
+            });
             //获取用户信息
             axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
                 let code = response.data.code;
@@ -145,30 +146,30 @@
             )
             //获取该影院上映的电影的信息
 
-            axios.get('http://zhouzhaorong.xyz/order/selectMoviesByCinemaId',{
-                params:{
-                    cinemaId:cinemaId
+            axios.get('http://zhouzhaorong.xyz/order/selectMoviesByCinemaId', {
+                params: {
+                    cinemaId: cinemaId
                 }
-            }).then((response)=>{
-                this.movies=response.data.data;
-                this.selectedMovie=response.data.data[0]
+            }).then((response) => {
+                this.movies = response.data.data;
+                this.selectedMovie = response.data.data[0]
             })
 
-                //获取选择的电影的信息
+            //获取选择的电影的信息
 
-            if(movieId!=false){
-                axios.get('http://zhouzhaorong.xyz/order/selectMovieById',{
-                    params:{
-                        movieId:movieId
+            if (movieId != false) {
+                axios.get('http://zhouzhaorong.xyz/order/selectMovieById', {
+                    params: {
+                        movieId: movieId
                     }
-                }).then((response)=>{
-                        this.selectedMovie=response.data.data;
+                }).then((response) => {
+                    this.selectedMovie = response.data.data;
                 })
             }
         },
-        mounted:function(){
+        mounted: function () {
         },
-        computed:{
+        computed: {
             selectedScenes: function () {
                 let selectedMovie = this.selectedMovie;
                 let selectedDate = this.selectedDate;
@@ -181,7 +182,7 @@
                     if (selectedDate == sceneDate && selectedMovie.id == scenes[i].movieId) {
                         time = moment(scenes[i].datetime).format('HH:mm');
                         scenes[i].time = time;
-                        let time2= moment(scenes[i].datetime).add(110,'minutes').format('HH:mm');
+                        let time2 = moment(scenes[i].datetime).add(110, 'minutes').format('HH:mm');
                         scenes[i].time2 = time2;
                         arr.push(scenes[i]);
                     }
