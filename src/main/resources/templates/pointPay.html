@@ -2,8 +2,9 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zzr卖座</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/pointPay.css">
 <body>
@@ -16,48 +17,53 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="pointPay">
-       <div id="title">支付</div>
-        <div id="orderId">zzr卖座订单-{{orderDetail.id}}</div>
-        <div id="payPrice">¥{{orderDetail.payPrice}}</div>
-        <div v-on:click="pay()" id="payNow">确认支付</div>
+        <div id="top">
+            <a href="javascript:history.go(-1);" id="fallBack"></a>
+            <div id="title">支付</div>
+        </div>
+        <div id="remain">
+            <div id="orderId">zzr卖座订单-{{orderDetail.id}}</div>
+            <div id="payPrice">¥{{orderDetail.payPrice}}</div>
+            <div v-on:click="pay()" id="payNow">确认支付</div>
+        </div>
     </div>
 </script>
-<script >
+<script>
     let app = new Vue({
         el: '#app',
         template: "#template",
         data: function () {
             return {
-                user:{},//用户信息
-                orderDetail:{},
+                user: {},//用户信息
+                orderDetail: {},
             };
         },
-        methods:{
-            pay:function () {
-                let orderId=this.orderDetail.id;
+        methods: {
+            pay: function () {
+                let orderId = this.orderDetail.id;
                 axios({
-                    method:"post",
-                    url:"http://zhouzhaorong.xyz/order/pay",
+                    method: "post",
+                    url: "/order/pay",
                     headers:
                         {
                             'Content-Type': 'application/json'
                         },
-                    data:orderId
-                }).then((response)=>{
+                    data: orderId
+                }).then((response) => {
                     alert("支付成功")
-                    window.location="http://zhouzhaorong.xyz/paySuccess.html?orderId="+orderId;
+                    window.location = "/orderDetail.html?orderId=" + orderId;
                 })
             }
         },
-        created:function () {
+        created: function () {
             //从rul获取orderId，并获取订单详细
-            let orderId=getQuery("orderId");
-            axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{
-                params:{
-                    orderId:orderId,
+            let orderId = getQuery("orderId");
+            axios.get('/order/selectOrderById', {
+                params: {
+                    orderId: orderId,
                 }
-            }).then((response)=>{
-                this.orderDetail=response.data.data;
+            }).then((response) => {
+                this.orderDetail = response.data.data;
             })
         }
     })

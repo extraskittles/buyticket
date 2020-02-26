@@ -2,12 +2,13 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zzr卖座</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/selectedMovie.css"></link>
 <body>
-    <div id="app"></div>
+<div id="app"></div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
@@ -16,42 +17,49 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="selectedMovie">
-        <a id="fallBack" href="javascript:history.go(-1);"><</a>
-        <div id="selectedMovie_title">{{movie.name}}</div>
-        <div id="date">
-            <div :class="{active_date:selectedDate==date[0]}" v-on:click="selectedDate=date[0]" id="date_today">今天{{date[0]}}</div>
-            <div :class="{active_date:selectedDate==date[1]}" v-on:click="selectedDate=date[1]" id="date_tomorrow">明天{{date[1]}}</div>
+        <div id="top">
+            <a :href="'/index.html'" id="fallBack"></a>
+            <div id="title">{{movie.name}}</div>
         </div>
-        <a  :href="'/selectedMovie_cinema.html?movieId='+movie.id+'&cinemaId='+cinema.id+'&datetime='+selectedDate" class="cinema" v-for="cinema in cinemas">
-            <div class="cinema_name">{{cinema.name}}</div>
-            <div class="cinema_address">{{cinema.address}}</div>
-        </a>
+        <div id="remain">
+            <div id="date">
+                <div :class="{active_date:selectedDate==date[0]}" v-on:click="selectedDate=date[0]" id="date_today">
+                    今天{{date[0]}}
+                </div>
+                <div :class="{active_date:selectedDate==date[1]}" v-on:click="selectedDate=date[1]" id="date_tomorrow">
+                    明天{{date[1]}}
+                </div>
+            </div>
+            <a :href="'/selectedMovie_cinema.html?movieId='+movie.id+'&cinemaId='+cinema.id+'&datetime='+selectedDate"
+               class="cinema" v-for="cinema in cinemas">
+                <div class="cinema_name">{{cinema.name}}</div>
+                <div class="cinema_address">{{cinema.address}}</div>
+            </a>
+        </div>
     </div>
 </script>
-<script >
+<script>
     let app = new Vue({
         el: '#app',
         template: "#template",
         data: function () {
             return {
-                user:{},//用户信息
-                cinemas:[],//所有电影
-                date:[],//记录今天明天的时间
-                movie:{},//电影信息
-                selectedDate:'' ,
+                user: {},//用户信息
+                cinemas: [],//所有电影
+                date: [],//记录今天明天的时间
+                movie: {},//电影信息
+                selectedDate: '',
             };
         },
-        methods:{
-
-        },
-        created:function () {
+        methods: {},
+        created: function () {
             //查询所有影院
-            axios.get('http://zhouzhaorong.xyz/order/selectCinemas').then((response) => {
+            axios.get('/order/selectCinemas').then((response) => {
                 this.cinemas = response.data.data;
             });
 
             //获取用户信息
-            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+            axios.get("/user/").then((response) => {
                 let code = response.data.code;
                 if (code == 200) {
                     let user = response.data.data;
@@ -63,15 +71,15 @@
             )
 
             //从url获取用户movieId
-            let movieId =getQuery('movieId');
+            let movieId = getQuery('movieId');
 
             //根据movieId获取该电影信息
-            axios.get('http://zhouzhaorong.xyz/order/selectMovieById',{
-                params:{
-                movieId:movieId
-            }
-        }).then((response)=>{
-                this.movie=response.data.data;
+            axios.get('/order/selectMovieById', {
+                params: {
+                    movieId: movieId
+                }
+            }).then((response) => {
+                this.movie = response.data.data;
             })
 
             //今天的时间
@@ -81,7 +89,7 @@
             this.date = [todayDate, tomorrowDate]
 
             //
-            this.selectedDate=this.date[0];
+            this.selectedDate = this.date[0];
         }
     })
 </script>

@@ -15,28 +15,28 @@ public class WechatUserSqlProvider {
     public String insertSelective(WechatUser record) {
         BEGIN();
         INSERT_INTO("wechat_user");
-        
+
         if (record.getId() != null) {
             VALUES("id", "#{id,jdbcType=INTEGER}");
         }
-        
+
         if (record.getOpenid() != null) {
             VALUES("openid", "#{openid,jdbcType=VARCHAR}");
         }
-        
+
         return SQL();
     }
 
     public String updateByPrimaryKeySelective(WechatUser record) {
         BEGIN();
         UPDATE("wechat_user");
-        
+
         if (record.getOpenid() != null) {
             SET("openid = #{openid,jdbcType=VARCHAR}");
         }
-        
+
         WHERE("id = #{id,jdbcType=INTEGER}");
-        
+
         return SQL();
     }
 }

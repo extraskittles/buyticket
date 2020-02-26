@@ -34,40 +34,40 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
-        String token=null;
+        String token = null;
         //检验token是否有效
         Cookie[] cookies = request.getCookies();
-        if(cookies==null){
-            chain.doFilter(request,response);
+        if (cookies == null) {
+            chain.doFilter(request, response);
             return;
         }
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals("token")){
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("token")) {
                 try {
-                    if(JwtUtils.verifyToken(token=cookie.getValue()).get("code").equals(1)){
+                    if (JwtUtils.verifyToken(token = cookie.getValue()).get("code").equals(1)) {
                         Map<String, Object> payLord = null;
                         try {
                             payLord = JwtUtils.getPayLord(token);
                         } catch (Exception e) {
-                            chain.doFilter(request,response);
+                            chain.doFilter(request, response);
                             return;
                         }
-                        String[] roles = ((String)payLord.get("roles")).split(",");
+                        String[] roles = ((String) payLord.get("roles")).split(",");
                         Collection<GrantedAuthority> authorities = new ArrayList<>();
-                        for(String role:roles){
+                        for (String role : roles) {
                             authorities.add(new SimpleGrantedAuthority(role));
                         }
-                        Authentication authentication=new UsernamePasswordAuthenticationToken("UserDetail",null,authorities);
+                        Authentication authentication = new UsernamePasswordAuthenticationToken("UserDetail", null, authorities);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     }
                 } catch (JOSEException e) {
                     e.printStackTrace();
                 }
-                chain.doFilter(request,response);
+                chain.doFilter(request, response);
                 return;
             }
         }
-        chain.doFilter(request,response);
+        chain.doFilter(request, response);
         return;
     }
 }

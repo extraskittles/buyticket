@@ -1,28 +1,55 @@
-body{
+body {
     margin: 0;
     padding: 0
 }
-#confirmOrder{
+
+#confirmOrder {
     display: flex;
     flex-direction: column;
     height: 100vh;
     background-color: #f0ecec;
 }
-#fallBack{
-    font-size: 2rem;
-    text-decoration-line: none;
-    color: #473d3d;
+
+#top {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     position: fixed;
-    left: 1rem;
-    top: 0.1rem;
+    width: 100%;
+    background: white;
+    height: 7vh;
 }
-#title{
+
+#fallBack {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 2rem;
+    background: url(../picture/fallback.png);
+    background-size: 1rem 1rem;
+    background-position: center;
+    background-repeat: no-repeat;;
+}
+
+#title {
     text-align: center;
-    padding: 0.5rem;
-    background-color: white;
-    font-size: 1.2rem;
+    font-size: 17px;
+    color: #191a1b;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 7vh;
+    line-height: 7vh;
 }
-#movie{
+
+#remain {
+    display: flex;
+    flex-direction: column;
+    height: 93vh;
+    padding-top: 7vh;
+}
+
+#movie {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -32,28 +59,35 @@ body{
     padding: 0 0.9rem;
     color: #6e6969;
 }
-#movie_name{
+
+#movie_name {
     font-size: 1.2rem;
     color: #191a1b;
 }
-#movie_length{
+
+#movie_length {
 
 }
-#movie_hallName{
+
+#movie_hallName {
 
 }
-#movie_SitPositions{
+
+#movie_SitPositions {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
-#movie_SitPosition{
+
+#movie_SitPosition {
     margin-right: 1rem;
 }
-#movie_datetime{
+
+#movie_datetime {
     margin-right: 0.8rem;
 }
-#cinema{
+
+#cinema {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -63,20 +97,24 @@ body{
     padding: 0 0.9rem;
     color: #6e6969;
 }
-#cinema_name{
+
+#cinema_name {
 
 }
-#cinema_address{
+
+#cinema_address {
 
 }
-#movie_time{
+
+#movie_time {
     display: flex;
     flex-direction: row;
     background-color: white;
     margin: 0 0 0.4rem 0;
     color: #40b8c7;
 }
-#pay{
+
+#pay {
     display: flex;
     flex-direction: column;
     background-color: white;
@@ -85,22 +123,26 @@ body{
     justify-content: space-around;
     padding: 0 0.9rem;
 }
-#pay_number{
+
+#pay_number {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-#pay_price{
+
+#pay_price {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-#pay_shouldPay{
+
+#pay_shouldPay {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-#bottom{
+
+#bottom {
     position: fixed;
     display: flex;
     flex-direction: row;
@@ -110,14 +152,17 @@ body{
     height: 3rem;
     align-items: center;
 }
-#bottom_text{
+
+#bottom_text {
     margin-left: 1rem;
 }
-#bottom_shouldPay{
+
+#bottom_shouldPay {
     margin-left: 0.6rem;
     color: #0fad9e;
 }
-#bottom_payNow{
+
+#bottom_payNow {
     position: absolute;
     right: 0;
     background-color: #ff5f16;
@@ -128,15 +173,19 @@ body{
     color: white;
     text-decoration-line: none;
 }
-#price_text{
+
+#price_text {
     color: #6e6969;
 }
-#number_text{
+
+#number_text {
     color: #6e6969;
 }
-#shouldPay_text{
+
+#shouldPay_text {
     color: #6e6969;
 }
-#time_datetime{
+
+#time_datetime {
     margin-right: 0.8rem;
 }

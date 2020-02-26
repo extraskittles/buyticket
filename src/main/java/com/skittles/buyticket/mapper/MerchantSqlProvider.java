@@ -15,36 +15,36 @@ public class MerchantSqlProvider {
     public String insertSelective(Merchant record) {
         BEGIN();
         INSERT_INTO("merchant");
-        
+
         if (record.getId() != null) {
             VALUES("id", "#{id,jdbcType=INTEGER}");
         }
-        
+
         if (record.getName() != null) {
             VALUES("name", "#{name,jdbcType=VARCHAR}");
         }
-        
+
         if (record.getPassword() != null) {
             VALUES("password", "#{password,jdbcType=VARCHAR}");
         }
-        
+
         return SQL();
     }
 
     public String updateByPrimaryKeySelective(Merchant record) {
         BEGIN();
         UPDATE("merchant");
-        
+
         if (record.getName() != null) {
             SET("name = #{name,jdbcType=VARCHAR}");
         }
-        
+
         if (record.getPassword() != null) {
             SET("password = #{password,jdbcType=VARCHAR}");
         }
-        
+
         WHERE("id = #{id,jdbcType=INTEGER}");
-        
+
         return SQL();
     }
 }

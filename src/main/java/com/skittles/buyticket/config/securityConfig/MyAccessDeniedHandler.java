@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
+
 //没有足够权限访问资源的处理
 @Component
 public class MyAccessDeniedHandler implements AccessDeniedHandler {

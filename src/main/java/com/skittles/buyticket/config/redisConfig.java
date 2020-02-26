@@ -1,28 +1,64 @@
 package com.skittles.buyticket.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-@Configuration
-public class redisConfig {
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+import java.util.HashMap;
 
-    /**
-     * 解决redis插入中文乱码
-     * @return
-     */
-    @Bean
-    public RedisTemplate redisTemplateInit() {
-        //设置序列化Key的实例化对象
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        //设置序列化Value的实例化对象
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        return redisTemplate;
+
+@Component
+@ConfigurationProperties(prefix = "spring.redis")
+
+public class RedisConfig {
+
+    private String host;
+
+    private int port;
+
+    private int timeout;//秒
+
+    private String password;
+
+    private HashMap<String, String> pool = new HashMap<>();
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public int getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(int timeout) {
+        this.timeout = timeout;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public HashMap<String, String> getPool() {
+        return pool;
+    }
+
+    public void setPool(HashMap<String, String> pool) {
+        this.pool = pool;
     }
 }

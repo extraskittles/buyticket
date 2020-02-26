@@ -2,8 +2,9 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zzr卖座</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/userCenter.css">
 <body>
@@ -17,8 +18,8 @@
 <script type="text/x-template" id="template">
     <div id="userCenter">
         <div id="top">
-            <img id="head" src="picture/head_login.jpg" >
-            <div id="account">{{user.name}}</div>
+            <img id="head" src="picture/head_login.jpg">
+            <div id="account" v-on:click="toLogin()">{{user.name}}</div>
         </div>
         <a :href="'/orderList.html'" id="order">
             <img id="order_img" src="picture/order.png">
@@ -27,48 +28,78 @@
         <div id="balance">
             <img id="balance_img" class="img" src="picture/balance.png">
             <div id="balance_text">余额</div>
-            <div id="balance_points">{{user.points}}</div>
+            <div id="balance_points">{{user.points}}积分</div>
         </div>
-        <div id="setting">
+        <div id="setting" v-on:click="toSetting()">
             <img id="setting_img" class="img" src="picture/setting.png">
             <div id="setting_text">设置</div>
         </div>
-        <div id="footer" >
+        <div id="footer">
             <a :href="'/index.html'" id="footer_movie" class="footer_div">
                 <img class="footer_div_img" src="picture/movie.png">
                 <div class="footer_div_text">电影</div>
             </a>
             <a :href="'cinema.html'" id="footer_cinema" class="footer_div">
-                <img  class="footer_div_img" src="picture/cinema.png">
-                <div  class="footer_div_text">影院</div>
+                <img class="footer_div_img" src="picture/cinema.png">
+                <div class="footer_div_text">影院</div>
             </a>
             <div id="footer_me" class="footer_div">
-                <img  class="footer_div_img" src="picture/active_me.png">
+                <img class="footer_div_img" src="picture/active_me.png">
                 <div id="footer_me_text" class="footer_div_text">我的</div>
             </div>
         </div>
     </div>
 </script>
-<script >
+<script>
     let app = new Vue({
         el: '#app',
         template: "#template",
         data: function () {
             return {
-                user:{},//用户信息
+                user: {},//用户信息
+                msg: '',
             };
         },
-        created:function () {
+        methods: {
+            toSetting:function(){
+                let user=this.user;
+                if(user.name=="未登录"){
+                   return
+                }else {
+                    window.location="/setting.html"
+                }
+            },
+            toLogin: function () {
+                let name = this.user.name;
+                if (name != "未登录") {
+                    return
+                }
+                window.location = "/smsLogin.html"
+            },
+            /*logout: function () {
+                axios.get('/user/logout',).then((response) => {
+                    if (response.data.code == 200) {
+                        alert("登出成功");
+                        window.location = "/smsLogin.html"
+                    }
+                })
+            }*/
+        },
+        created: function () {
             //获取用户信息
-                axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
-                    let code = response.data.code;
-                    if (code == 200) {
-                        let user = response.data.data;
-                        this.user = user;
-                    }
-                }).catch(error => {
-                    }
-                )
+            axios.get("/user/").then((response) => {
+                let code = response.data.code;
+                let user = {};
+                if (code == 200) {
+                    user = response.data.data;
+                } else {
+                    user.name = "未登录";
+                }
+                this.user = user;
+            })
+        },
+        computed: {
+
         }
     })
 </script>

@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zzr卖座</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/orderDetail.css">
 <body>
@@ -12,92 +13,110 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
 <script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="http://static.runoob.com/assets/qrcode/qrcode.min.js"></script>
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="box">
-        <div id="title">订单详情</div>
-        <div id="orderStatus">{{orderDetail.isExpire}}</div>
-        <div id="scene">
-            <div id="scene_movieName">{{orderDetail.movieName}}</div>
-            <div id="scene_time"></div>
-            <div id="scene_cinemaName">{{orderDetail.cinemaName}}</div>
-            <div id="scene_position">{{orderDetail.weekOfDay}}{{orderDetail.dateAndTime}}</div>
-            <div id="scene_priceAndNumber">
-                <div id="scene_price">{{orderDetail.price}}</div>
-                <div id="scene_number">{{orderDetail.number}}</div>
+        <div id="top">
+            <a :href="'/orderList.html'" id="fallBack"></a>
+            <div id="title">订单详情</div>
+        </div>
+        <div id="remain">
+            <div id="orderStatus">{{orderDetail.isExpire}}</div>
+            <div id="scene">
+                <div id="scene_movieName">{{orderDetail.movieName}}</div>
+                <div id="scene_cinemaName">{{orderDetail.cinemaName}}</div>
+                <div id="scene_time">{{orderDetail.weekOfDay}}&nbsp;{{orderDetail.dateAndTime}}</div>
+                <div id="scene_position">{{orderDetail.hallName}}&nbsp;{{orderDetail.sitPositionStr}}</div>
+                <div id="scene_priceAndNumber">
+                    <div id="scene_price">¥{{orderDetail.price}}</div>
+                    <div id="scene_number">×{{orderDetail.number}}</div>
+                </div>
             </div>
-        </div>
-        <div id="takeTicket">
-            <div id="takeTicket_number">{{orderDetail.number}}张电影票</div>
-            <div id="takeTicket_uuuId">{{orderDetail.uuid}}</div>
-        </div>
-        <div id="payPrice">
-            <div id="payPrice_text">商品金额</div>
-            <div id="payPrice_value">{{orderDetail.payPrice}}</div>
-        </div>
-        <div id="cinema">
-            <div id="cinema_name">{{orderDetail.cinemaName}}</div>
-            <div id="cinema_address">{{orderDetail.cinemaAddress}}</div>
+            <div id="takeTicket">
+                <div id="takeTicket_code"></div>
+                <div id="takeTicket_number">{{orderDetail.number}}张电影票</div>
+                <div id="takeTicket_text">取款码:</div>
+                <div id="takeTicket_uuuId">{{orderDetail.uuid}}</div>
+            </div>
+            <div id="payPrice">
+                <div id="payPrice_text">商品金额</div>
+                <div id="payPrice_value">¥{{orderDetail.payPrice}}</div>
+            </div>
+            <div id="cinema">
+                <div id="cinema_name">{{orderDetail.cinemaName}}</div>
+                <div id="cinema_address">{{orderDetail.address}}</div>
+            </div>
         </div>
     </div>
 </script>
-<script >
+<script>
     let app = new Vue({
         el: '#app',
         template: "#template",
         data: function () {
             return {
-                user:{},//用户信息
-                orderDetail:[],//订单信息
+                user: {},//用户信息
+                orderDetail: [],//订单信息
             };
         },
-        created:function () {
+        created: function () {
+
             //获取某个订单的信息
-            let orderId=getQuery("orderId");
-            axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{
-                params:{
-                    orderId:orderId,
+            let orderId = getQuery("orderId");
+            axios.get('/order/selectOrderById', {
+                params: {
+                    orderId: orderId,
                 }
-            }).then((response)=>{
-                let orderDetail=response.data.data;
+            }).then((response) => {
+                let orderDetail = response.data.data;
                 //计算几排几座
-                let sitNumbers=orderDetail.sitNumbers;
-                let sitNumberArr =sitNumbers.split(',');
-                let sitPositionArr=[];
-                let position=null   ;
-                for(let index in sitNumberArr){
-                    let i=parseInt(sitNumberArr[index]);
-                    position=(parseInt(i/10)+1)+'排'+i%10+'座'
-                    if(i%10==0){
-                        position=parseInt(i/10)+'排10座';
+                let sitNumbers = orderDetail.sitNumbers;
+                let sitNumberArr = sitNumbers.split(',');
+                let sitPositionStr = '';
+                let position = null;
+                for (let index in sitNumberArr) {
+                    let i = parseInt(sitNumberArr[index]);
+                    position = (parseInt(i / 10) + 1) + '排' + i % 10 + '座'
+                    if (i % 10 == 0) {
+                        position = parseInt(i / 10) + '排10座';
                     }
-                    sitPositionArr.push(position);
+                    sitPositionStr = sitPositionStr + " " + position;
                 }
-                orderDetail.sitPositionArr=sitPositionArr;
+                orderDetail.sitPositionStr = sitPositionStr;
                 //计算日期
                 //修改datetime格式
-                orderDetail.weekOfDay=moment(orderDetail.datetime).format('星期E');
-                orderDetail.dateAndTime=moment(orderDetail.datetime).format('MM月DD日 HH:mm');
+                orderDetail.weekOfDay = moment(orderDetail.datetime).format('星期E');
+                orderDetail.dateAndTime = moment(orderDetail.datetime).format('YYYY年MM月DD日 HH:mm');
                 //计算该票的状态
-                let date=moment();
-                if(date>moment(orderDetail.datetime).valueOf()+120*60*1000){
-                    orderDetail.isExpire="放映结束"
-                }else{
-                    orderDetail.isExpire="等待进场"
+                let date = moment();
+                if (date > moment(orderDetail.datetime).valueOf() + 120 * 60 * 1000) {
+                    orderDetail.isExpire = "放映结束"
+                } else {
+                    orderDetail.isExpire = "等待进场"
                 }
                 //计算票数量
-                orderDetail.number=orderDetail.payPrice/orderDetail.price;
-                this.orderDetail=orderDetail;
+                orderDetail.number = orderDetail.payPrice / orderDetail.price;
+                this.orderDetail = orderDetail;
             })
             //获取用户信息
-            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+            axios.get("/user/").then((response) => {
                 let code = response.data.code;
                 if (code == 200) {
                     let user = response.data.data;
                     this.user = user;
                 }
             })
+        },
+        mounted: function () {
+            let qrcode = new QRCode("takeTicket_code", {
+                text: "http://www.runoob.com",
+                width: 128,
+                height: 128,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
         }
     })
 </script>

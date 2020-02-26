@@ -1,14 +1,11 @@
-body {
+body{
     margin: 0;
     padding: 0;
 }
-
-#selectedMovie {
+#box{
     display: flex;
     flex-direction: column;
-
 }
-
 #top {
     display: flex;
     flex-direction: row;
@@ -40,43 +37,14 @@ body {
     height: 7vh;
     line-height: 7vh;
 }
-
-#remain {
-    display: flex;
-    flex-direction: column;
-    height: 93vh;
-    padding-top: 7vh;
-}
-
-#date {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0.5rem;
-}
-
-.cinema {
-    padding: 15px;
-    text-decoration-line: none;
-    color: #191a1b;
-}
-
-.cinema_name {
-    font-size: 15px;
-    margin-bottom: 5px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.cinema_address {
-    font-size: 13px;
-    color: #797d82;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.active_date {
+#logout{
+    position: fixed;
+    bottom: 0rem;
+    width: 100%;
+    text-align: center;
+    background-color: white;
     color: #ff5f16;
+    height: 3rem;
+    line-height: 3rem;
+    background-color: #e1dede;
 }

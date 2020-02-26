@@ -1,0 +1,67 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+#box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+#brand{
+    height: 4rem;
+    margin: 6rem 0 2rem 0;
+}
+#phone{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2rem;
+    width: 80%;
+    height: 2rem;
+    align-items: center;
+}
+#info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 2rem;
+}
+#phone{
+    display: flex;
+    flex-direction: row;
+}
+#phone_text{
+    width: 12rem;
+    border: none;
+    height: 2rem;
+    font-size: 1rem;
+    color: #191a1b;
+}
+#phone_getCode{
+    color: #bdc0c5;
+}
+#info{
+    display: flex;
+    flex-direction: column;
+}
+#codeValue{
+    width: 80%;
+    border: none;
+    height: 2rem;
+    font-size: 1rem;
+    color: #191a1b;
+}
+#login{
+    width: 80%;
+    align-self: center;
+    text-align: center;
+    margin: 2rem;
+    background-color: #ff5f16;
+    height: 3rem;
+    line-height: 3rem;
+    color: antiquewhite;
+    border-radius: 0.5rem;
+}

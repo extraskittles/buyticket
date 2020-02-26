@@ -1,30 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>用户注册</title>
+    <script src="js/vue/vue.js"></script>
+    <script src="js/vue/axios.js"></script>
 </head>
-<style>
-
-    .mark {
-        display: none;
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        margin: auto;
-        height: 0.88rem;
-        line-height: 0.88rem;
-        width: 80%;
-        text-align: center;
-        font-size: 0.28rem;
-        color: #fff;
-        background: rgba(0, 0, 0, 0.6);
-        border-radius: 0.1rem;
-    }
-</style>
 <body>
-
+<div id="app">
+    <label for="">手机号码：</label>
+    <input type="text" class="txt" name="mobile" v-model="mobile"/>
+    <input type="button" :disabled="countFlag" @click="sendMobile" v-model="btnMsg == null ? countNum+'s后重新发送' : btnMsg">
+</div>
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            // 倒计时周期
+            countNum:60,
+            // 用于倒计时标记，true-正在倒计时
+            countFlag:false,
+            // 定时器
+            intervalBtn:{},
+            //默认按钮的值
+            btnMsg:"点击发送验证码",
+            //手机号码
+            mobile:""
+        },
+        methods:{
+            // 倒计时
+            countDown(){
+                // 设置btn倒计时时显示的信息
+                this.btnMsg = null;
+                // 更改btn状态
+                this.countFlag =! this.countFlag;
+                // 设置倒计时
+                this.intervalBtn = setInterval(() => {
+                    if(this.countNum <= 0) {
+                        // 重置btn提示信息
+                        this.btnMsg = "点击发送验证码";
+                        // 清除定时器
+                        clearInterval(this.intervalBtn)
+                        // 更改btn状态
+                        this.countFlag =! this.countFlag;
+                        // 重置倒计时状态
+                        this.countNum = 5;
+                    };
+                    // 倒计时
+                    this.countNum -- ;
+                }, 1000);
+            },
+            sendMobile(){
+                //获取输入手机号码
+                let mobile = this.mobile
+                //正则校验手机号是否合法
+                if(!(/^1(3|4|5|7|8)\d{9}$/.test(mobile))){
+                    alert("手机号错误")
+                    return
+                }
+                //触发定时器方法
+                this.countDown()
+            }
+        },
+    })
+</script>
 </body>
 </html>

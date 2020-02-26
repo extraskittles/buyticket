@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql://111.231.237.220/buy_ticket?characterEncoding=UTF8&serverTimezone=CTT
+    username: root
+    password: ???????
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+      max-lifetime: 30000
+      connection-test-query: SELECT 1
+  resources:
+    static-locations: /META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/templates/
+
+zzr:
+  hostname: zhouzhaorong.xyz

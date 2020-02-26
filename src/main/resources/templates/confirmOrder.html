@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
+    <title>zzr卖座</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/confirmOrder.css">
 <body>
@@ -17,102 +17,122 @@
 <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
-<div id="confirmOrder">
-    <a id="fallBack" href="javascript:history.go(-1);"><</a>
-    <div id="title">确认购票</div>
-    <div id="movie">
-        <div id="movie_name">电影:{{orderDetail.movieName}}</div>
-        <div id="movie_time">
-            <div id="time_datetime">{{datetime}}</div>
-            <div id="time_day">{{weekOfDay}}</div>
+    <div id="confirmOrder">
+        <div id="top">
+            <a v-on:click="cancelOrder()" href="javascript:history.go(-1);" id="fallBack"></a>
+            <div id="title">确认购票</div>
         </div>
-        <div id="movie_length">110分钟</div>
-        <div id="movie_hallName">{{orderDetail.hallName}}</div>
-        <div id="movie_SitPositions">
-            <div id="movie_SitPosition" v-for="sitPosition in sitPositionArr">{{sitPosition}}</div>
-        </div>
-    </div>
-    <div id="cinema">
-        <div id="cinema_name">{{orderDetail.cinemaName}}</div>
-        <div id="cinema_address">地址:{{orderDetail.address}}</div>
-    </div>
+        <div id="remain">
+            <div id="movie">
+                <div id="movie_name">电影:{{orderDetail.movieName}}</div>
+                <div id="movie_time">
+                    <div id="time_datetime">{{datetime}}</div>
+                    <div id="time_day">{{weekOfDay}}</div>
+                </div>
+                <div id="movie_length">110分钟</div>
+                <div id="movie_hallName">{{orderDetail.hallName}}</div>
+                <div id="movie_SitPositions">
+                    <div id="movie_SitPosition" v-for="sitPosition in sitPositionArr">{{sitPosition}}</div>
+                </div>
+            </div>
+            <div id="cinema">
+                <div id="cinema_name">{{orderDetail.cinemaName}}</div>
+                <div id="cinema_address">地址:{{orderDetail.address}}</div>
+            </div>
 
-    <div id="pay">
-        <div id="pay_price">
-            <div id="price_text">价格</div>
-            <div id="price_value">¥{{orderDetail.price}}</div>
-        </div>
-        <div id="pay_number">
-            <div id="number_text">数量</div>
-            <div id="number_value">{{ticketNumber}}</div>
-        </div>
-        <div id="pay_shouldPay">
-            <div id="shouldPay_text">总价</div>
-            <div id="shouldPay_value">¥{{orderDetail.payPrice}}</div>
+            <div id="pay">
+                <div id="pay_price">
+                    <div id="price_text">价格</div>
+                    <div id="price_value">¥{{orderDetail.price}}</div>
+                </div>
+                <div id="pay_number">
+                    <div id="number_text">数量</div>
+                    <div id="number_value">{{ticketNumber}}</div>
+                </div>
+                <div id="pay_shouldPay">
+                    <div id="shouldPay_text">总价</div>
+                    <div id="shouldPay_value">¥{{orderDetail.payPrice}}</div>
+                </div>
+            </div>
+            <div id="bottom">
+                <div id="bottom_text">应付</div>
+                <div id="bottom_shouldPay">¥{{orderDetail.payPrice}}</div>
+                <a :href="'/payOrder.html?orderId='+orderDetail.id" id="bottom_payNow">立即支付</a>
+            </div>
         </div>
     </div>
-    <div id="bottom">
-        <div id="bottom_text">应付</div>
-        <div id="bottom_shouldPay">¥{{orderDetail.payPrice}}</div>
-        <a :href="'/payOrder.html?orderId='+orderDetail.id" id="bottom_payNow" >立即支付</a>
-    </div>
-</div>
 </script>
 <script>
-    let app=new Vue({
-        el:'#app',
-        template:'#template',
-        data:function () {
-            return{
-                orderDetail:{},
-                sitPositionArr:[],
-                datetime:'',//几月几日
-                weekOfDay:'',//周几
+    let app = new Vue({
+        el: '#app',
+        template: '#template',
+        data: function () {
+            return {
+                orderDetail: {},
+                sitPositionArr: [],
+                datetime: '',//几月几日
+                weekOfDay: '',//周几
+                orderId: '',
             }
         },
-        methods:{
+        methods: {
+            cancelOrder: function (orderId) {
+                var orderId = this.orderId;
+                axios({
+                    method: "post",
+                    url: "/order/cancelUnpaidOrder",
+                    headers:
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                    data: orderId
+                }).then((response) => {
+                    window.location = "/confirmOrder.html?orderId=" + response.data.data.id;
+                })
+            }
         },
-        created:function () {
-            let orderId=getQuery("orderId");
-            axios.get('http://zhouzhaorong.xyz/order/selectOrderById',{
-                params:{
-                    orderId:orderId,
+        created: function () {
+            let orderId = getQuery("orderId");
+            this.orderId = orderId;
+            axios.get('/order/selectOrderById', {
+                params: {
+                    orderId: orderId,
                 }
-            }).then((response)=>{
-                this.orderDetail=response.data.data;
+            }).then((response) => {
+                this.orderDetail = response.data.data;
                 //计算几排几座
-                let sitNumbers=response.data.data.sitNumbers;
-                let sitNumberArr =sitNumbers.split(',');
-                let sitPositionArr=[];
-                let position=null   ;
-                for(let index in sitNumberArr){
-                    let i=parseInt(sitNumberArr[index]);
-                    position=(parseInt(i/10)+1)+'排'+i%10+'座'
-                    if(i%10==0){
-                        position=parseInt(i/10)+'排10座';
+                let sitNumbers = response.data.data.sitNumbers;
+                let sitNumberArr = sitNumbers.split(',');
+                let sitPositionArr = [];
+                let position = null;
+                for (let index in sitNumberArr) {
+                    let i = parseInt(sitNumberArr[index]);
+                    position = (parseInt(i / 10) + 1) + '排' + i % 10 + '座'
+                    if (i % 10 == 0) {
+                        position = parseInt(i / 10) + '排10座';
                     }
-                   sitPositionArr.push(position);
+                    sitPositionArr.push(position);
                 }
-                this.sitPositionArr=sitPositionArr;
+                this.sitPositionArr = sitPositionArr;
                 //计算日期
                 //修改datetime格式
-                this.weekOfDay=moment(response.data.data.datetime).format('星期E');
-                this.datetime=moment(response.data.data.datetime).format('MM月DD日 HH:mm');
+                this.weekOfDay = moment(response.data.data.datetime).format('星期E');
+                this.datetime = moment(response.data.data.datetime).format('MM月DD日 HH:mm');
             })
         },
-        mounted:function () {
+        mounted: function () {
 
         },
         computed: {
-            payPoint:function () {
-                let payPrice=this.orderDetail.payPrice;
-                let payPoint=payPrice*10;
+            payPoint: function () {
+                let payPrice = this.orderDetail.payPrice;
+                let payPoint = payPrice * 10;
                 return payPoint;
             },
-            ticketNumber:function () {
-                let payPrice=this.orderDetail.payPrice;
-                let price=this.orderDetail.price;
-                let ticketNumber=payPrice/price;
+            ticketNumber: function () {
+                let payPrice = this.orderDetail.payPrice;
+                let price = this.orderDetail.price;
+                let ticketNumber = payPrice / price;
                 return ticketNumber;
             },
         }

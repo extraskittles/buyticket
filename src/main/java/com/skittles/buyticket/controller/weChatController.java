@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class weChatController {
     @RequestMapping("/MP_verify_DGrvOPLWkQm9snSi.txt")
-    public String returnWechat(){
+    public String returnWechat() {
         return "DGrvOPLWkQm9snSi";
     }
 }

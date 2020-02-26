@@ -2,8 +2,9 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zzr卖座</title>
 </head>
 <link type="text/css" rel="stylesheet" href="/css/cinema.css">
 <body>
@@ -16,41 +17,47 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="cinemas">
-        <div id="cinemas_title">影院</div>
-        <a :href="'/selectedMovie_cinema.html?cinemaId='+cinema.id" class="cinemas_cinema" v-for="cinema in cinemas">
-            <div class="cinemas_cinema_name">{{cinema.name}}</div>
-            <div class="cinemas_cinema_address">{{cinema.address}}</div>
-        </a>
-        <div id="footer" class="tags">
-            <a :href="'/index.html'" id="footer_movie" class="footer_div">
-                <img class="footer_div_img" src="picture/movie.png">
-                <div class="footer_div_text">电影</div>
+        <div id="top">
+            <a :href="'/index.html'" id="fallBack"></a>
+            <div id="title">影院</div>
+        </div>
+        <div id="remain">
+            <a :href="'/selectedMovie_cinema.html?cinemaId='+cinema.id" class="cinemas_cinema"
+               v-for="cinema in cinemas">
+                <div class="cinemas_cinema_name">{{cinema.name}}</div>
+                <div class="cinemas_cinema_address">{{cinema.address}}</div>
             </a>
-            <div id="footer_cinema" class="footer_div">
-                <img  class="footer_div_img" src="picture/active_cinema.png">
-                <div id="footer_cinema_text" class="footer_div_text">影院</div>
+            <div id="footer" class="tags">
+                <a :href="'/index.html'" id="footer_movie" class="footer_div">
+                    <img class="footer_div_img" src="picture/movie.png">
+                    <div class="footer_div_text">电影</div>
+                </a>
+                <div id="footer_cinema" class="footer_div">
+                    <img class="footer_div_img" src="picture/active_cinema.png">
+                    <div id="footer_cinema_text" class="footer_div_text">影院</div>
+                </div>
+                <a :href="'userCenter.html'" id="footer_me" class="footer_div">
+                    <img class="footer_div_img" src="picture/me.png">
+                    <div class="footer_div_text">我的</div>
+                </a>
             </div>
-            <a :href="'userCenter.html'" id="footer_me" class="footer_div">
-                <img  class="footer_div_img" src="picture/me.png">
-                <div  class="footer_div_text">我的</div>
-            </a>
         </div>
     </div>
 </script>
-<script >
+<script>
     let app = new Vue({
         el: '#app',
         template: "#template",
         data: function () {
             return {
-                user:{},//用户信息
-                cinemas:[],//所有影院信息
+                user: {},//用户信息
+                cinemas: [],//所有影院信息
 
             };
         },
-        created:function () {
+        created: function () {
             //获取用户信息
-            axios.get("http://zhouzhaorong.xyz/user/").then((response) => {
+            axios.get("/user/").then((response) => {
                 let code = response.data.code;
                 if (code == 200) {
                     let user = response.data.data;
@@ -60,7 +67,7 @@
                 }
             )
             //查询所有影院
-            axios.get('http://zhouzhaorong.xyz/order/selectCinemas').then((response) => {
+            axios.get('/order/selectCinemas').then((response) => {
                 this.cinemas = response.data.data;
             });
 

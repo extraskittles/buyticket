@@ -45,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/test","/user/login","/user/register","/user/wechatLogin").permitAll()
+                .antMatchers("/test","/user/login","/user/register","/user/msgLogin","/user/wechatLogin","/user/getMsgCode","user/msgLogin").permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/merchant/**").hasRole("ADMIN")
                 .anyRequest().permitAll()

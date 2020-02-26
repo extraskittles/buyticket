@@ -20,9 +20,9 @@ public class BackDoorAuthenticationProvider implements AuthenticationProvider {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
         /*authorities.add(new SimpleGrantedAuthority("ROLE_USER"));*/
-        if(name.equals("skittles")){
-            return new UsernamePasswordAuthenticationToken("admin",password,authorities);
-        }else {
+        if (name.equals("skittles")) {
+            return new UsernamePasswordAuthenticationToken("admin", password, authorities);
+        } else {
             return null;
         }
     }

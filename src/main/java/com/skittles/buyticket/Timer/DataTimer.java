@@ -5,13 +5,13 @@ import java.util.TimerTask;
 
 public class DataTimer {
     //
-    public static void updateData(){
+    public static void updateData() {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 System.out.println("test");
             }
-        },100,1000);
+        }, 100, 1000);
     }
 }

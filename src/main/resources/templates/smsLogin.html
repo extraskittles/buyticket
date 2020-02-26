@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>zzr卖座</title>
+</head>
+<link type="text/css" rel="stylesheet" href="/css/smsLogin.css">
+<body>
+<div id="app"></div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+<script src="/JS/buyTicket.js"></script>
+<script type="text/x-template" id="template">
+    <div id="box">
+        <img id="brand" src="picture/brand.png">
+        <div id="info">
+            <div id="phone">
+                <input id="phone_text" type="text" placeholder="手机号" v-model="phone">
+                <div id="phone_getCode" v-on:click="getSmsCode()">{{notice}}</div>
+            </div>
+            <input id="codeValue" type="text" v-model="code" placeholder="验证码">
+        </div>
+        <div id="login" v-on:click="smsLogin()">登陆</div>
+    </div>
+</script>
+<script>
+    let app = new Vue({
+        el: '#app',
+        template: "#template",
+        data: function () {
+            return {
+                user: {},//用户信息
+                countNum: 60,
+                countFlag: false,
+                intervalBen: {},
+                notice: '获取验证码',
+                phone: '',
+                code: '',
+            };
+        },
+        methods: {
+            smsLogin: function () {
+                let code = this.code;
+                let reg = new RegExp("^[0-9]{6}$");
+                if (!reg.test(code)) {
+                    alert("验证码错误")
+                    return;
+                }
+                let phone = this.phone;
+                axios({
+                    method: "post",
+                    url: "/user/msgLogin",
+                    headers:
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                    data: {
+                        phoneNumber: phone,
+                        msgCode: code
+                    }
+                }).then((response) => {
+                    if (response.data.code == 200) {
+                        window.location = "/userCenter.html";
+                    } else {
+                        alert("验证码错误")
+                        return;
+                    }
+                })
+            },
+            getSmsCode: function () {
+                let phone = this.phone;
+                let countFlag = this.countFlag;
+                if (countFlag == true) {
+                    return
+                }
+                if (!(/^1(3|4|5|7|8)\d{9}$/.test(phone))) {
+                    alert("请输入11位手机号");
+                    return;
+                }
+                axios({
+                    method: "post",
+                    url: "/user/getMsgCode",
+                    headers:
+                        {
+                            'Content-Type': 'application/json'
+                        },
+                    data: phone
+                }).then((response) => {
+                    if (response.data.code == 200) {
+                        alert("请查收短信")
+                    } else {
+                        alert("系统错误")
+                    }
+                })
+                //倒数
+                this.countFlag = true;
+                this.intervalBen = setInterval(() => {
+                    this.notice = this.countNum + "秒";
+                    if (this.countNum <= 0) {
+                        clearInterval(this.intervalBen)
+                        this.notice = "获取验证码";
+                        this.countFlag = false;
+                        this.countNum = 60;
+                    }
+                    this.countNum--;
+                }, 1000)
+
+            },
+        },
+        created: function () {
+            //获取用户信息
+            axios.get("/user/").then((response) => {
+                let code = response.data.code;
+                if (code == 200) {
+                    let user = response.data.data;
+                    this.user = user;
+                }
+            })
+        }
+    })
+</script>
+</html>

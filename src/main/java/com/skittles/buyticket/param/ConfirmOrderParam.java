@@ -1,7 +1,6 @@
 package com.skittles.buyticket.param;
 
 
-
 public class ConfirmOrderParam {
     private int cinemaId;
     private int sceneId;

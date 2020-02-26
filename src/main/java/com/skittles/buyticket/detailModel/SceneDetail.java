@@ -8,7 +8,6 @@ public class SceneDetail extends Scene {
     private String movieName;
 
 
-
     private Double price;
 
     private String description;

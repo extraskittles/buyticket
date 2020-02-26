@@ -15,36 +15,36 @@ public class CinemaSqlProvider {
     public String insertSelective(Cinema record) {
         BEGIN();
         INSERT_INTO("cinema");
-        
+
         if (record.getId() != null) {
             VALUES("id", "#{id,jdbcType=INTEGER}");
         }
-        
+
         if (record.getName() != null) {
             VALUES("name", "#{name,jdbcType=VARCHAR}");
         }
-        
+
         if (record.getAddress() != null) {
             VALUES("address", "#{address,jdbcType=VARCHAR}");
         }
-        
+
         return SQL();
     }
 
     public String updateByPrimaryKeySelective(Cinema record) {
         BEGIN();
         UPDATE("cinema");
-        
+
         if (record.getName() != null) {
             SET("name = #{name,jdbcType=VARCHAR}");
         }
-        
+
         if (record.getAddress() != null) {
             SET("address = #{address,jdbcType=VARCHAR}");
         }
-        
+
         WHERE("id = #{id,jdbcType=INTEGER}");
-        
+
         return SQL();
     }
 }

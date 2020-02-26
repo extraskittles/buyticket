@@ -1,4 +1,5 @@
 package com.skittles.buyticket.config.securityConfig;
+
 import com.google.gson.Gson;
 import com.skittles.buyticket.result.CommonResult;
 import com.skittles.buyticket.result.ResultCode;
@@ -11,13 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 //未登录而访问受保护资源的处理
 @Component
 public class MyEntryPointHandler implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
 
-      /* httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/entryPoint");*/
+        /* httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/entryPoint");*/
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
         Gson gson = new Gson();

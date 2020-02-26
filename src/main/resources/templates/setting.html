@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width,height=device-height,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>zzr卖座</title>
 </head>
-<link type="text/css" rel="stylesheet" href="/css/selectedMovie_cinema.css">
+<link type="text/css" rel="stylesheet" href="/css/setting.css">
 <body>
 <div id="app"></div>
 </body>
@@ -17,7 +17,11 @@
 <script src="/JS/buyTicket.js"></script>
 <script type="text/x-template" id="template">
     <div id="box">
-
+        <div id="top">
+            <a :href="'/userCenter.html'" id="fallBack"></a>
+            <div id="title">设置</div>
+        </div>
+        <div id="logout" v-on:click="logout()">退出登录</div>
     </div>
 </script>
 <script>
@@ -28,6 +32,17 @@
             return {
                 user: {},//用户信息
             };
+        },
+        methods:{
+          logout:function () {
+              axios.get('/user/logout').then((response)=>{
+                  let code = response.data.code;
+                  if(code==200){
+                      alert("登出成功")
+                      window.location="/userCenter.html"
+                  }
+              })
+          }
         },
         created: function () {
             //获取用户信息

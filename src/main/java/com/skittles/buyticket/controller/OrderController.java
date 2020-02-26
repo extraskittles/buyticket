@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -29,14 +30,15 @@ import java.util.Map;
 public class OrderController {
     @Autowired
     CinemaService cinemaService;
-@Autowired
+    @Autowired
     OrderService orderService;
-@Autowired
+    @Autowired
     OrderDetailMapper orderDetailMapper;
-@Autowired
+    @Autowired
     MovieMapper movieMapper;
-@Autowired
+    @Autowired
     CinemaMapper cinemaMapper;
+
     @ApiOperation("根据电影院id查找该影院上映的所有有效场次的所有信息")
     @GetMapping("selectSceneByCinemaId")
     public CommonResult selectScene(int cinemaId) {
@@ -46,19 +48,18 @@ public class OrderController {
         }
         return CommonResult.failed();
     }
+
     @ApiOperation("查询所有影院的信息")
-    @CrossOrigin(origins = "*")
     @GetMapping("/selectCinemas")
-    public CommonResult selectCinemas(){
+    public CommonResult selectCinemas() {
         List<Cinema> cinemas = cinemaService.selectCinemas();
-        if(cinemas!=null){
+        if (cinemas != null) {
             return CommonResult.success(cinemas);
         }
         return CommonResult.failed();
     }
 
     @ApiOperation("根据电影id查找有上映该电影的所有电影院信息（影院名字)")
-    @CrossOrigin(origins = "*")
     @GetMapping("selectCinema")
     public CommonResult selectCinema(int movieId) {
         List<Cinema> cinemas = cinemaService.selectCinemaByMovieId(movieId);
@@ -67,112 +68,125 @@ public class OrderController {
         }
         return CommonResult.failed();
     }
+
     @ApiOperation("根据场次id,获取该场次所有信息")
     @GetMapping(value = "/selectSceneById")
-    public CommonResult selectSceneDetail( Integer sceneId) {
+    public CommonResult selectSceneDetail(Integer sceneId) {
         SceneDetail sceneDetail = cinemaService.selectSceneDetailById(sceneId);
         return CommonResult.success(sceneDetail);
     }
+
     @ApiOperation("根据电影院id，场次id，座位号生成确认订单")
-    @PostMapping(value = "/confirmOrder",produces = "application/json")
+    @PostMapping(value = "/confirmOrder", produces = "application/json")
     public CommonResult confirmOrder(@RequestBody ConfirmOrderParam confirmOrderParam, HttpServletRequest request) {
         int id = HttpUtils.getIdByRequest(request);
-        if(id==0){
-           return CommonResult.unAuthorized();
+        if (id == 0) {
+            return CommonResult.unAuthorized();
         }
         Map<String, Object> map = orderService.confirmOrder(confirmOrderParam, id);
-        if(map.get("defaultTicket")!=null){
+        if (map.get("defaultTicket") != null) {
             return CommonResult.failed("所选票已被购，请再选票");
         }
         return CommonResult.success(map.get("orderDetail"));
     }
 
     @ApiOperation("根据用户积分支付")
-    @PostMapping(value = "/pay",produces = "application/json")
-    public CommonResult pay(@RequestBody int orderId,HttpServletRequest request){
+    @PostMapping(value = "/pay", produces = "application/json")
+    public CommonResult pay(@RequestBody int orderId, HttpServletRequest request) {
         Map<String, Boolean> map = orderService.pay(orderId, request);
-        if(map.get("noPoints")){
+        if (map.get("noPoints")) {
             return CommonResult.failed("没有足够积分");
         }
-        if(map.get("success")){
+        if (map.get("success")) {
             return CommonResult.success(map.get("data"));
-        }else {
+        } else {
             return CommonResult.failed();
         }
     }
 
     @ApiOperation("查询所有电影的信息")
-    @CrossOrigin(origins = "*")
     @GetMapping("/selectMovies")
-    public CommonResult selectMovies(){
+    public CommonResult selectMovies() {
         List<Movie> movies = cinemaService.selectMovies();
-        if(movies!=null){
+        if (movies != null) {
             return CommonResult.success(movies);
-        }else {
+        } else {
             return CommonResult.failed();
         }
     }
 
     @ApiOperation("根据订单号查询该订单信息")
     @GetMapping("/selectOrderById")
-    public CommonResult selectOrderById(int orderId,HttpServletRequest request){
+    public CommonResult selectOrderById(int orderId, HttpServletRequest request) {
         Integer userId = HttpUtils.getIdByRequest(request);
         OrderDetail orderDetail = orderDetailMapper.selectOrderDetailById(orderId);
-        if(userId!=null&&userId==orderDetail.getUserId()){
+        if (userId != null && userId == orderDetail.getUserId()) {
             return CommonResult.success(orderDetail);
-        }else{
+        } else {
             return CommonResult.failed("查询订单错误");
         }
     }
 
     @ApiOperation("根据电影id查询该电影的信息")
     @GetMapping("/selectMovieById")
-    public CommonResult selectOrderById(Integer movieId){
-        if(movieId==null){
+    public CommonResult selectOrderById(Integer movieId) {
+        if (movieId == null) {
             return CommonResult.failed("电影id不能为空");
         }
         Movie movie = movieMapper.selectByPrimaryKey(movieId);
-        if(movie!=null){
+        if (movie != null) {
             return CommonResult.success(movie);
-        }else{
+        } else {
             return CommonResult.success("查询不到相关电影");
         }
     }
 
     @ApiOperation("根据影院id查询该影院的信息")
     @GetMapping("/selectCinemaById")
-    public CommonResult selectCinemaById(Integer cinemaId){
-        if(cinemaId==null){
+    public CommonResult selectCinemaById(Integer cinemaId) {
+        if (cinemaId == null) {
             return CommonResult.failed("影院id不能为空");
         }
         Cinema cinema = cinemaMapper.selectByPrimaryKey(cinemaId);
-        if(cinema!=null){
+        if (cinema != null) {
             return CommonResult.success(cinema);
-        }else{
+        } else {
             return CommonResult.success("查询不到相关影院");
         }
     }
 
     @ApiOperation("根据影院id查询该影院上映了哪些电影")
     @GetMapping("/selectMoviesByCinemaId")
-    public CommonResult selectMoviesByCinemaId(Integer cinemaId){
+    public CommonResult selectMoviesByCinemaId(Integer cinemaId) {
         List<Movie> movies = movieMapper.selectMoviesByCinemaId(cinemaId);
-        if(movies!=null){
+        if (movies != null) {
             return CommonResult.success(movies);
-        }else {
+        } else {
             return CommonResult.failed("查询失败");
         }
     }
 
     @ApiOperation("查看当前用户的所有订单")
     @GetMapping("/selectOrderDetails")
-    public CommonResult selectOrderDetails(HttpServletRequest request){
+    public CommonResult selectOrderDetails(HttpServletRequest request) {
         Integer userId = HttpUtils.getIdByRequest(request);
         List<OrderDetail> orderDetails = orderDetailMapper.selectOrderDetailByUserId(userId);
-        if(orderDetails!=null){
+        if (orderDetails != null) {
             return CommonResult.success(orderDetails);
-        }else {
+        } else {
             return CommonResult.success("当前用户没有任何订单");
+        }
+    }
+
+    @ApiOperation("取消用户一个未支付订单")
+    @PostMapping(value = "/cancelUnpaidOrder", produces = "application/json")
+    public CommonResult cancelUnpaidOrder(@RequestBody @NotNull Integer orderId, HttpServletRequest request) {
+        int userId = HttpUtils.getIdByRequest(request);
+        boolean b = orderService.cancelOrder(orderId, userId);
+        if (b == true) {
+            return CommonResult.success();
+        } else {
+            return CommonResult.failed("取消失败");
         }
     }
 }
